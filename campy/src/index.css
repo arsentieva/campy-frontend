@@ -1,1 +1,8 @@
-/* TODO Add site wide styles */
+/* body {
+  background: linear-gradient(-70deg, #39A5A7 60%, #c7F9CC 30%);
+} */
+
+a {
+  text-decoration: none;
+  color: '#22577A'
+}
