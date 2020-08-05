@@ -34,7 +34,7 @@ function App() {
           <Route path='/reviews' component={Reviews}/>
           <Route path='/add-review' component={AddReview}/>
           <Route path='/edit-location' component={EditLocation}/>
-          <Route path='/messages' compoenent={Messages}/>
+          <Route path='/messages' component={Messages}/>
           <Route path='/message-detail' component={MessageDetail}/>
         </Switch>
         <Footer />
