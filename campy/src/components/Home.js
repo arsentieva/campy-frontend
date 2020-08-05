@@ -1,50 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Box,
-  Grid,
-  Paper,
-  ButtonBase,
-  Typography,
-  Card,
-  CardMedia,
-  TextField,
-  CardContent,
-} from "@material-ui/core";
-import woman from "../assets/womanByFirePit.jpg";
-import van from "../assets/vanInWoods.jpg";
-import truck from "../assets/truckAndCampfire.jpg";
-import manBeach from "../assets/manCamperBeach.jpg";
-import fire from "../assets/fire.jpg";
-import camperField from '../assets/camperInField.jpg'
-import sittingOnCamper from '../assets/sittingOnCamper.jpg'
+import { AirportShuttle } from "@material-ui/icons";
+
+import { Grid, Typography, Link, IconButton } from "@material-ui/core";
+import GoogleAutoComplete from "./GoogleAutoComplete";
+import sittingOnCamper from "../assets/sittingOnCamper.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    background: `linear-gradient(-70deg, #c7F9CC 60%, rgba(0, 0, 0, 0) 30%), url(${sittingOnCamper})`,
+    background: `linear-gradient(-90deg, #c7F9CC 55%, rgba(0, 0, 0, 0) 50%), url(${sittingOnCamper}) no-repeat`,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "left",
-    color: "#22577A",
-    backgroundColor: "#80ED99",
-    margin: "auto",
-    maxWidth: 500,
-  },
+
+  button: {},
 }));
 
 export const Home = () => {
   const classes = useStyles();
-
+  const [place, setPlace] = useState("");
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+  };
   return (
-    <Grid
-      className={classes.root}
-      container
-      style={{ minHeight: "100vh",}}
-    >
-     <Typography>Where do you want to go?</Typography>
+    <Grid className={classes.root} container style={{ minHeight: "100vh" }}>
+      <Grid item xs={8} />
+      <Grid
+        item
+        container
+        xs={4}
+        alignContent="flex-end"
+        justify="center"
+        direction="column"
+      >
+        <Typography variant="h4" style={{ color: "#3EB4B6" }}>
+          Where do you want to go?
+        </Typography>
+        <Grid container>
+          <GoogleAutoComplete />
+          <Typography color="secondary">
+            <IconButton color="secondary" onClick={handleClick}>
+              <AirportShuttle place={place} />
+            </IconButton>
+            Let's Go!
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
