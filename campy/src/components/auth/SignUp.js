@@ -10,8 +10,8 @@ import {
   MenuItem,
   InputLabel,
 } from "@material-ui/core";
-import camperPic from "../assets/camperUnderStars.jpg";
-import logo from "../assets/logo.png";
+import camperPic from "../../assets/camperUnderStars.jpg";
+import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {

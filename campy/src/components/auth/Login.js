@@ -8,8 +8,8 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { AccountCircle, LockRounded } from "@material-ui/icons";
-import camperPic from "../assets/camperUnderStars.jpg";
-import logo from "../assets/logo.png";
+import camperPic from "../../assets/camperUnderStars.jpg";
+import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
