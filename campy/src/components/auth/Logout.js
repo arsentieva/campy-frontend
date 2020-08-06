@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { MeetingRoom } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import { ListItemText, ListItem, ListItemIcon } from "@material-ui/core";
+import { ListItem, IconButton, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -21,11 +21,11 @@ export const Logout = () => {
   };
   return (
     <div>
-      <ListItem button >
-        <ListItemIcon className={classes.listItem} onClick={logOut}>
+      <ListItem button>
+        <IconButton className={classes.listItem} onClick={logOut}>
           <MeetingRoom className={classes.listItem} />
-        </ListItemIcon>
-          <ListItemText className={classes.listItem}>Logout</ListItemText>
+          <Typography className={classes.listItem}>Logout</Typography>
+        </IconButton>
       </ListItem>
     </div>
   );
