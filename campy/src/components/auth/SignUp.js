@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   TextField,
   Button,
   Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel,
 } from "@material-ui/core";
+import Axios from "axios";
+import { useAuth } from "../../context/AuthContext";
+import { ErrorNotice } from "../ErrorNotice";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
 
@@ -21,14 +21,51 @@ const useStyles = makeStyles((theme) => ({
 
 export const SignUp = () => {
   const classes = useStyles();
-  const [data, setData] = useState("");
-  const handleChange = (event) => {
-    setData(event.target.value);
+
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [domicileType, setDomicileType] = useState("");
+  const { setAuthTokens } = useAuth("");
+  const login = () => {
+    Axios.post("http://localhost:5000/login", {
+      email,
+      password,
+    })
+      .then((result) => {
+        if (result.status === 200) {
+          setAuthTokens(result.data);
+          setLoggedIn(true);
+        } else {
+          setIsError(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err) && setIsError(err);
+      });
   };
+  const postRegister = () => {
+    Axios.post("http://localhost:5000/signup", {
+      firstName,
+      lastName,
+      email,
+      password,
+      phoneNumber,
+      domicileType,
+    })
+      .then(({ email, password }) => login({email, password}));
+  };
+  if (isLoggedIn) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div>
-      <Grid container style={{ minHeight: "100vh" }}>
+      <Grid container style={{ minHeight: "98vh" }}>
         <Grid item xs={12} sm={6}>
           <img
             src={camperPic}
@@ -42,8 +79,15 @@ export const SignUp = () => {
             }}
           />
         </Grid>
+        {isError && (
+          <ErrorNotice
+            message={isError}
+            clearError={() => setIsError(undefined)}
+          />
+        )}
         <Grid
           className={classes.formContainer}
+          component="form"
           container
           item
           xs={12}
@@ -51,6 +95,7 @@ export const SignUp = () => {
           alignItems="center"
           justify="space-between"
           direction="column"
+          onSubmit={postRegister}
           style={{ padding: 10 }}
         >
           <div />
@@ -58,35 +103,45 @@ export const SignUp = () => {
             <Grid container justify="center">
               <img src={logo} alt="campy logo" width={300} />
             </Grid>
-            <TextField label="First Name" margin="normal" />
-            <TextField label="Last Name" margin="normal" />
+            <TextField
+              label="First Name"
+              margin="normal"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <TextField
+              label="Last Name"
+              margin="normal"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <TextField
+              type="email"
+              label="Email"
+              margin="normal"
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-            <TextField type='email' label="Email" margin="normal" />
-            <TextField type='password' label="Password" margin="normal" />
+            <TextField
+              type="phone"
+              label="Phone Number"
+              margin="normal"
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              margin="normal"
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-            <TextField type='password' label="Confirm Password" margin="normal" />
-            
-            <FormControl className={classes.formControl}>
-              <InputLabel id="methodOfCamping">
-                Primary Method of Camping
-              </InputLabel>
-              <Select
-                labelId="methodOfCamping"
-                value={data.method}
-                onChange={handleChange}
-              >
-                <MenuItem value="RV">RV</MenuItem>
-                <MenuItem value="camper">Camper</MenuItem>
-                <MenuItem value="carWithTent">Car with Tent</MenuItem>
-              </Select>
-            </FormControl>
+            <TextField
+              type="text"
+              label="Primary method of Camping"
+              margin="normal"
+              onChange={(e) => setDomicileType(e.target.value)}
+            />
             <div style={{ height: 20 }} />
-            <InputLabel htmlFor="imageUpoad">Profile Picture</InputLabel>
-            <Button id="imageUpload" variant="contained" color="primary">
-              <input type="file" />
-            </Button>
             <div style={{ height: 20 }} />
-            <Button color="primary" variant="contained" width="100%">
+            <Button color="primary" onClick={postRegister} variant="contained" width="100%">
               Submit
             </Button>
             <div style={{ height: 20 }} />

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Logout } from "./auth/Logout";
 import MobilerightMenuSlider from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
@@ -14,14 +15,7 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
-import {
-  Person,
-  PersonAdd,
-  Home,
-  Info,
-  MeetingRoom,
-  Explore,
-} from "@material-ui/icons";
+import { Home, Info, Explore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/campySimpleLogo.png";
 
@@ -29,7 +23,7 @@ import logo from "../assets/campySimpleLogo.png";
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: "#57CC99",
+    background: "#80ED99",
     height: "100%",
   },
   logo: {
@@ -57,16 +51,7 @@ const menuItems = [
     listText: "Explore",
     listPath: "/locations",
   },
-  {
-    listIcon: <Person />,
-    listText: "Login",
-    listPath: "/login",
-  },
-  {
-    listIcon: <PersonAdd />,
-    listText: "Sign Up",
-    listPath: "/sign-up",
-  },
+
   {
     listIcon: <Info />,
     listText: "About",
@@ -74,7 +59,7 @@ const menuItems = [
   },
 ];
 
-export const LoggedInNavBar = () => {
+export const UserNavBar = () => {
   const [state, setState] = useState({
     right: false,
   });
@@ -93,6 +78,7 @@ export const LoggedInNavBar = () => {
         <img className={classes.logo} src={logo} alt="campy logo" />
       </a>
       <Divider />
+
       <List>
         {menuItems.map((listItem, key) => (
           <ListItem button key={key} component={Link} to={listItem.listPath}>
@@ -105,6 +91,7 @@ export const LoggedInNavBar = () => {
             />
           </ListItem>
         ))}
+        <Logout />
       </List>
     </Box>
   );
@@ -115,7 +102,7 @@ export const LoggedInNavBar = () => {
         <AppBar
           className={classes.appBar}
           position="fixed"
-          style={{ background: "#57CC99" }}
+          style={{ background: "#80ED99" }}
         >
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <a href="/">
@@ -125,11 +112,11 @@ export const LoggedInNavBar = () => {
             <IconButton onClick={toggleSlider("right", true)}>
               <Typography
                 variant="h5"
-                style={{ color: "#d3f5ef", textAlign: "end" }}
+                style={{ color: "#22577A", textAlign: "end" }}
               >
                 MENU
               </Typography>
-              <MenuIcon style={{ color: "#d3f5ef" }} />
+              <MenuIcon style={{ color: "#22577A" }} />
             </IconButton>
 
             <MobilerightMenuSlider

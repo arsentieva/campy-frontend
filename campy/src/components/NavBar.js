@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {AuthOptions} from './auth/AuthOptions'
 import MobilerightMenuSlider from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
-import { AuthOptions } from "./auth/AuthOptions";
 import {
   AppBar,
   Toolbar,
@@ -15,7 +15,7 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
-import { Person, PersonAdd, Home, Info, Explore } from "@material-ui/icons";
+import {  Home, Info, Explore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/campySimpleLogo.png";
 
@@ -39,8 +39,63 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const menuItems = [
+  {
+    listIcon: <Home />,
+    listText: "Home",
+    listPath: "/",
+  },
+
+  {
+    listIcon: <Explore />,
+    listText: "Explore",
+    listPath: "/locations",
+  },
+
+  {
+    listIcon: <Info />,
+    listText: "About",
+    listPath: "/about",
+  },
+];
+
 export const NavBar = () => {
+  const [state, setState] = useState({
+    right: false,
+  });
+  const toggleSlider = (slider, open) => () => {
+    setState({ ...state, [slider]: open });
+  };
   const classes = useStyles();
+
+  const sideList = (slider) => (
+    <Box
+      className={classes.menuSliderContainer}
+      component="div"
+      onClick={toggleSlider(slider, false)}
+    >
+      <a href="/">
+        <img className={classes.logo} src={logo} alt="campy logo" />
+      </a>
+      <Divider />
+
+      <List>
+        {menuItems.map((listItem, key) => (
+          <ListItem button key={key} component={Link} to={listItem.listPath}>
+            <ListItemIcon className={classes.listItem}>
+              {listItem.listIcon}
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItem}
+              primary={listItem.listText}
+            />
+          </ListItem>
+        ))}
+        <AuthOptions />
+      </List>
+    </Box>
+  );
+
   return (
     <>
       <Box component="nav">
@@ -53,7 +108,24 @@ export const NavBar = () => {
             <a href="/">
               <img className={classes.logo} src={logo} alt="campy logo" />
             </a>
-            <AuthOptions />
+
+            <IconButton onClick={toggleSlider("right", true)}>
+              <Typography
+                variant="h5"
+                style={{ color: "#22577A", textAlign: "end" }}
+              >
+                MENU
+              </Typography>
+              <MenuIcon style={{ color: "#22577A" }} />
+            </IconButton>
+
+            <MobilerightMenuSlider
+              anchor="right"
+              open={state.right}
+              onClose={toggleSlider("right", false)}
+            >
+              {sideList("right")}
+            </MobilerightMenuSlider>
           </Toolbar>
         </AppBar>
       </Box>
