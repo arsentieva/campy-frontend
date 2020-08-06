@@ -34,6 +34,7 @@ export const NavBar = () => {
         className={classes.appBar}
         position="fixed"
         justify="space-between"
+        style={{ position: "fixed" }}
       >
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <a href="/">
