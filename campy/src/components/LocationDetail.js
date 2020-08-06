@@ -49,18 +49,29 @@ const useStyles = makeStyles((theme) => ({
     'font-weight': 'bold',
     background: '#22577A',
   },
-  amenity: {
+  checkbox1: {
     'font-weight': 'bold',
     'max-width': '50%',
     background: '#22577A',
+    height: '450px',
   },
-  necessity: {
+  checkbox2: {
     'font-weight': 'bold',
     background: '#22577A',
+    height: '450px',
   },
   review: {
     'font-weight': 'bold',
     background: '#22577A',
+    height: '450px',
+    padding: '5px'
+  },
+  calendar: {
+    'font-weight': 'bold',
+    background: '#22577A',
+    height: '450px',
+    width: '300px',
+    padding: '5px'
   }
 }));
 
@@ -105,173 +116,180 @@ export const LocationDetail = (props) => {
   }
 
   return (
-    <div>
-      <div className={classes.details}>
-        <div className={classes.detailsImage}>
-          {
-            location.images.map((x, i) => 
-              <Paper elevation={5}>
-                <img src={x[i]} alt={`product-image-${i}`} />
-              </Paper>            
-            )
-          }
-        </div>
-        <Paper elevation={5} className={classes.detailsInfo}>
-          <List>
-            <ListItem>
-              <ListItemText primary='Address:' secondary={location.address} />
-              <ListItemText primary='City:' secondary={location.city} />
-              <ListItemText primary='State:' secondary={location.state} />
-              <ListItemText primary='GPS Coordinates:' secondary={location.gps_coords} />
-              <ListItemText primary='Website:' secondary={location.website ? location.website : 'None'} />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem>
-              <ListItemText primary='Description:' secondary={location.description} />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem>
-              <ListItemText primary='Host Notes:' secondary={location.host_notes} />
-            </ListItem>
-          </List>
-        </Paper>
-        <Paper elevation={5} className={classes.review}>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Overall Rating</Typography>
-            <Rating value={location.review.overall_rating} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Noise</Typography>
-            <Rating value={location.review.noise} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Safety</Typography>
-            <Rating value={location.review.safety} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Cleanliness</Typography>
-            <Rating value={location.review.cleanliness} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Access</Typography>
-            <Rating value={location.review.access} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Site Quality</Typography>
-            <Rating value={location.review.site_quality} readOnly />
-          </Box>
-        </Paper>
-        <Paper elevation={5} className={classes.amenity}>
-          <List>
-            <ListItem>
-              <ListItemText primary='Electric Hookup:' />
-              <Checkbox
-                disabled
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />}
-                checked={location.amenity.electric_hookup} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Water Hookup:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.electric_hookup}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Septic Hookup:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.septic_hookup}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Assigned Parking:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.assigned_parking}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Tow Vehicle Parking:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.tow_vehicle_parking}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Trash Removal:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.trash_removal}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Water Front:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.water_front}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Pets Allowed:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.pets_allowed} 
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Internet Access:' />
-              <Checkbox 
-                disabled 
-                checked={location.amenity.internet_access} 
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-          </List>
-        </Paper>
-        <Paper elevation={5} className={classes.necessity}>
-          <List>
-            <ListItem>
-              <ListItemText primary='RV Compatible:' />
-              <Checkbox
-                disabled
-                checked={location.necessity.rv_compatible}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Generators Allowed:' />
-              <Checkbox
-                disabled
-                checked={location.necessity.generators_allowed}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Fires Allowed:' />
-              <Checkbox
-                disabled
-                checked={location.necessity.fires_allowed}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary={`Max Days:${location.necessity.max_days}`} secondary={location.necessity.max_days} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary='Pad Type:' secondary={location.necessity.pad_type} />
-            </ListItem>
-          </List>
-        </Paper>
+    <div className={classes.details}>
+      <div className={classes.detailsImage}>
+        {
+          location.images.map((x, i) => 
+            <Paper elevation={5}>
+              <img src={x[i]} alt={`product-image-${i}`} />
+            </Paper>            
+          )
+        }
       </div>
+      <Paper elevation={5} className={classes.detailsInfo}>
+        <List>
+          <ListItem>
+            <ListItemText primary='Address:' secondary={location.address} />
+            <ListItemText primary='City:' secondary={location.city} />
+            <ListItemText primary='State:' secondary={location.state} />
+            <ListItemText primary='GPS Coordinates:' secondary={location.gps_coords} />
+            <ListItemText primary='Website:' secondary={location.website ? location.website : 'None'} />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+          <ListItem>
+            <ListItemText primary='Max Days:' secondary={location.necessity.max_days} />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+          <ListItem>
+            <ListItemText primary='Pad Type:' secondary={location.necessity.pad_type} />
+          </ListItem>
+          <Divider variant="inset" component="li" />  
+          <ListItem>
+            <ListItemText primary='Description:' secondary={location.description} />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+          <ListItem>
+            <ListItemText primary='Host Notes:' secondary={location.host_notes} />
+          </ListItem>          
+        </List>
+      </Paper>
+      <Paper elevation={5} className={classes.review}>
+        <Box component="fieldset" borderColor="transparent">
+          <Typography component="legend">Overall Rating</Typography>
+          <Rating value={location.review.overall_rating} readOnly />
+        </Box>
+        <Box component="fieldset" borderColor="transparent">
+          <Typography component="legend">Noise</Typography>
+          <Rating value={location.review.noise} readOnly />
+        </Box>
+        <Box component="fieldset" borderColor="transparent">
+          <Typography component="legend">Safety</Typography>
+          <Rating value={location.review.safety} readOnly />
+        </Box>
+        <Box component="fieldset" borderColor="transparent">
+          <Typography component="legend">Cleanliness</Typography>
+          <Rating value={location.review.cleanliness} readOnly />
+        </Box>
+        <Box component="fieldset" borderColor="transparent">
+          <Typography component="legend">Access</Typography>
+          <Rating value={location.review.access} readOnly />
+        </Box>
+        <Box component="fieldset" borderColor="transparent">
+          <Typography component="legend">Site Quality</Typography>
+          <Rating value={location.review.site_quality} readOnly />
+        </Box>
+      </Paper>
+      <Paper elevation={5} className={classes.checkbox1}>
+        <List>
+          <ListItem>
+            <ListItemText primary='Electric Hookup:' />
+            <Checkbox
+              disabled
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />}
+              checked={location.amenity.electric_hookup} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Water Hookup:' />
+            <Checkbox 
+              disabled 
+              checked={location.amenity.electric_hookup}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Septic Hookup:' />
+            <Checkbox 
+              disabled 
+              checked={location.amenity.septic_hookup}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Assigned Parking:' />
+            <Checkbox 
+              disabled 
+              checked={location.amenity.assigned_parking}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Tow Vehicle Parking:' />
+            <Checkbox 
+              disabled 
+              checked={location.amenity.tow_vehicle_parking}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Trash Removal:' />
+            <Checkbox 
+              disabled 
+              checked={location.amenity.trash_removal}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>     
+        </List>
+      </Paper>
+      <Paper elevation={5} className={classes.checkbox2}>
+        <List>
+          <ListItem>
+            <ListItemText primary='Water Front:' />
+            <Checkbox
+              disabled
+              checked={location.amenity.water_front}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>  
+          <ListItem>
+            <ListItemText primary='Pets Allowed:' />
+            <Checkbox
+              disabled
+              checked={location.amenity.pets_allowed}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Internet Access:' />
+            <Checkbox
+              disabled
+              checked={location.amenity.internet_access}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='RV Compatible:' />
+            <Checkbox
+              disabled
+              checked={location.necessity.rv_compatible}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Generators Allowed:' />
+            <Checkbox
+              disabled
+              checked={location.necessity.generators_allowed}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary='Fires Allowed:' />
+            <Checkbox
+              disabled
+              checked={location.necessity.fires_allowed}
+              icon={<CircleUnchecked />}
+              checkedIcon={<CircleChecked />} />
+          </ListItem>
+        </List>
+      </Paper>
+      <Paper elevation={5} className={classes.calendar}>
+        <List>
+          <ListItem>
+            <ListItemText primary='Put Calendar Here' />
+          </ListItem>
+        </List>
+      </Paper>
     </div>
   )
 }
