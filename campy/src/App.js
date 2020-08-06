@@ -13,6 +13,7 @@ import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
 import { AddReview } from "./components/protectedRoutes/AddReview";
 import { EditLocation } from "./components/protectedRoutes/EditLocation";
+import { MyLocations} from './components/protectedRoutes/MyLocations'
 import { Messages } from "./components/protectedRoutes/Messages";
 import { MessageDetail } from "./components/protectedRoutes/MessageDetail";
 import { About } from "./components/About";
@@ -39,6 +40,8 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <ProtectedRoute path="/add-location" component={AddLocation} />
+            <ProtectedRoute path="/my-locations" component={MyLocations} />
+
             <Route path="/location-detail" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
             <ProtectedRoute path="/account" component={AccountPage} />

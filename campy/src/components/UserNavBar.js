@@ -15,7 +15,7 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
-import { Home, Info, Explore } from "@material-ui/icons";
+import { Home, Info, Explore, AccountBox, AddLocation, Email } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/campySimpleLogo.png";
 
@@ -45,7 +45,21 @@ const menuItems = [
     listText: "Home",
     listPath: "/",
   },
-
+  {
+    listIcon: <AccountBox />,
+    listText: "My Account",
+    listPath: '/account',
+  },
+  {
+    listIcon: <AddLocation />,
+    listText: "Host a location",
+    listPath: '/add-location',
+  },
+  {
+    listIcon: <Email />,
+    listText: "Messages",
+    listPath: '/messages',
+  },
   {
     listIcon: <Explore />,
     listText: "Explore",
