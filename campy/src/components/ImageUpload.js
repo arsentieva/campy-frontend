@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { storage } from "../Firebase/index";
+import { storage } from "../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, InputLabel, Input, IconButton } from "@material-ui/core";
 import { AddAPhoto, Send } from "@material-ui/icons";
@@ -51,7 +51,7 @@ export const ImageUpload = (props) => {
       <br />
       <InputLabel>
         <AddAPhoto />
-        {props.text}
+        {text}
       </InputLabel>
       <Input type="file" onChange={handleChange} />
       <IconButton onClick={handleUpload}>
@@ -61,7 +61,7 @@ export const ImageUpload = (props) => {
       <br />
       <img
         src={url}
-        alt={image.name}
+        alt='image'
         style={{ width: "200px", height: "200px" }}
       />
     </div>

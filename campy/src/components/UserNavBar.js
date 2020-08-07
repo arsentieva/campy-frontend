@@ -13,11 +13,20 @@ import {
   Divider,
   List,
   Typography,
+  Avatar,
   Box,
 } from "@material-ui/core";
-import { Home, Info, Explore, AccountBox, AddLocation, Email } from "@material-ui/icons";
+import {
+  Home,
+  Info,
+  Explore,
+  AccountBox,
+  AddLocation,
+  Email,
+} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/campySimpleLogo.png";
+import {useAuth } from '../context/AuthContext'
 
 //CSS Styles
 const useStyles = makeStyles((theme) => ({
@@ -48,17 +57,17 @@ const menuItems = [
   {
     listIcon: <AccountBox />,
     listText: "My Account",
-    listPath: '/account',
+    listPath: "/account",
   },
   {
     listIcon: <AddLocation />,
     listText: "Host a location",
-    listPath: '/add-location',
+    listPath: "/add-location",
   },
   {
     listIcon: <Email />,
     listText: "Messages",
-    listPath: '/messages',
+    listPath: "/messages",
   },
   {
     listIcon: <Explore />,
@@ -74,6 +83,9 @@ const menuItems = [
 ];
 
 export const UserNavBar = () => {
+
+  const { authTokens } = useAuth();
+  const userFirstName = authTokens.user_first_name;
   const [state, setState] = useState({
     right: false,
   });
@@ -92,8 +104,11 @@ export const UserNavBar = () => {
         <img className={classes.logo} src={logo} alt="campy logo" />
       </a>
       <Divider />
-
       <List>
+        <ListItem>
+          <Avatar />
+          <ListItemText className={classes.listItem}>Hello {`${userFirstName}`}!</ListItemText>
+        </ListItem>
         {menuItems.map((listItem, key) => (
           <ListItem button key={key} component={Link} to={listItem.listPath}>
             <ListItemIcon className={classes.listItem}>
@@ -105,6 +120,7 @@ export const UserNavBar = () => {
             />
           </ListItem>
         ))}
+        <Divider />
         <Logout />
       </List>
     </Box>

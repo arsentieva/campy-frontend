@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { AirportShuttle } from "@material-ui/icons";
 
-import { Grid, Typography, Link, IconButton } from "@material-ui/core";
+import { Grid, Typography, IconButton } from "@material-ui/core";
 import GoogleAutoComplete from "./GoogleMaps/GoogleAutoComplete";
 import sittingOnCamper from "../assets/sittingOnCamper.jpg";
 

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  TextField,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { Grid, TextField, Button, Typography } from "@material-ui/core";
 import Axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { ErrorNotice } from "../ErrorNotice";
@@ -29,10 +24,9 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [domicileType, setDomicileType] = useState("");
   const { setAuthTokens } = useAuth("");
   const login = () => {
-    Axios.post("http://localhost:5000/login", {
+    Axios.post("http://localhost:5000/auth/login", {
       email,
       password,
     })
@@ -49,15 +43,13 @@ export const SignUp = () => {
       });
   };
   const postRegister = () => {
-    Axios.post("http://localhost:5000/signup", {
+    Axios.post("http://localhost:5000/auth/signup", {
       firstName,
       lastName,
       email,
       password,
       phoneNumber,
-      domicileType,
-    })
-      .then(({ email, password }) => login({email, password}));
+    }).then(({ email, password }) => login({ email, password }));
   };
   if (isLoggedIn) {
     return <Redirect to="/" />;
@@ -133,15 +125,14 @@ export const SignUp = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <TextField
-              type="text"
-              label="Primary method of Camping"
-              margin="normal"
-              onChange={(e) => setDomicileType(e.target.value)}
-            />
             <div style={{ height: 20 }} />
             <div style={{ height: 20 }} />
-            <Button color="primary" onClick={postRegister} variant="contained" width="100%">
+            <Button
+              color="primary"
+              onClick={postRegister}
+              variant="contained"
+              width="100%"
+            >
               Submit
             </Button>
             <div style={{ height: 20 }} />
