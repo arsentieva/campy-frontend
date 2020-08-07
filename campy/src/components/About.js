@@ -23,10 +23,10 @@ export const About = () => {
           displaced or just passing through and in need for a temporary place to camp. Campy is
           great for homeowners or campgrounds.
         </p>
-        <div>
-          <h3>Tech Stack Used</h3>
-          <p>React.js, Python with Flask, SQLAlchemy, PostreSQL, Material-UI, and Firebase for authentication and image handling</p>
-        </div>
+      <div>
+        <h3>Tech Stack Used</h3>
+        <p>React.js, Python with Flask, SQLAlchemy, PostreSQL, Material-UI, and Firebase for authentication and image handling</p>
+      </div>
       </div>
     </div>
   )
