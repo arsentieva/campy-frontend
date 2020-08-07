@@ -71,6 +71,7 @@ export const GoogleMapComponent = () => {
     return "Loading Maps";
   }
 
+  let imageUrl= "http://maps.google.com/mapfiles/kml/shapes/campground.png";
   return (
     <div>
      <GoogleMap
@@ -85,7 +86,7 @@ export const GoogleMapComponent = () => {
             <Marker key = {place.id}
             position = { {lat: place.lat, lng: place.lng}}
             icon = {{
-              // url: `/campy-frontend/campy/src/components/GoogleMaps/tent.png`,
+              url: imageUrl,
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
