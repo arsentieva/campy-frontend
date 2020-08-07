@@ -1,15 +1,110 @@
-import React from "react";
-import { Grid, Typography, IconButton, Avatar, Divider } from "@material-ui/core";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Grid,
+  Typography,
+  IconButton,
+  Avatar,
+  Divider,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {Edit} from "@material-ui/icons";
+import { Edit } from "@material-ui/icons";
+import Axios from "axios";
+import { useAuth } from "../../context/AuthContext";
+import { MyLocations } from "./MyLocations";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginTop: "20vh",
+    padding: "10px",
+    backgroundColor: theme.palette.primary.main,
+  },
+  picture: {
+    width: "200px",
+    height: "200px",
+  },
 }));
-
 export const AccountPage = () => {
-  const classes = useStyles();
-  return <Grid className={classes.root}>
+  const { authTokens } = useAuth();
+  const [currentUser, setCurrentUser] = useState(undefined);
 
-  </Grid>;
+  const userId = authTokens.user_id;
+
+  const classes = useStyles();
+  if (currentUser) {
+    return (
+      <Grid container className={classes.root}>
+        <Grid
+          item
+          container
+          spacing={10}
+          direction="column"
+          justify="center"
+          alignContent="center"
+          xs={4}
+        >
+          <Grid item>
+            {currentUser.image_url !== null ? (
+              <Avatar className={classes.picture} src={currentUser.image_url} />
+            ) : (
+              <Avatar className={classes.picture} />
+            )}
+          </Grid>
+          <Grid item>
+            <IconButton component={Link} to="/edit-account">
+              <Edit />
+              Edit Account
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          direction="column"
+          justify="space-between"
+          alignContent="center"
+          xs={4}
+          spacing={3}
+        >
+          <Grid item>
+            <Typography>First Name</Typography>
+            <Typography>{currentUser.first_name || ""}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography>Last Name</Typography>
+            <Typography>{currentUser.last_name || ""}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography>Email Address</Typography>
+            <Typography>{currentUser.email || ""}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography>Phone Number</Typography>
+            <Typography>{currentUser.phone_number || ""}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography>Primary Method of Camping</Typography>
+            <Typography>{currentUser.domicle_type || ""}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography>Bio</Typography>
+            <Typography>{currentUser.user_info || ""}</Typography>
+          </Grid>
+        </Grid>
+        <Grid container justify="center"  xs={4} item>
+          <Grid item>
+            <MyLocations />
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  } else {
+    Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
+      (response) => {
+        console.log(response.data);
+        setCurrentUser(response.data.user);
+      }
+    );
+    return null;
+  }
 };

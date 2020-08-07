@@ -13,7 +13,6 @@ import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
 import { AddReview } from "./components/protectedRoutes/AddReview";
 import { EditLocation } from "./components/protectedRoutes/EditLocation";
-import { MyLocations} from './components/protectedRoutes/MyLocations'
 import { Messages } from "./components/protectedRoutes/Messages";
 import { MessageDetail } from "./components/protectedRoutes/MessageDetail";
 import { About } from "./components/About";
@@ -30,28 +29,32 @@ function App() {
     localStorage.setItem("tokens", JSON.stringify(data));
     setAuthTokens(data);
   };
+
   return (
     <Router>
       <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
         <CssBaseline>
-          {existingTokens !== null ? <UserNavBar /> : <NavBar />}
+          {existingTokens !== null ? (
+            <UserNavBar />
+          ) : (
+            <NavBar />
+          )}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/sign-up" component={SignUp} />
+            <Route exact path="/about" component={About} />
             <ProtectedRoute path="/add-location" component={AddLocation} />
-            <ProtectedRoute path="/my-locations" component={MyLocations} />
 
             <Route path="/location-detail" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
-            <ProtectedRoute path="/account" component={AccountPage} />
+            <ProtectedRoute path="/account" component={() => AccountPage()} />
             <ProtectedRoute path="/edit-account" component={EditAccount} />
             <Route path="/reviews" component={Reviews} />
             <ProtectedRoute path="/add-review" component={AddReview} />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
             <ProtectedRoute path="/messages" compoenent={Messages} />
             <ProtectedRoute path="/message-detail" component={MessageDetail} />
-            <Route path="/about" compoenent={About} />
           </Switch>
           <Footer />
         </CssBaseline>

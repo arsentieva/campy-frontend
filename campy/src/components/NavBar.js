@@ -91,6 +91,7 @@ export const NavBar = () => {
             />
           </ListItem>
         ))}
+        <Divider />
         <AuthOptions />
       </List>
     </Box>

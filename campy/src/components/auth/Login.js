@@ -31,7 +31,7 @@ export const Login = () => {
   const { setAuthTokens } = useAuth();
 
   const postLogin = () => {
-    Axios.post("http://localhost:5000/login", {
+    Axios.post("http://localhost:5000/auth/login", {
       email,
       password,
     })

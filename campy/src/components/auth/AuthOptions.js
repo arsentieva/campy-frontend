@@ -1,8 +1,10 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 import { ListItemText, List, ListItem, ListItemIcon } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Person, PersonAdd, PermIdentity } from "@material-ui/icons";
+import { useAuth } from "../../context/AuthContext";
+import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -21,8 +23,25 @@ export const AuthOptions = () => {
   const login = () => {
     history.push("/login");
   };
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const { setAuthTokens } = useAuth();
+
   const loginDemo = () => {
-    
+    Axios.post("http://localhost:5000/auth/login", {
+      email: "demo@mail.com",
+      password: "password",
+    })
+      .then((result) => {
+        setAuthTokens(result.data);
+        setLoggedIn(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  if (isLoggedIn) {
+    return <Redirect to="/" />;
   }
 
   return (
