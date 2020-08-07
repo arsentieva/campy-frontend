@@ -1,14 +1,23 @@
 import React, { useState } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import Select from '@material-ui/core/Select'
+import Rating from '@material-ui/lab/Rating';
 import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 
 
 const useStyles = makeStyles((theme) => ({
+  background: {
+    background: '#22577A',
+    height: '100vh',
+    width: '100vw',
+    'margin-top': '75px',
+    color: 'white',
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -31,36 +40,18 @@ export const AddReview = () => {
   const [siteQuality, setSiteQuality] = useState(0)
   const [comments, setComments] = useState('')
 
-  const handleChangeRate = (event) => {
-    setRate(event.target.value);
-  };
-  const handleChangeDaysStayed = (event) => {
-    setDaysStayed(event.target.value);
-  };
-  const handleChangeOverallRating = (event) => {
-    setOverallRating(event.target.value);
-  };
-  const handleChangeNoise = (event) => {
-    setNoise(event.target.value);
-  };
-  const handleChangeSafety = (event) => {
-    setSafety(event.target.value);
-  };
-  const handleChangeCleanliness = (event) => {
-    setCleanliness(event.target.value);
-  };
-  const handleChangeAccess = (event) => {
-    setAccess(event.target.value);
-  };
-  const handleChangeSiteQuality = (event) => {
-    setSiteQuality(event.target.value);
-  };
-  const handleChangeComments = (event) => {
-    setComments(event.target.value);
-  };
+  const handleChangeRate = e => {
+    setRate(e.target.value)
+  }
+  const handleChangeDaysStayed = e => {
+    setDaysStayed(e.target.value)
+  }
+  const handleChangeComments = e => {
+    setComments(e.target.value)
+  }
 
   return (
-    <>
+    <Box className={classes.background}>
       <Grid 
         container 
         spacing={0} 
@@ -69,107 +60,80 @@ export const AddReview = () => {
         align='center'
         style={{ minHeight: '100vh' }}>
         <Grid item>
-          <FormControl className={classes.formControl}>
-            <InputLabel>Overall Rating</InputLabel>
-            <Select
+          <Box component="fieldset" borderColor="transparent">
+            <Typography component="legend">Overall Rating</Typography>
+            <Rating
               value={overallRating}
-              onChange={handleChangeOverallRating}>
-                <MenuItem value={0}>0</MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel>Noise</InputLabel>
-            <Select
+              onChange={(event, newValue) => {
+                setOverallRating(newValue);
+              }} />
+          </Box>
+          <Box component="fieldset" borderColor="transparent">
+            <Typography component="legend">Noise</Typography>
+            <Rating
               value={noise}
-              onChange={handleChangeNoise}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel>Safety</InputLabel>
-            <Select
+              onChange={(event, newValue) => {
+                setNoise(newValue);
+              }} />
+          </Box>
+          <Box component="fieldset" borderColor="transparent">
+            <Typography component="legend">Safety</Typography>
+            <Rating
               value={safety}
-              onChange={handleChangeSafety}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>    
-          <FormControl className={classes.formControl}>
-            <InputLabel>Cleanliness</InputLabel>
-            <Select
+              onChange={(event, newValue) => {
+                setSafety(newValue);
+              }} />
+          </Box>
+          <Box component="fieldset" borderColor="transparent">
+            <Typography component="legend">Cleanliness</Typography>
+            <Rating
               value={cleanliness}
-              onChange={handleChangeCleanliness}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>    
-          <FormControl className={classes.formControl}>
-            <InputLabel>Access</InputLabel>
-            <Select
+              onChange={(event, newValue) => {
+                setCleanliness(newValue);
+              }} />
+          </Box>
+          <Box component="fieldset" borderColor="transparent">
+            <Typography component="legend">Access</Typography>
+            <Rating
               value={access}
-              onChange={handleChangeAccess}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>    
-          <FormControl className={classes.formControl}>
-            <InputLabel>Site Quality</InputLabel>
-            <Select
+              onChange={(event, newValue) => {
+                setAccess(newValue);
+              }} />
+          </Box>
+          <Box component="fieldset" borderColor="transparent">
+            <Typography component="legend">Site Quality</Typography>
+            <Rating
               value={siteQuality}
-              onChange={handleChangeSiteQuality}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>    
+              onChange={(event, newValue) => {
+                setAccess(newValue);
+              }} />
+          </Box>  
         </Grid>
         <Grid item>
           <TextField
             label='Daily Rate'
-            onchange={handleChangeRate}
+            onChange={handleChangeRate}
             value={rate}>
           </TextField>
         </Grid>
         <Grid item>
           <TextField
             label='Days Stayed'
-            onchange={handleChangeDaysStayed}
+            onChange={handleChangeDaysStayed}
             value={daysStayed}>
           </TextField>
         </Grid>
         <Grid item>
           <TextField
             label='Comments'
-            onchange={handleChangeComments}
+            multiline
+            rows={8}
+            variant='outlined'
+            onChange={handleChangeComments}
             value={comments}>
           </TextField>
         </Grid>
       </Grid>
-    </>
+    </Box>
   )
 }

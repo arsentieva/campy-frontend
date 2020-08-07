@@ -28,7 +28,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/add-location" component={AddLocation} />
-          <Route path="/location-detail" component={LocationDetail} />
+          <Route path="/location-detail/:id" component={LocationDetail} />
           <Route path="/location-list" component={LocationList} />
           <Route path="/account" component={AccountPage} />
           <Route path='/reviews' component={Reviews}/>

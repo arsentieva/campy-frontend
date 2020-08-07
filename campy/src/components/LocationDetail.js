@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List'
@@ -18,11 +19,12 @@ const useStyles = makeStyles((theme) => ({
     background: '#22577A',
     height: '100vh',
     width: '100vw',
-    'margin-top': '75px',
+    marginTop: '75px',
+    marginBottom: '310px',
   },
   details: {
     '& ul': {
-      'list-style-type': 'none',
+      listStyleType: 'none',
       padding: '0px 5px',
     },
     '& > *': {
@@ -31,14 +33,15 @@ const useStyles = makeStyles((theme) => ({
     },
     background: '#22577A',
     display: 'flex',
-    'align-items': 'flex-start',
-    'flex-wrap': 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
+    flexWrap: 'wrap',
   },
   detailsImage: {
     display: 'flex',
-    'flex-direction': 'row',
-    'max-width': '300px',
-    'max-height': '300px',
+    flexDirection: 'row',
+    maxWidth: '300px',
+    maxHeight: '300px',
     width: '100%',
     '& > div': {
       margin: '0px 10px'
@@ -51,87 +54,94 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     padding: '5px',
     width: '100%',
-    'font-weight': 'bold',
+    fontWeight: 'bold',
     background: '#22577A',
   },
   checkbox1: {
-    'font-weight': 'bold',
-    'max-width': '50%',
+    fontWeight: 'bold',
+    maxWidth: '50%',
     background: '#22577A',
-    height: '450px',
+    height: '380px',
   },
   checkbox2: {
-    'font-weight': 'bold',
+    fontWeight: 'bold',
     background: '#22577A',
-    height: '450px',
-  },
-  review: {
-    'font-weight': 'bold',
-    background: '#22577A',
-    height: '450px',
-    padding: '5px'
+    height: '380px',
   },
   calendar: {
     display: 'flex',
-    'flex-grow': 1,
-    'font-weight': 'bold',
+    flexGrow: 1,
+    fontWeight: 'bold',
     background: '#22577A',
-    'min-height': '450px',
-    'min-width': '300px',
+    height: '380px',
+    minWidth: '380px',
+    width: '400px',
     padding: '5px'
+  },
+  revNComment: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '400px',
+    width: '450px',
+    marginBottom: '70px',
+    paddingBottom: '70px',
+  },
+  review: {
+    display: 'flex',
+    flexDirection: 'row',
+    fontWeight: 'bold',
+    background: '#22577A',
+    padding: '5px',
+    color: 'white'
+  },
+  comment: {
+    '& p': {
+      color: 'white'
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    flexGrow: 1,
+    padding: '5px',
+    fontWeight: 'bold',
+    background: '#22577A',
   }
 }));
 
 export const LocationDetail = (props) => {
-  const classes = useStyles();
-  // const { location } = props
-  const location = {
-    'address': '10880 Malibu Point',
-    'city': 'Malibu',
-    'state': 'CA',
-    'gps_coords': '34.000872,-118.806839',
-    'image_urls': ['image1.jpg', 'image2.jpg'],
-    'website': null,
-    'description': 'It overlooks the Pacific Ocean with an amazing view. It was once destroyed from a very unfortunate happening, but now rebuilt like it never happened. Might find some interesting things down the basement.',
-    'host_notes': 'Have fun and then get out. Also, don\'t touch things without permission.',
-    'amenity': {
-      'electric_hookup': true,
-      'water_hookup': true,
-      'septic_hookup': false,
-      'assigned_parking': false,
-      'tow_vehicle_parking': true,
-      'trash_removal': false,
-      'water_front': true,
-      'pets_allowed': true,
-      'internet_access': false,
-    },
-    'necessity': {
-      'rv_compatible': true,
-      'generators_allowed': true,
-      'fires_allowed': true,
-      'max_days': 2,
-      'pad_type': 'grass'
-    },
-    'review': {
-      'overall_rating': 4,
-      'noise': 5,
-      'safety': 4,
-      'cleanliness': 5,
-      'access': 1,
-      'site_quality': 5,
-    }
-  }
+
+  const classes = useStyles()
+  const { id } = useParams()
+  // const id = props.match.params.id
+
+  const [location, setLocation] = useState({image_urls: []})
+  const [review, setReview] = useState([])
+
+  useEffect(() => {
+    (async function fetchLocation() {
+      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}`)
+      const json = await res.json()
+      setLocation(json.location)
+    })(); // semi-colon is needed for IIFE to work
+
+    (async function fetchReview() {
+      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}/reviews`)
+      const json = await res.json()
+      setReview(json.reviews)
+    })();
+  }, [])
 
   return (
     <Box className={classes.background}>
       <div className={classes.details}>
         <div className={classes.detailsImage}>
           {
-            location.image_urls.map((x, i) => 
-              <Paper elevation={5}>
+            location.image_urls ? (location.image_urls.map((x, i) => 
+              <Paper key={i} elevation={5}>
                 <img src={x[i]} alt={`product-image-${i}`} />
               </Paper>
-            )
+            )) : null
           }
         </div>
         <Paper elevation={5} className={classes.detailsInfo}>
@@ -145,11 +155,11 @@ export const LocationDetail = (props) => {
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
-              <ListItemText primary='Max Days:' secondary={location.necessity.max_days} />
+              <ListItemText primary='Max Days:' secondary={location.max_days} />
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
-              <ListItemText primary='Pad Type:' secondary={location.necessity.pad_type} />
+              <ListItemText primary='Pad Type:' secondary={location.pad_type} />
             </ListItem>
             <Divider variant="inset" component="li" />  
             <ListItem>
@@ -161,32 +171,6 @@ export const LocationDetail = (props) => {
             </ListItem>          
           </List>
         </Paper>
-        <Paper elevation={5} className={classes.review}>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Overall Rating</Typography>
-            <Rating value={location.review.overall_rating} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Noise</Typography>
-            <Rating value={location.review.noise} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Safety</Typography>
-            <Rating value={location.review.safety} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Cleanliness</Typography>
-            <Rating value={location.review.cleanliness} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Access</Typography>
-            <Rating value={location.review.access} readOnly />
-          </Box>
-          <Box component="fieldset" borderColor="transparent">
-            <Typography component="legend">Site Quality</Typography>
-            <Rating value={location.review.site_quality} readOnly />
-          </Box>
-        </Paper>
         <Paper elevation={5} className={classes.checkbox1}>
           <List>
             <ListItem>
@@ -195,13 +179,13 @@ export const LocationDetail = (props) => {
                 disabled
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />}
-                checked={location.amenity.electric_hookup} />
+                checked={location.electric_hookup || false} />
             </ListItem>
             <ListItem>
               <ListItemText primary='Water Hookup:' />
               <Checkbox 
                 disabled 
-                checked={location.amenity.electric_hookup}
+                checked={location.water_hookup || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -209,7 +193,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Septic Hookup:' />
               <Checkbox 
                 disabled 
-                checked={location.amenity.septic_hookup}
+                checked={location.septic_hookup || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -217,7 +201,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Assigned Parking:' />
               <Checkbox 
                 disabled 
-                checked={location.amenity.assigned_parking}
+                checked={location.assigned_parking || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -225,7 +209,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Tow Vehicle Parking:' />
               <Checkbox 
                 disabled 
-                checked={location.amenity.tow_vehicle_parking}
+                checked={location.tow_vehicle_parking || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -233,7 +217,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Trash Removal:' />
               <Checkbox 
                 disabled 
-                checked={location.amenity.trash_removal}
+                checked={location.trash_removal || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>     
@@ -245,7 +229,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Water Front:' />
               <Checkbox
                 disabled
-                checked={location.amenity.water_front}
+                checked={location.water_front || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>  
@@ -253,7 +237,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Pets Allowed:' />
               <Checkbox
                 disabled
-                checked={location.amenity.pets_allowed}
+                checked={location.pets_allowed || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -261,7 +245,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Internet Access:' />
               <Checkbox
                 disabled
-                checked={location.amenity.internet_access}
+                checked={location.internet_access || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -269,7 +253,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='RV Compatible:' />
               <Checkbox
                 disabled
-                checked={location.necessity.rv_compatible}
+                checked={location.rv_compatible || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -277,7 +261,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Generators Allowed:' />
               <Checkbox
                 disabled
-                checked={location.necessity.generators_allowed}
+                checked={location.generators_allowed || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -285,7 +269,7 @@ export const LocationDetail = (props) => {
               <ListItemText primary='Fires Allowed:' />
               <Checkbox
                 disabled
-                checked={location.necessity.fires_allowed}
+                checked={location.fires_allowed || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
@@ -298,6 +282,65 @@ export const LocationDetail = (props) => {
             </ListItem>
           </List>
         </Paper>
+        {
+          review.map((x, i) =>
+            <Box key={i} className={classes.revNComment}>
+              <Paper elevation={5} className={classes.review}>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Overall</Typography>
+                  <Rating size='small' value={x.overall_rating || 0} readOnly />
+                  <Typography component="legend">Noise</Typography>
+                  <Rating size='small' value={x.noise || 0} readOnly />
+                  <Typography component="legend">Safety</Typography>
+                  <Rating size='small' value={x.safety || 0} readOnly />
+                  <Typography component="legend">Cleanliness</Typography>
+                  <Rating size='small' value={x.cleanliness || 0} readOnly />
+                  <Typography component="legend">Access</Typography>
+                  <Rating size='small' value={x.access || 0} readOnly />
+                  <Typography component="legend">Site Quality</Typography>
+                  <Rating size='small' value={x.site_quality || 0} readOnly />
+                </Box>
+                <List className={classes.comment}>
+                  <ListItem>
+                    <ListItemText primary={`${x.user_first_name} ${x.user_last_name}`} secondary={x.comments} />
+                  </ListItem>
+                </List>
+              </Paper>
+              {/* <Paper elevation={5} className={classes.review}>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Overall Rating</Typography>
+                  <Rating value={x.overall_rating || 0} readOnly />
+                </Box>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Noise</Typography>
+                  <Rating value={x.noise || 0} readOnly />
+                </Box>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Safety</Typography>
+                  <Rating value={x.safety || 0} readOnly />
+                </Box>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Cleanliness</Typography>
+                  <Rating value={x.cleanliness || 0} readOnly />
+                </Box>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Access</Typography>
+                  <Rating value={x.access || 0} readOnly />
+                </Box>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Site Quality</Typography>
+                  <Rating value={x.site_quality || 0} readOnly />
+                </Box>
+              </Paper> */}
+              {/* <Paper elevation={5} className={classes.comment}>
+                <List>
+                  <ListItem>
+                    <ListItemText primary={`${x.user_first_name} ${x.user_last_name}`} secondary={x.comments} />
+                  </ListItem>
+                </List>
+              </Paper> */}
+            </Box>)
+        }
       </div>
     </Box>
   )
