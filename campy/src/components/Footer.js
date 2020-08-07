@@ -5,9 +5,9 @@ import { GitHub } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    background: "#49BFC1",
+    background: "#39A5A7",
     bottom: 0,
-    top: "90%",
+    top: "92%",
     color: "#22577A",
   },
   footer: {

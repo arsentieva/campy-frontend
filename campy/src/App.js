@@ -1,44 +1,64 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
 import { NavBar } from "./components/NavBar";
+import { UserNavBar } from "./components/UserNavBar";
 import { Home } from "./components/Home";
-import { Login } from "./components/Login";
-import { SignUp } from "./components/SignUp";
-import { AddLocation } from './components/AddLocation'
-import { LocationList } from './components/LocationList'
-import { LocationDetail } from './components/LocationDetail'
-import { AccountPage } from './components/AccountPage'
-import { Reviews } from './components/Reviews'
-import { AddReview } from './components/AddReview'
-import { EditLocation } from './components/EditLocation'
-import { Messages } from './components/Messages'
-import { MessageDetail } from './components/MessageDetail'
-import {Footer} from './components/Footer'
-
-import { } from './components/Messages'
+import { Login } from "./components/auth/Login";
+import { SignUp } from "./components/auth/SignUp";
+import { AddLocation } from "./components/protectedRoutes/AddLocation";
+import { LocationList } from "./components/LocationList";
+import { LocationDetail } from "./components/LocationDetail";
+import { AccountPage } from "./components/protectedRoutes/AccountPage";
+import { EditAccount } from "./components/protectedRoutes/EditAccount";
+import { Reviews } from "./components/Reviews";
+import { AddReview } from "./components/protectedRoutes/AddReview";
+import { EditLocation } from "./components/protectedRoutes/EditLocation";
+import { Messages } from "./components/protectedRoutes/Messages";
+import { MessageDetail } from "./components/protectedRoutes/MessageDetail";
+import { About } from "./components/About";
+import { Footer } from "./components/Footer";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { AuthContext } from "./context/AuthContext";
 import { CssBaseline } from "@material-ui/core";
 
 function App() {
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+  const [authTokens, setAuthTokens] = useState(existingTokens);
+
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  };
+
   return (
     <Router>
-      <CssBaseline>
-        <NavBar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/sign-up" component={SignUp} />
-          <Route path="/add-location" component={AddLocation} />
-          <Route path="/location-detail/:id" component={LocationDetail} />
-          <Route path="/location-list" component={LocationList} />
-          <Route path="/account" component={AccountPage} />
-          <Route path='/reviews' component={Reviews}/>
-          <Route path='/add-review' component={AddReview}/>
-          <Route path='/edit-location' component={EditLocation}/>
-          <Route path='/messages' component={Messages}/>
-          <Route path='/message-detail' component={MessageDetail}/>
-        </Switch>
-        <Footer />
-      </CssBaseline>
+      <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <CssBaseline>
+          {existingTokens !== null ? (
+            <UserNavBar />
+          ) : (
+            <NavBar />
+          )}
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/sign-up" component={SignUp} />
+            <Route exact path="/about" component={About} />
+            <ProtectedRoute path="/add-location" component={AddLocation} />
+
+            <Route path="/location-detail" component={LocationDetail} />
+            <Route path="/locations" component={LocationList} />
+            <ProtectedRoute path="/account" component={() => AccountPage()} />
+            <ProtectedRoute path="/edit-account" component={EditAccount} />
+            <Route path="/reviews" component={Reviews} />
+            <ProtectedRoute path="/add-review" component={AddReview} />
+            <ProtectedRoute path="/edit-location" component={EditLocation} />
+            <ProtectedRoute path="/messages" compoenent={Messages} />
+            <ProtectedRoute path="/message-detail" component={MessageDetail} />
+          </Switch>
+          <Footer />
+        </CssBaseline>
+      </AuthContext.Provider>
     </Router>
   );
 }
