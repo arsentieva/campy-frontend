@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useState, useRef, useCallback} from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import mapStyle from "./mapStyle";
+import places from "./places";
+
 
 const containerStyle = {
-  width: "100vw",
-  height: "40vh",
+  width: "50vw",
+  height: "100vh",
+
 };
 
 const options = {
@@ -14,8 +17,8 @@ const options = {
 
 const libraries = ["places"]
 
-let lat=0;
-let lng=0;
+let lat=47.599361;
+let lng=-122.332111;
 
 function showCoords(position) {
   lat = position.coords.latitude;
@@ -46,6 +49,16 @@ function getCurrentPosition() {
 getCurrentPosition()
 
 export const GoogleMapComponent = () => {
+
+  const mapRef= useRef();
+  const [zoom, setZoom]= useState(10);
+  const [bounds, setBounds ]= useState(null);
+  const [selected, setSelected ]= useState(null);
+
+  const onMapLoad = useCallback((map)=> {
+    mapRef.current= map;
+  }, []);
+
   const {isLoaded, loadError} = useLoadScript ({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -60,12 +73,34 @@ export const GoogleMapComponent = () => {
 
   return (
     <div>
-
-        <GoogleMap mapContainerStyle={containerStyle} center={{lat, lng}} zoom={10} options= {options}>
-          {/* Child components, such as markers, info windows, etc. */}
+     <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={{lat, lng}}
+      zoom={8}
+      options= {options}
+      onLoad={onMapLoad}
+     >
+          {
+          places.map((place)=>(
+            <Marker key = {place.id}
+            position = { {lat: place.lat, lng: place.lng}}
+            icon = {{
+              // url: `/campy-frontend/campy/src/components/GoogleMaps/tent.png`,
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+            }}
+            onClick = {()=> { setSelected(place)}}
+            />
+          ))}
+          {selected ? (
+          <InfoWindow position= {{ lat:selected.lat, lng:selected.lng}} onCloseClick={()=> setSelected(null)}>
+            <div>
+              <h2> {selected.campgroundName} </h2>
+            </div>
+          </InfoWindow>) : null}
           <></>
         </GoogleMap>
-
     </div>
   );
 }

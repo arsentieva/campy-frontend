@@ -21,7 +21,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "use-places-autocomplete": "^1.3.10",
-    "use-position": "0.0.7"
+    "use-position": "0.0.7",
+    "use-supercluster": "^0.2.8"
   },
   "scripts": {
     "start": "react-scripts start",
