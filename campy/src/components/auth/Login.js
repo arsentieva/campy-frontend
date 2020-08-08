@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { ErrorNotice } from "../ErrorNotice";
+import { DemoUser } from "./DemoUser";
 import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -17,13 +18,13 @@ import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: "#38A3A5",
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
 export const Login = () => {
   const classes = useStyles();
-  
+
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [email, setEmail] = useState("");
@@ -53,7 +54,7 @@ export const Login = () => {
   }
 
   return (
-    <div>
+    <>
       <Grid container style={{ minHeight: "100vh" }}>
         <Grid item xs={12} sm={6}>
           <img
@@ -117,7 +118,9 @@ export const Login = () => {
                 ),
               }}
             />
-            <div style={{ height: 20 }} />
+            <Grid container item direction='column' justify='center' alignContent='center'>
+              
+              <div style={{ height: 20 }} />
             <Button
               color="primary"
               variant="contained"
@@ -126,6 +129,10 @@ export const Login = () => {
             >
               Login
             </Button>
+            <DemoUser />
+            <div style={{ height: 20 }} />
+
+            </Grid>
             <div style={{ height: 20 }} />
             <Typography>
               Not registered? <a href="/sign-up">Sign Up Here!</a>
@@ -134,6 +141,6 @@ export const Login = () => {
           <div />
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 };

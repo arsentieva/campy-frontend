@@ -5,7 +5,6 @@ import {
   Typography,
   IconButton,
   Avatar,
-  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Edit } from "@material-ui/icons";
@@ -15,9 +14,9 @@ import { MyLocations } from "./MyLocations";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: "20vh",
+    marginTop: "72px",
     padding: "10px",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   picture: {
     width: "200px",
@@ -34,10 +33,12 @@ export const AccountPage = () => {
   if (currentUser) {
     return (
       <Grid container className={classes.root}>
+        <Grid container item>
+
         <Grid
           item
           container
-          spacing={10}
+          spacing={3}
           direction="column"
           justify="center"
           alignContent="center"
@@ -51,9 +52,16 @@ export const AccountPage = () => {
             )}
           </Grid>
           <Grid item>
+            <IconButton component={Link} to="/edit-profile-pic">
+              <Edit />
+              <Typography>Edit Profile Picture</Typography>
+            </IconButton>
+          </Grid>
+          <Grid item>
             <IconButton component={Link} to="/edit-account">
               <Edit />
-              Edit Account
+              <Typography>Edit Account Information</Typography>
+
             </IconButton>
           </Grid>
         </Grid>
@@ -92,11 +100,12 @@ export const AccountPage = () => {
           </Grid>
         </Grid>
         <Grid container justify="center"  xs={4} item>
+        </Grid>
+      </Grid>
           <Grid item>
             <MyLocations />
           </Grid>
         </Grid>
-      </Grid>
     );
   } else {
     Axios.get(`https://campy-backend.herokuapp.com/users/${userId}`, "User").then(

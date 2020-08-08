@@ -3,48 +3,55 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AirportShuttle } from "@material-ui/icons";
 
 import { Grid, Typography, IconButton } from "@material-ui/core";
-import GoogleAutoComplete from "./GoogleMaps/GoogleAutoComplete";
 import sittingOnCamper from "../assets/sittingOnCamper.jpg";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  heroImage: {
     flexGrow: 1,
-    width: "100%",
-    background: `linear-gradient(-90deg, #c7F9CC 55%, rgba(0, 0, 0, 0) 50%), url(${sittingOnCamper}) no-repeat`,
+    backgroundImage: `url(${sittingOnCamper})`,
+    height: "100vh",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
   },
 
-  button: {},
+  overlay: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  hereoMessage: {
+    width: "100%",
+    backgroundColor: "rgba(36, 91, 127, 0.3)",
+    color: "#ffffc7",
+  },
 }));
 
 export const Home = () => {
   const classes = useStyles();
-  const [place, setPlace] = useState("");
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log("clicked");
-  };
+
   return (
-    <Grid className={classes.root} container style={{ minHeight: "100vh" }}>
-      <Grid item xs={8} />
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignContent="center"
+      className={classes.heroImage}
+    >
       <Grid
-        item
+        xs={12}
+        className={classes.overlay}
         container
-        xs={4}
-        alignContent="flex-end"
-        justify="center"
+        item
         direction="column"
+        justify="center"
+        alignContent="center"
       >
-        <Typography variant="h4" style={{ color: "#3EB4B6" }}>
-          Where do you want to go?
-        </Typography>
-        <Grid container>
-          <GoogleAutoComplete />
-          <Typography color="secondary">
-            <IconButton color="secondary" onClick={handleClick}>
-              <AirportShuttle place={place} />
-            </IconButton>
-            Let's Go!
+        <Grid item className={classes.hereoMessage}>
+          <Typography variant="h1" >
+            Where do you want to go?
           </Typography>
+          <Typography variant="h4">Click Explore to plan your next adventure!</Typography>
         </Grid>
       </Grid>
     </Grid>
