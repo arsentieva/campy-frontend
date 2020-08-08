@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, InputLabel, Input, IconButton } from "@material-ui/core";
 import { AddAPhoto, Send } from "@material-ui/icons";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({}))
 
 export const ImageUpload = (props) => {
   const classes = useStyles();
@@ -51,7 +51,7 @@ export const ImageUpload = (props) => {
       <br />
       <InputLabel>
         <AddAPhoto />
-        {text}
+        {props.text}
       </InputLabel>
       <Input type="file" onChange={handleChange} />
       <IconButton onClick={handleUpload}>
@@ -61,7 +61,7 @@ export const ImageUpload = (props) => {
       <br />
       <img
         src={url}
-        alt='image'
+        alt={image.name}
         style={{ width: "200px", height: "200px" }}
       />
     </div>

@@ -17,6 +17,7 @@ import { Messages } from "./components/protectedRoutes/Messages";
 import { MessageDetail } from "./components/protectedRoutes/MessageDetail";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
+import {ProfilePicUpload} from './components/protectedRoutes/ProfilePicUpload'
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AuthContext } from "./context/AuthContext";
 import { CssBaseline } from "@material-ui/core";
@@ -48,7 +49,8 @@ function App() {
 
             <Route path="/location-detail" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
-            <ProtectedRoute path="/account" component={() => AccountPage()} />
+            <ProtectedRoute path="/account" component={AccountPage} />
+            <ProtectedRoute path='/edit-profile-pic' component={ProfilePicUpload} />
             <ProtectedRoute path="/edit-account" component={EditAccount} />
             <Route path="/reviews" component={Reviews} />
             <ProtectedRoute path="/add-review" component={AddReview} />

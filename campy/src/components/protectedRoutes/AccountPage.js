@@ -37,7 +37,7 @@ export const AccountPage = () => {
         <Grid
           item
           container
-          spacing={10}
+          spacing={3}
           direction="column"
           justify="center"
           alignContent="center"
@@ -51,9 +51,16 @@ export const AccountPage = () => {
             )}
           </Grid>
           <Grid item>
+            <IconButton component={Link} to="/edit-profile-pic">
+              <Edit />
+              <Typography>Edit Profile Picture</Typography>
+            </IconButton>
+          </Grid>
+          <Grid item>
             <IconButton component={Link} to="/edit-account">
               <Edit />
-              Edit Account
+              <Typography>Edit Account Information</Typography>
+
             </IconButton>
           </Grid>
         </Grid>

@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Save, AddAPhoto } from "@material-ui/icons";
 import Axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { ErrorNotice } from "../ErrorNotice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,66 +34,48 @@ export const EditAccount = () => {
   const { authTokens } = useAuth();
   const userId = authTokens.user_id;
   const [currentUser, setCurrentUser] = useState(undefined);
-
+  const [success, setSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [domicileType, setDomicileType] = useState();
   const [userInfo, setUserInfo] = useState();
-  const [image_url, setimage_url] = useState();
 
-  const [image, setImage] = useState(null);
-  const [progress, setProgress] = useState(0);
-
-  const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then((image_url) => {
-            setimage_url(image_url);
-            console.log(image_url);
-          });
-      }
-    );
-  };
-  const handleUpdate = async () => {
-    handleUpload()
-    await Axios.put(`http://localhost:5000/users/${userId}`, {
-      firstName,
-      lastName,
-      phoneNumber,
-      domicileType,
-      userInfo,
-      image_url
+  const handleUpdate = () => {
+    Axios.put(`http://localhost:5000/users/${userId}`, {
+      firstName: firstName || currentUser.first_name,
+      lastName: lastName || currentUser.last_name,
+      phoneNumber: phoneNumber || currentUser.phone_number,
+      domicileType: domicileType || currentUser.domicile_type,
+      userInfo: userInfo || currentUser.user_info,
+      imageURL: currentUser.image_url,
     })
-      .then(() => {
-        return <Redirect to="/account" />;
+      .then((result) => {
+        if (result.status === 200) {
+          setSuccess(true);
+        } else {
+          setIsError(true);
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err) && setIsError(err);
+      });
   };
+  if (success) {
+    return <Redirect to="/account" />;
+  }
   if (currentUser) {
     return (
       <Grid container className={classes.root}>
+        <input type="hidden" defaultValue={currentUser.image_url} />
         <Grid item container justify="center" alignContent="center" xs={4}>
+          {isError && (
+            <ErrorNotice
+              message={isError}
+              clearError={() => setIsError(undefined)}
+            />
+          )}
           <Grid item>
             {currentUser.image_url !== null ? (
               <Avatar className={classes.picture} src={currentUser.image_url} />
@@ -120,6 +103,7 @@ export const EditAccount = () => {
             <Grid item>
               <Typography>First Name</Typography>
               <TextField
+                value={firstName}
                 defaultValue={currentUser.first_name || ""}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -127,6 +111,7 @@ export const EditAccount = () => {
             <Grid item>
               <Typography>Last Name</Typography>
               <TextField
+                value={lastName}
                 defaultValue={currentUser.last_name || ""}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -134,6 +119,7 @@ export const EditAccount = () => {
             <Grid item>
               <Typography>Phone Number</Typography>
               <TextField
+                value={phoneNumber}
                 defaultValue={currentUser.phone_number || ""}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
@@ -141,6 +127,7 @@ export const EditAccount = () => {
             <Grid item>
               <Typography>Primary Method of Camping</Typography>
               <TextField
+                value={domicileType}
                 defaultValue={currentUser.domicile_type || ""}
                 onChange={(e) => setDomicileType(e.target.value)}
               />
@@ -148,6 +135,7 @@ export const EditAccount = () => {
             <Grid item xs>
               <Typography>Bio</Typography>
               <TextareaAutosize
+                value={userInfo}
                 rowsMin={8}
                 style={{ width: "100%" }}
                 defaultValue={currentUser.user_info || ""}
@@ -164,13 +152,6 @@ export const EditAccount = () => {
           alignContent="center"
           xs={4}
         >
-          <Grid item>
-            <Typography>
-              <AddAPhoto />
-              Profile Picture
-            </Typography>
-            <Input type="file" onChange={handleChange} />
-          </Grid>
           <Grid item>
             <IconButton onClick={handleUpdate}>
               <Save />

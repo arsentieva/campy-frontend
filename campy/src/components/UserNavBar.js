@@ -86,6 +86,7 @@ export const UserNavBar = () => {
 
   const { authTokens } = useAuth();
   const userFirstName = authTokens.user_first_name;
+  const userImageUrl = authTokens.image_url;
   const [state, setState] = useState({
     right: false,
   });
@@ -105,8 +106,8 @@ export const UserNavBar = () => {
       </a>
       <Divider />
       <List>
-        <ListItem>
-          <Avatar />
+        <ListItem justify='center'>
+          <Avatar src={userImageUrl}/>
           <ListItemText className={classes.listItem}>Hello {`${userFirstName}`}!</ListItemText>
         </ListItem>
         {menuItems.map((listItem, key) => (
