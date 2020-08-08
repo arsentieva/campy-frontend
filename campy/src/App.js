@@ -46,12 +46,12 @@ function App() {
             <Route exact path="/about" component={About} />
             <ProtectedRoute path="/add-location" component={AddLocation} />
 
-            <Route path="/location-detail" component={LocationDetail} />
-            <Route path="/locations" component={LocationList} />
+            <Route path="/location-detail/:id" component={LocationDetail} />
+            <Route exact path="/locations" component={LocationList} />
             <ProtectedRoute path="/account" component={() => AccountPage()} />
             <ProtectedRoute path="/edit-account" component={EditAccount} />
             <Route path="/reviews" component={Reviews} />
-            <ProtectedRoute path="/add-review" component={AddReview} />
+            <ProtectedRoute path="/locations/:id/add-review" component={AddReview} />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
             <ProtectedRoute path="/messages" compoenent={Messages} />
             <ProtectedRoute path="/message-detail" component={MessageDetail} />

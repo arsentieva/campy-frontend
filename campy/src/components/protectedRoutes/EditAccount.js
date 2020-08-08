@@ -76,7 +76,7 @@ export const EditAccount = () => {
   };
   const handleUpdate = async () => {
     handleUpload()
-    await Axios.put(`http://localhost:5000/users/${userId}`, {
+    await Axios.put(`https://campy-backend.herokuapp.com/users/${userId}`, {
       firstName,
       lastName,
       phoneNumber,
@@ -181,7 +181,7 @@ export const EditAccount = () => {
       </Grid>
     );
   } else {
-    Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
+    Axios.get(`https://campy-backend.herokuapp.com/users/${userId}`, "User").then(
       (response) => {
         console.log(response.data);
         setCurrentUser(response.data.user);

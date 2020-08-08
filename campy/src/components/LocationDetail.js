@@ -130,7 +130,7 @@ export const LocationDetail = (props) => {
       const json = await res.json()
       setReview(json.reviews)
     })();
-  }, [])
+  })
 
   return (
     <Box className={classes.background}>
@@ -139,35 +139,35 @@ export const LocationDetail = (props) => {
           {
             location.image_urls ? (location.image_urls.map((x, i) => 
               <Paper key={i} elevation={5}>
-                <img src={x[i]} alt={`product-image-${i}`} />
+                <img src={x[i]} alt={`location-pic-${i}`} />
               </Paper>
-            )) : null
+            )) : 'Pictures Here'
           }
         </div>
         <Paper elevation={5} className={classes.detailsInfo}>
           <List>
             <ListItem>
-              <ListItemText primary='Address:' secondary={location.address} />
-              <ListItemText primary='City:' secondary={location.city} />
-              <ListItemText primary='State:' secondary={location.state} />
-              <ListItemText primary='GPS Coordinates:' secondary={location.gps_coords} />
+              <ListItemText primary='Address:' secondary={location.address || 'Loading...'} />
+              <ListItemText primary='City:' secondary={location.city || 'Loading...'} />
+              <ListItemText primary='State:' secondary={location.state || 'Loading...'} />
+              <ListItemText primary='GPS Coordinates:' secondary={location.gps_coords || 'Loading...'} />
               <ListItemText primary='Website:' secondary={location.website ? location.website : 'None'} />
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
-              <ListItemText primary='Max Days:' secondary={location.max_days} />
+              <ListItemText primary='Max Days:' secondary={location.max_days || 'Loading...'} />
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
-              <ListItemText primary='Pad Type:' secondary={location.pad_type} />
+              <ListItemText primary='Pad Type:' secondary={location.pad_type || 'Loading...'} />
             </ListItem>
             <Divider variant="inset" component="li" />  
             <ListItem>
-              <ListItemText primary='Description:' secondary={location.description} />
+              <ListItemText primary='Description:' secondary={location.description || 'Loading...'} />
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
-              <ListItemText primary='Host Notes:' secondary={location.host_notes} />
+              <ListItemText primary='Host Notes:' secondary={location.host_notes || 'Loading...'} />
             </ListItem>          
           </List>
         </Paper>

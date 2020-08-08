@@ -27,7 +27,7 @@ export const AuthOptions = () => {
   const { setAuthTokens } = useAuth();
 
   const loginDemo = () => {
-    Axios.post("http://localhost:5000/auth/login", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/login", {
       email: "demo@mail.com",
       password: "password",
     })
