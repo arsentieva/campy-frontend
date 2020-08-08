@@ -6,7 +6,7 @@ import places from "./places";
 import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
-
+import "@reach/combobox/styles.css";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth:400,
     height: 48,
     zIndex: 10,
+    border: "2px solid #39A5A7"
   }
 }));
 
@@ -153,29 +154,37 @@ function Search({panTo}){
        radius: 200 * 1000,
      },
    });
+
+   const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleSelect = async (address) => {
+    setValue(address, false);
+    clearSuggestions();
+
+    try {
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      panTo({ lat, lng });
+    } catch (error) {
+      console.log("😱 Error: ", error);
+    }
+  };
+
+
+
    return (
     <div className={classes.search}>
-        <Combobox
-          onSelect={async(address)=> {
-            setValue(address, false);
-            clearSuggestions();
-            try{
-              const results = await getGeocode({address});
-              const { lat, lng } = await getLatLng(results[0]);
-              panTo({ lat, lng });
-            } catch (err) {
-                console.log("error!")
-            }
-          }}
-          >
-          <ComboboxInput
+        <Combobox onSelect={handleSelect}>
+          <ComboboxInput style={{ width: 400, height:48, borderRadius: 3, border: "2px solid #39A5A7"}}
             value={value}
-            onChange={(e)=> setValue(e.target.value)}
+            onChange={handleInput}
             disabled={!ready}
             placeholder="Where to next?"
           />
           <ComboboxPopover>
-            <ComboboxList>
+            <ComboboxList style={{ width: 400 }}>
               {status === "OK" && data.map(({ id, description }) => (
                   <ComboboxOption key={id} value={description} />
                 ))}
@@ -183,6 +192,5 @@ function Search({panTo}){
           </ComboboxPopover>
         </Combobox>
       </div>
-
   );
 }
