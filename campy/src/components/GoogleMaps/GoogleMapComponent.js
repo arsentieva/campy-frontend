@@ -1,12 +1,22 @@
 import React, {useState, useRef, useCallback} from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import { Grid, Typography, IconButton } from "@material-ui/core";
+import { Grid, Typography, IconButton, CardMedia , Paper, Box } from "@material-ui/core";
+import WifiIcon from '@material-ui/icons/Wifi';
+import NightsStayIcon from '@material-ui/icons/NightsStay';
+import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import mapStyle from "./mapStyle";
 import places from "./places";
 import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import campImageOne from "../../assets/coupleByCamper.jpg"
+import campImageTwo from "../../assets/camperInField.jpg"
+import campImageThree from "../../assets/camperUnderStars.jpg"
+import campImageFour from "../../assets/groupAtTable.jpg"
+import campImageFive from "../../assets/personOnRV.jpg"
+import campImageSix from "../../assets/sittingOnCamper.jpg"
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -24,7 +34,32 @@ const useStyles = makeStyles((theme) => ({
     height: 48,
     zIndex: 10,
     border: "2px solid #39A5A7"
-  }
+  },
+  root: {
+    flexGrow: 1,
+    top: theme.spacing(10),
+    margin: theme.spacing(1)
+  },
+  paper: {
+    padding: theme.spacing(2),
+    maxWidth: 550,
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  img: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+  cover: {
+    width: 160,
+    height:160,
+    padding: 0,
+    paddingRight: 2
+  },
 }));
 
 const containerStyle = {
@@ -71,6 +106,8 @@ function getCurrentPosition() {
 
 getCurrentPosition()
 
+const images = [campImageOne, campImageTwo, campImageThree, campImageFour, campImageFive, campImageSix]
+
 export const GoogleMapComponent = () => {
 
   const mapRef= useRef();
@@ -101,7 +138,16 @@ export const GoogleMapComponent = () => {
   return (
     <div>
         <Grid container style={{ minHeight: "100vh" }}>
-        <Grid item xs={4} />
+        <Grid item xs={4}>
+          <div style={{height: "80px"}} />
+          {
+          places.slice(0,5).map((place=>(
+            <div>
+             <ComplexGrid key = {place.id} imagePath={images[place.id-1]} campTitle={place.campgroundName} campState={ place.state} campRating={place.rating} campMaxDays={place.maxDays} />
+            </div>
+            )))
+          }
+        </Grid>
         <Grid item container xs={8} alignContent="flex-end" justify="center" direction="column">
           <Search  panTo={panTo} />
           <Locate  panTo={panTo} />
@@ -172,8 +218,6 @@ function Search({panTo}){
     }
   };
 
-
-
    return (
     <div className={classes.search}>
         <Combobox onSelect={handleSelect}>
@@ -192,5 +236,51 @@ function Search({panTo}){
           </ComboboxPopover>
         </Combobox>
       </div>
+  );
+}
+
+function ComplexGrid({ imagePath, campTitle, campState, campRating, campMaxDays}) {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper} elevation={3}>
+        <Grid container spacing={4}>
+          <Grid item>
+          <CardMedia  className={classes.cover} image={imagePath} title="Live from space album cover" />
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">{campTitle}</Typography>
+                <Typography variant="body2" gutterBottom>{campState}</Typography>
+                <Box component="fieldset" mb={3} borderColor="transparent">
+                  <Typography component="legend">Overall Rating</Typography>
+                  <Rating
+                    name="customized-empty"
+                    defaultValue={campRating}
+                    precision={0.5}
+                    emptyIcon={<StarBorderIcon fontSize="inherit"
+                    size="large"
+                    readOnly />}
+                  />
+               </Box>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Grid item>
+                <IconButton >
+                  <NightsStayIcon style={{fontSize: 40, color: "#39A5A7"}}/>
+                  <Typography variant="subtitle1">Max {campMaxDays} </Typography>
+                </IconButton>
+              </Grid>
+                <IconButton >
+                  <WifiIcon style={{fontSize: 40, color: "#39A5A7"}}/>
+                </IconButton>
+              </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
   );
 }
