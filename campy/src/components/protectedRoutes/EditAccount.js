@@ -41,7 +41,7 @@ export const EditAccount = () => {
   const [userInfo, setUserInfo] = useState();
 
   const handleUpdate = () => {
-    Axios.put(`http://localhost:5000/users/${userId}`, {
+    Axios.put(`https://campy-backend.herokuapp.com/users/${userId}`, {
       firstName: firstName || currentUser.first_name,
       lastName: lastName || currentUser.last_name,
       phoneNumber: phoneNumber || currentUser.phone_number,

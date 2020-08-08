@@ -72,7 +72,7 @@ export const ProfilePicUpload = () => {
   const handleUpdate = () => {
     console.log(url);
     console.log(authTokens.first_name);
-    Axios.put(`http://localhost:5000/users/${userId}`, {
+    Axios.put(`https://campy-backend.herokuapp.com/users/${userId}`, {
       firstName: authTokens.first_name || currentUser.first_name,
       lastName: authTokens.last_name || currentUser.last_name,
       phoneNumber: authTokens.phone_number || currentUser.phone_number,
@@ -152,7 +152,7 @@ export const ProfilePicUpload = () => {
       </Grid>
     );
   } else {
-    Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
+    Axios.get(`https://campy-backend.herokuapp.com/users/${userId}`, "User").then(
       (response) => {
         console.log(response.data);
         setCurrentUser(response.data.user);
