@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    background: `linear-gradient(-90deg, #c7F9CC 55%, rgba(0, 0, 0, 0) 50%), url(${sittingOnCamper}) no-repeat`,
+    background: `linear-gradient(-90deg, #FFFFC7 55%, rgba(0, 0, 0, 0) 50%), url(${sittingOnCamper}) no-repeat`,
   },
 
   button: {},
@@ -34,13 +34,13 @@ export const Home = () => {
         justify="center"
         direction="column"
       >
-        <Typography variant="h4" style={{ color: "#3EB4B6" }}>
+        <Typography variant="h4" style={{ color: "#0C2131" }}>
           Where do you want to go?
         </Typography>
         <Grid container>
           <GoogleAutoComplete />
-          <Typography color="secondary">
-            <IconButton color="secondary" onClick={handleClick}>
+          <Typography color="primary">
+            <IconButton color="primary" onClick={handleClick}>
               <AirportShuttle place={place} />
             </IconButton>
             Let's Go!

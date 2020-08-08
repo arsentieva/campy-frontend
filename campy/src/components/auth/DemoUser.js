@@ -9,9 +9,9 @@ import {
 import { PermIdentity } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-  formContainer: {
-    backgroundColor: "#38A3A5",
-  },
+  button: {
+   
+ }
 }));
 
 export const DemoUser = () => {
@@ -44,7 +44,7 @@ export const DemoUser = () => {
   return (
     <div>
       <div style={{ height: 20 }} />
-      <Button
+      <Button className={classes.button}
         color="primary"
         variant="contained"
         width="100%"

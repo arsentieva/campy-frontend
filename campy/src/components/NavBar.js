@@ -23,7 +23,7 @@ import logo from "../assets/campySimpleLogo.png";
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: "#80ED99",
+    background: theme.palette.secondary.main,
     height: "100%",
   },
   logo: {
@@ -103,7 +103,7 @@ export const NavBar = () => {
         <AppBar
           className={classes.appBar}
           position="fixed"
-          style={{ background: "#80ED99" }}
+          style={{ background: "#245B7F", color: "#FFFFC7" }}
         >
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <a href="/">
@@ -113,11 +113,11 @@ export const NavBar = () => {
             <IconButton onClick={toggleSlider("right", true)}>
               <Typography
                 variant="h5"
-                style={{ color: "#22577A", textAlign: "end" }}
+                style={{ color: "#FFFFC7", textAlign: "end" }}
               >
                 MENU
               </Typography>
-              <MenuIcon style={{ color: "#22577A" }} />
+              <MenuIcon style={{ color: "#FFFFC7" }} />
             </IconButton>
 
             <MobilerightMenuSlider

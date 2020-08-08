@@ -96,7 +96,7 @@ export default function GoogleAutoComplete() {
   return (
     <Autocomplete
       id="google-map-demo"
-      style={{ width: 300, backgroundColor: "#c7F9CC" }}
+      style={{ width: 300, backgroundColor: "#ebeef2" }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
       }

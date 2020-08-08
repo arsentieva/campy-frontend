@@ -5,7 +5,6 @@ import {
   Typography,
   IconButton,
   Avatar,
-  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Edit } from "@material-ui/icons";
@@ -15,9 +14,9 @@ import { MyLocations } from "./MyLocations";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: "20vh",
+    marginTop: "72px",
     padding: "10px",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   picture: {
     width: "200px",
@@ -34,6 +33,8 @@ export const AccountPage = () => {
   if (currentUser) {
     return (
       <Grid container className={classes.root}>
+        <Grid container item>
+
         <Grid
           item
           container
@@ -99,11 +100,12 @@ export const AccountPage = () => {
           </Grid>
         </Grid>
         <Grid container justify="center"  xs={4} item>
+        </Grid>
+      </Grid>
           <Grid item>
             <MyLocations />
           </Grid>
         </Grid>
-      </Grid>
     );
   } else {
     Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
