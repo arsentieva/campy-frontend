@@ -12,15 +12,18 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "absolute",
     top: theme.spacing(13),
-    left: theme.spacing(5),
-    color: theme.palette.text.secondary,
-    border: 1,
-    borderRadius: 3,
     maxWidth:400,
-    width:"100",
     height: 48,
-    zIndex: 10
+    zIndex: 10,
   },
+  locate: {
+    position: "absolute",
+    top: theme.spacing(13),
+    right: theme.spacing(10),
+    maxWidth:400,
+    height: 48,
+    zIndex: 10,
+  }
 }));
 
 const containerStyle = {
@@ -70,12 +73,10 @@ getCurrentPosition()
 export const GoogleMapComponent = () => {
 
   const mapRef= useRef();
-  const [zoom, setZoom]= useState(10);
-  const [bounds, setBounds ]= useState(null);
   const [selected, setSelected ]= useState(null);
   const panTo = useCallback(({lat, lng})=> {
     mapRef.current.panTo({lat, lng})
-    mapRef.current.setZoom(11);
+    mapRef.current.setZoom(10);
   }, [])
 
   const onMapLoad = useCallback((map)=> {
@@ -95,12 +96,14 @@ export const GoogleMapComponent = () => {
   }
 
   let imageUrl= "http://maps.google.com/mapfiles/kml/shapes/campground.png";
+
   return (
     <div>
         <Grid container style={{ minHeight: "100vh" }}>
         <Grid item xs={4} />
         <Grid item container xs={8} alignContent="flex-end" justify="center" direction="column">
           <Search  panTo={panTo} />
+          <Locate  panTo={panTo} />
           <GoogleMap mapContainerStyle={containerStyle} center={{lat, lng}} zoom={8}
               options= {options} onLoad={onMapLoad} >
               { places.map((place)=>(
@@ -124,6 +127,21 @@ export const GoogleMapComponent = () => {
              </Grid>
         </Grid>
     </div>
+  );
+}
+
+function Locate({ panTo }) {
+  const classes = useStyles();
+  let compassUrl= "http://maps.google.com/mapfiles/kml/pal3/icon28.png";
+  return (
+    <button
+    className={classes.locate}
+      onClick={() => {
+        panTo({lat, lng });
+      }}
+    >
+      <img src={compassUrl} alt="compass" />
+    </button>
   );
 }
 
