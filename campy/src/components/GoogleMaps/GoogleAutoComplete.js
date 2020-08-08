@@ -108,19 +108,16 @@ export default function GoogleAutoComplete() {
       value={value}
       onChange={(event, newValue) => {
         setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-      }}
+        setValue(newValue);      }}
       onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
+        setInputValue(newInputValue);      }}
       renderInput={(params) => (
         <TextField
           {...params}
           label="Add a location"
           variant="outlined"
           fullWidth
-        />
-      )}
+        />      )}
       renderOption={(option) => {
         const matches =
           option.structured_formatting.main_text_matched_substrings;
