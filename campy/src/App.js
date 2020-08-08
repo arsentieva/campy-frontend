@@ -8,7 +8,7 @@ import { SignUp } from "./components/auth/SignUp";
 import { AddLocation } from "./components/protectedRoutes/AddLocation";
 import { LocationList } from "./components/LocationList";
 import { LocationDetail } from "./components/LocationDetail";
-import  CalendarApp  from "./components/protectedRoutes/Calendar";
+import CalendarApp from "./components/Calendar";
 import { AccountPage } from "./components/protectedRoutes/AccountPage";
 import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";

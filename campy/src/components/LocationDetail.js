@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import CalendarMaterialUIPickers from './Calendar';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List'
@@ -111,6 +112,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const LocationDetail = (props) => {
 
+
+  const hostedURL = 'https://campy-backend.herokuapp.com'
+  const localhost = 'http://localhost:5000'
+
   const classes = useStyles()
   const { id } = useParams()
   // const id = props.match.params.id
@@ -118,26 +123,27 @@ export const LocationDetail = (props) => {
   const [location, setLocation] = useState({image_urls: []})
   const [review, setReview] = useState([])
 
+
   useEffect(() => {
     (async function fetchLocation() {
-      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}`)
+      const res = await fetch(`${localhost}/locations/${id}`)
       const json = await res.json()
       setLocation(json.location)
     })(); // semi-colon is needed for IIFE to work
 
     (async function fetchReview() {
-      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}/reviews`)
+      const res = await fetch(`${localhost}/locations/${id}/reviews`)
       const json = await res.json()
       setReview(json.reviews)
     })();
-  })
+  }, [])
 
   return (
     <Box className={classes.background}>
       <div className={classes.details}>
         <div className={classes.detailsImage}>
           {
-            location.image_urls ? (location.image_urls.map((x, i) => 
+            location.image_urls ? (location.image_urls.map((x, i) =>
               <Paper key={i} elevation={5}>
                 <img src={x[i]} alt={`location-pic-${i}`} />
               </Paper>
@@ -161,14 +167,14 @@ export const LocationDetail = (props) => {
             <ListItem>
               <ListItemText primary='Pad Type:' secondary={location.pad_type || 'Loading...'} />
             </ListItem>
-            <Divider variant="inset" component="li" />  
+            <Divider variant="inset" component="li" />
             <ListItem>
               <ListItemText primary='Description:' secondary={location.description || 'Loading...'} />
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem>
               <ListItemText primary='Host Notes:' secondary={location.host_notes || 'Loading...'} />
-            </ListItem>          
+            </ListItem>
           </List>
         </Paper>
         <Paper elevation={5} className={classes.checkbox1}>
@@ -183,44 +189,44 @@ export const LocationDetail = (props) => {
             </ListItem>
             <ListItem>
               <ListItemText primary='Water Hookup:' />
-              <Checkbox 
-                disabled 
+              <Checkbox
+                disabled
                 checked={location.water_hookup || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
             <ListItem>
               <ListItemText primary='Septic Hookup:' />
-              <Checkbox 
-                disabled 
+              <Checkbox
+                disabled
                 checked={location.septic_hookup || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
             <ListItem>
               <ListItemText primary='Assigned Parking:' />
-              <Checkbox 
-                disabled 
+              <Checkbox
+                disabled
                 checked={location.assigned_parking || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
             <ListItem>
               <ListItemText primary='Tow Vehicle Parking:' />
-              <Checkbox 
-                disabled 
+              <Checkbox
+                disabled
                 checked={location.tow_vehicle_parking || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
             </ListItem>
             <ListItem>
               <ListItemText primary='Trash Removal:' />
-              <Checkbox 
-                disabled 
+              <Checkbox
+                disabled
                 checked={location.trash_removal || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
-            </ListItem>     
+            </ListItem>
           </List>
         </Paper>
         <Paper elevation={5} className={classes.checkbox2}>
@@ -232,7 +238,7 @@ export const LocationDetail = (props) => {
                 checked={location.water_front || false}
                 icon={<CircleUnchecked />}
                 checkedIcon={<CircleChecked />} />
-            </ListItem>  
+            </ListItem>
             <ListItem>
               <ListItemText primary='Pets Allowed:' />
               <Checkbox
@@ -278,7 +284,7 @@ export const LocationDetail = (props) => {
         <Paper elevation={5} className={classes.calendar}>
           <List>
             <ListItem>
-              <ListItemText primary='Put Calendar Here' />
+              <CalendarMaterialUIPickers />
             </ListItem>
           </List>
         </Paper>
