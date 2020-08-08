@@ -41,7 +41,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route exact path="/about" component={About} />
-            <Route path="/location-detail" component={LocationDetail} />
+            <Route path="/location-detail/:id" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
             <Route path="/reviews" component={Reviews} />
             <ProtectedRoute path="/add-location" component={AddLocation} />
@@ -53,7 +53,7 @@ function App() {
             <ProtectedRoute path="/my-messages" component={MyMessages} />
 
             <ProtectedRoute path="/edit-account" component={EditAccount} />
-            <ProtectedRoute path="/add-review" component={AddReview} />
+            <ProtectedRoute path="/locations/:id/add-review" component={AddReview} />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
            
           </Switch>
