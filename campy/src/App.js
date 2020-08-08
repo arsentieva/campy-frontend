@@ -8,6 +8,7 @@ import { SignUp } from "./components/auth/SignUp";
 import { AddLocation } from "./components/protectedRoutes/AddLocation";
 import { LocationList } from "./components/LocationList";
 import { LocationDetail } from "./components/LocationDetail";
+import  CalendarApp  from "./components/protectedRoutes/Calendar";
 import { AccountPage } from "./components/protectedRoutes/AccountPage";
 import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
@@ -17,7 +18,7 @@ import { Messages } from "./components/protectedRoutes/Messages";
 import { MessageDetail } from "./components/protectedRoutes/MessageDetail";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
-import {ProfilePicUpload} from './components/protectedRoutes/ProfilePicUpload'
+import { ProfilePicUpload } from './components/protectedRoutes/ProfilePicUpload'
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AuthContext } from "./context/AuthContext";
 import { CssBaseline } from "@material-ui/core";
@@ -38,8 +39,8 @@ function App() {
           {existingTokens !== null ? (
             <UserNavBar />
           ) : (
-            <NavBar />
-          )}
+              <NavBar />
+            )}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
@@ -49,6 +50,7 @@ function App() {
 
             <Route path="/location-detail" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
+            <ProtectedRoute exact path="/locations/:location_id/calendar" component={CalendarApp} />
             <ProtectedRoute path="/account" component={AccountPage} />
             <ProtectedRoute path='/edit-profile-pic' component={ProfilePicUpload} />
             <ProtectedRoute path="/edit-account" component={EditAccount} />

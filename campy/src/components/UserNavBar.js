@@ -26,7 +26,7 @@ import {
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/campySimpleLogo.png";
-import {useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 
 //CSS Styles
 const useStyles = makeStyles((theme) => ({
@@ -107,7 +107,7 @@ export const UserNavBar = () => {
       <Divider />
       <List>
         <ListItem justify='center'>
-          <Avatar src={userImageUrl}/>
+          <Avatar src={userImageUrl} />
           <ListItemText className={classes.listItem}>Hello {`${userFirstName}`}!</ListItemText>
         </ListItem>
         {menuItems.map((listItem, key) => (
