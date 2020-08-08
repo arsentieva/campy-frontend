@@ -50,15 +50,17 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     padding: 0,
     textAlign: "center",
+    fontSize: "1.2rem",
   },
   heading: {
     textAlign: "center",
+    fontSize: "1.3rem",
   },
   textStack: {
     justifyContent: "center",
     alignContent: "center",
   },
-  card: { maxWidth: 345 },
+  card: { maxWidth: 345, margin: 0, padding: 0 },
   media: { height: 140 },
   teamColumn: {
     margin: 0,
@@ -117,14 +119,11 @@ export const About = () => {
   return (
     <Grid className={classes.root} container spacing={3}>
       <Grid item container>
-        <Grid item xs={12}>
-          <Typography className={classes.heading} variant="h3">
-            All About
-            <img className={classes.logo} src={logo} alt="campy logo" />
-          </Typography>
+        <Grid item container justify="center" alignItems="center" xs={12}>
+          <img className={classes.logo} src={logo} alt="campy logo" />
         </Grid>
         <Grid container item justify="space-around" alignContent="center">
-          <Grid container justify='center' alignContent='center' item xs={4}>
+          <Grid container justify="center" alignContent="center" item xs={4}>
             <Typography variant="subtitle2" className={classes.heading}>
               What is Campy?
             </Typography>
@@ -140,7 +139,7 @@ export const About = () => {
               homeowners or campgrounds.
             </Typography>
           </Grid>
-          <Grid container  alignContent='center' direction='column' item xs={4}>
+          <Grid container alignContent="center" direction="column" item xs={4}>
             <Typography className={classes.heading} variant="subtitle2">
               Inspiration
             </Typography>
@@ -161,15 +160,13 @@ export const About = () => {
           item
           container
           direction="column"
+          alignContent="center"
           spacing={3}
           xs={6}
         >
           <Typography variant="h6">Tech Stack Used</Typography>
           <Grid item>
             <Typography variant="subtitle2">Back End</Typography>
-            <Typography variant="body2">
-              Python with Flask-RextX, SQLAlchemy, PostreSQL, JWT Authentication
-            </Typography>
 
             <Grid item>
               <List style={{ display: "inline-flex" }}>
@@ -189,10 +186,7 @@ export const About = () => {
           </Grid>
           <Grid item>
             <Typography variant="subtitle2">Front End</Typography>
-            <Typography variant="body2">
-              React.JS, Material-UI, and Google Firebase for image handling,
-              Google Maps API for map information, Axios for HTTP requests.
-            </Typography>
+
             <Grid item>
               <List style={{ display: "inline-flex" }}>
                 {techStackFront.map((listitem, key) => (
@@ -237,7 +231,7 @@ export const About = () => {
             <a href="https://icons8.com"> Icons8</a>.
           </Typography>
         </Grid>
-        <Grid item container xs={6}>
+        <Grid item container xs={6} justify="center">
           <Typography variant="h6"> Meet the Team</Typography>
           <Grid container xs={12} item>
             <Grid
@@ -250,13 +244,13 @@ export const About = () => {
               direction="column"
               spacing={3}
             >
-              <Grid item container>
+              <Grid item container justify="center">
                 <Card className={classes.card}>
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
                       image={aaron}
-                      style={{ height: 0, paddingTop: '56.25%' }}
+                      style={{ height: 0, paddingTop: "56.25%" }}
                       title="Contemplative Reptile"
                     />
                     <CardContent>
@@ -287,12 +281,12 @@ export const About = () => {
                   </CardActions>
                 </Card>
               </Grid>
-              <Grid item container>
+              <Grid item container justify="center">
                 <Card className={classes.card}>
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: '56.25%' }}
+                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={anna}
                       title="Contemplative Reptile"
                     />
@@ -333,12 +327,12 @@ export const About = () => {
               direction="column"
               spacing={3}
             >
-              <Grid item container>
+              <Grid item container justify="center">
                 <Card className={classes.card}>
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: '56.25%' }}
+                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={arom}
                       title="Contemplative Reptile"
                     />
@@ -370,12 +364,12 @@ export const About = () => {
                   </CardActions>
                 </Card>
               </Grid>
-              <Grid item container>
+              <Grid item container justify="center">
                 <Card className={classes.card}>
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: '56.25%' }}
+                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={kristen}
                       title="Contemplative Reptile"
                     />

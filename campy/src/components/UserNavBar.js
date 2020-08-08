@@ -149,16 +149,26 @@ export const UserNavBar = () => {
             <a href="/">
               <img className={classes.logo} src={logo} alt="campy logo" />
             </a>
-
-            <IconButton onClick={toggleSlider("right", true)}>
-              <Typography
-                variant="h5"
-                style={{ color: "#FFFFC7", textAlign: "end" }}
-              >
-                MENU
-              </Typography>
-              <MenuIcon style={{ color: "#FFFFC7" }} />
-            </IconButton>
+            <div>
+              <IconButton component="a" href="/locations">
+                <Explore style={{ color: "#FFFFC7" }} />
+                <Typography
+                  variant="h5"
+                  style={{ color: "#ffffC7", textAlign: "end" }}
+                >
+                  Explore
+                </Typography>
+              </IconButton>
+              <IconButton onClick={toggleSlider("right", true)}>
+                <Typography
+                  variant="h5"
+                  style={{ color: "#FFFFC7", textAlign: "end" }}
+                >
+                  MENU
+                </Typography>
+                <MenuIcon style={{ color: "#FFFFC7" }} />
+              </IconButton>
+            </div>
 
             <MobilerightMenuSlider
               anchor="right"

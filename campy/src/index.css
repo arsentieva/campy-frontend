@@ -2,10 +2,10 @@
   background: linear-gradient(-70deg, #39A5A7 60%, #c7F9CC 30%) no-repeat;
 } */
 html {
-  background-color: #FFFFC7;
+  background-color: #ffffc7;
 }
 
 a {
   text-decoration: none;
-  color: '#22577A'
+  color: "#22577A";
 }

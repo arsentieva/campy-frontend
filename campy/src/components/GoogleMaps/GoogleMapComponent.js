@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     top: theme.spacing(10),
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),
@@ -137,42 +137,67 @@ export const GoogleMapComponent = () => {
 
   return (
     <div>
-        <Grid container style={{ minHeight: "100vh" }}>
+      <Grid container style={{ minHeight: "100vh" }}>
         <Grid item xs={4}>
-          <div style={{height: "80px"}} />
-          {
-          places.slice(0,5).map((place=>(
-            <div>
-             <ComplexGrid key = {place.id} imagePath={images[place.id-1]} campTitle={place.campgroundName} campState={ place.state} campRating={place.rating} campMaxDays={place.maxDays} />
+          <div style={{ height: "80px" }} />
+          {places.slice(0, 5).map((place) => (
+            <div key={place.id}>
+              <ComplexGrid
+                imagePath={images[place.id - 1]}
+                campTitle={place.campgroundName}
+                campState={place.state}
+                campRating={place.rating}
+                campMaxDays={place.maxDays}
+              />
             </div>
-            )))
-          }
+          ))}
         </Grid>
-        <Grid item container xs={8} alignContent="flex-end" justify="center" direction="column">
-          <Search  panTo={panTo} />
-          <Locate  panTo={panTo} />
-          <GoogleMap mapContainerStyle={containerStyle} center={{lat, lng}} zoom={8}
-              options= {options} onLoad={onMapLoad} >
-              { places.map((place)=>(
-                  <Marker key = {place.id}
-                    position = { {lat: place.lat, lng: place.lng}}
-                    icon = {{
-                      url: imageUrl,
-                      scaledSize: new window.google.maps.Size(30, 30),
-                      origin: new window.google.maps.Point(0, 0),
-                      anchor: new window.google.maps.Point(15, 15), }}
-                    onClick = {()=> { setSelected(place)}} />
-                  ))}
-                  {selected ? (
-                  <InfoWindow position= {{ lat:selected.lat, lng:selected.lng}} onCloseClick={()=> setSelected(null)}>
-                    <div>
-                      <h2> {selected.campgroundName} </h2>
-                    </div>
-                  </InfoWindow>) : null}
-                  <></>
-                </GoogleMap>
-             </Grid>
+        <Grid
+          item
+          container
+          xs={8}
+          alignContent="flex-end"
+          justify="center"
+          direction="column"
+        >
+          <Search panTo={panTo} />
+          <Locate panTo={panTo} />
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={{ lat, lng }}
+            zoom={8}
+            options={options}
+            onLoad={onMapLoad}
+          >
+            {places.map((place) => (
+              <Marker
+                key={place.id}
+                position={{ lat: place.lat, lng: place.lng }}
+                icon={{
+                  url: imageUrl,
+                  scaledSize: new window.google.maps.Size(30, 30),
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                }}
+                onClick={() => {
+                  setSelected(place);
+                }}
+              />
+            ))}
+            {selected ? (
+              <InfoWindow
+                position={{ lat: selected.lat, lng: selected.lng }}
+                onCloseClick={() => setSelected(null)}
+              >
+                <div>
+                  <h2> {selected.campgroundName} </h2>
+                </div>
+              </InfoWindow>
+            ) : null}
+            <></>
+          </GoogleMap>
         </Grid>
+      </Grid>
     </div>
   );
 }
