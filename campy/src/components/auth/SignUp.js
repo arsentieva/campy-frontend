@@ -10,7 +10,7 @@ import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: "#38A3A5",
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 

@@ -17,7 +17,7 @@ export const Logout = () => {
   const { setAuthTokens } = useAuth();
   const logOut = () => {
     setAuthTokens(null);
-    history.push("/");
+    history.push("/login");
   };
   return (
     <div>
