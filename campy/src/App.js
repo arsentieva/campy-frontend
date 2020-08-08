@@ -50,6 +50,7 @@ function App() {
 
             <Route path="/location-detail" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
+            <Route path="/locations/:location_id" component={Location}
             <ProtectedRoute exact path="/locations/:location_id/calendar" component={CalendarApp} />
             <ProtectedRoute path="/account" component={AccountPage} />
             <ProtectedRoute path='/edit-profile-pic' component={ProfilePicUpload} />
