@@ -14,7 +14,7 @@ export default [
         "rating": 4.5,
         "maxDays":3,
         "state": "Washington",
-        "campgroundName": "Okanogan-Wenatchee National Forest",
+        "campgroundName": "Okanogan-Wenatchee Forest",
         "lat": 48.0937,
         "lng": -120.313
     },
