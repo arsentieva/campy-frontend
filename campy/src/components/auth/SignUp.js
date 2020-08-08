@@ -10,7 +10,7 @@ import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: "#38A3A5",
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
@@ -26,7 +26,7 @@ export const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const { setAuthTokens } = useAuth("");
   const login = () => {
-    Axios.post("http://localhost:5000/auth/login", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/login", {
       email,
       password,
     })
@@ -43,7 +43,7 @@ export const SignUp = () => {
       });
   };
   const postRegister = () => {
-    Axios.post("http://localhost:5000/auth/signup", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/signup", {
       firstName,
       lastName,
       email,

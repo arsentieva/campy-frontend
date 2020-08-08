@@ -14,11 +14,11 @@ import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
 import { AddReview } from "./components/protectedRoutes/AddReview";
 import { EditLocation } from "./components/protectedRoutes/EditLocation";
-import { Messages } from "./components/protectedRoutes/Messages";
+import { MyMessages } from "./components/protectedRoutes/MyMessages";
 import { MessageDetail } from "./components/protectedRoutes/MessageDetail";
 import { About } from "./components/About";
 import { Footer } from "./components/Footer";
-import { ProfilePicUpload } from './components/protectedRoutes/ProfilePicUpload'
+import { ProfilePicUpload } from "./components/protectedRoutes/ProfilePicUpload";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AuthContext } from "./context/AuthContext";
 import { CssBaseline } from "@material-ui/core";
@@ -36,30 +36,27 @@ function App() {
     <Router>
       <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
         <CssBaseline>
-          {existingTokens !== null ? (
-            <UserNavBar />
-          ) : (
-              <NavBar />
-            )}
+          {existingTokens !== null ? <UserNavBar /> : <NavBar />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route exact path="/about" component={About} />
-            <ProtectedRoute path="/add-location" component={AddLocation} />
-
-            <Route path="/location-detail" component={LocationDetail} />
+            <Route path="/location-detail/:id" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
-            <Route path="/locations/:location_id" component={Location}
-            <ProtectedRoute exact path="/locations/:location_id/calendar" component={CalendarApp} />
-            <ProtectedRoute path="/account" component={AccountPage} />
-            <ProtectedRoute path='/edit-profile-pic' component={ProfilePicUpload} />
-            <ProtectedRoute path="/edit-account" component={EditAccount} />
             <Route path="/reviews" component={Reviews} />
-            <ProtectedRoute path="/add-review" component={AddReview} />
+            <ProtectedRoute path="/add-location" component={AddLocation} />
+            <ProtectedRoute path="/account" component={AccountPage} />
+            <ProtectedRoute
+              path="/edit-profile-pic"
+              component={ProfilePicUpload}
+            />
+            <ProtectedRoute path="/my-messages" component={MyMessages} />
+
+            <ProtectedRoute path="/edit-account" component={EditAccount} />
+            <ProtectedRoute path="/locations/:id/add-review" component={AddReview} />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
-            <ProtectedRoute path="/messages" compoenent={Messages} />
-            <ProtectedRoute path="/message-detail" component={MessageDetail} />
+
           </Switch>
           <Footer />
         </CssBaseline>

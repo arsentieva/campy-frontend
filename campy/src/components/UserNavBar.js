@@ -22,17 +22,20 @@ import {
   Explore,
   AccountBox,
   AddLocation,
+  CalendarToday,
   Email,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import logo from "../assets/campySimpleLogo.png";
-import { useAuth } from '../context/AuthContext'
+import logo from "../assets/lightLogo2.png";
+import logo2 from "../assets/darkLogo.png";
+
+import { useAuth } from "../context/AuthContext";
 
 //CSS Styles
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: "#80ED99",
+    background: "#FFFFC7",
     height: "100%",
   },
   logo: {
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "80px",
   },
   listItem: {
-    color: "#22577A",
+    color: "#2D709F",
   },
 }));
 
@@ -65,10 +68,16 @@ const menuItems = [
     listPath: "/add-location",
   },
   {
-    listIcon: <Email />,
-    listText: "Messages",
-    listPath: "/messages",
+    listIcon: <CalendarToday />,
+    listText: "My Adventures",
+    listPath: "/schedule",
   },
+  {
+    listIcon: <Email />,
+    listText: "My Messages",
+    listPath: "/my-messages",
+  },
+
   {
     listIcon: <Explore />,
     listText: "Explore",
@@ -83,7 +92,6 @@ const menuItems = [
 ];
 
 export const UserNavBar = () => {
-
   const { authTokens } = useAuth();
   const userFirstName = authTokens.user_first_name;
   const userImageUrl = authTokens.image_url;
@@ -102,13 +110,15 @@ export const UserNavBar = () => {
       onClick={toggleSlider(slider, false)}
     >
       <a href="/">
-        <img className={classes.logo} src={logo} alt="campy logo" />
+        <img className={classes.logo} src={logo2} alt="campy logo" />
       </a>
       <Divider />
       <List>
-        <ListItem justify='center'>
+        <ListItem justify="center">
           <Avatar src={userImageUrl} />
-          <ListItemText className={classes.listItem}>Hello {`${userFirstName}`}!</ListItemText>
+          <ListItemText className={classes.listItem}>
+            Hello {`${userFirstName}`}!
+          </ListItemText>
         </ListItem>
         {menuItems.map((listItem, key) => (
           <ListItem button key={key} component={Link} to={listItem.listPath}>
@@ -133,22 +143,32 @@ export const UserNavBar = () => {
         <AppBar
           className={classes.appBar}
           position="fixed"
-          style={{ background: "#80ED99" }}
+          style={{ background: "#245B7F", color: "#FFFFC7" }}
         >
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <a href="/">
               <img className={classes.logo} src={logo} alt="campy logo" />
             </a>
-
-            <IconButton onClick={toggleSlider("right", true)}>
-              <Typography
-                variant="h5"
-                style={{ color: "#22577A", textAlign: "end" }}
-              >
-                MENU
-              </Typography>
-              <MenuIcon style={{ color: "#22577A" }} />
-            </IconButton>
+            <div>
+              <IconButton component="a" href="/locations">
+                <Explore style={{ color: "#FFFFC7" }} />
+                <Typography
+                  variant="h5"
+                  style={{ color: "#ffffC7", textAlign: "end" }}
+                >
+                  Explore
+                </Typography>
+              </IconButton>
+              <IconButton onClick={toggleSlider("right", true)}>
+                <Typography
+                  variant="h5"
+                  style={{ color: "#FFFFC7", textAlign: "end" }}
+                >
+                  MENU
+                </Typography>
+                <MenuIcon style={{ color: "#FFFFC7" }} />
+              </IconButton>
+            </div>
 
             <MobilerightMenuSlider
               anchor="right"

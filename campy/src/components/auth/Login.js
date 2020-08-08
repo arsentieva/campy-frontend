@@ -18,7 +18,7 @@ import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: "#38A3A5",
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
@@ -32,7 +32,7 @@ export const Login = () => {
   const { setAuthTokens } = useAuth();
 
   const postLogin = () => {
-    Axios.post("http://localhost:5000/auth/login", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/login", {
       email,
       password,
     })

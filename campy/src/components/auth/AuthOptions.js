@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { ListItemText, List, ListItem, ListItemIcon } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Person, PersonAdd, PermIdentity } from "@material-ui/icons";
+import { Person, PersonAdd,  } from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({

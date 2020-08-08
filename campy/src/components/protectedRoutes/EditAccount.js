@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { storage } from "../../Firebase/firebaseConfig";
 
 import {
   Grid,
-  Input,
   Typography,
   IconButton,
   Avatar,
@@ -12,7 +10,7 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Save, AddAPhoto } from "@material-ui/icons";
+import { Save, } from "@material-ui/icons";
 import Axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { ErrorNotice } from "../ErrorNotice";
@@ -162,7 +160,7 @@ export const EditAccount = () => {
       </Grid>
     );
   } else {
-    Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
+    Axios.get(`https://campy-backend.herokuapp.com/users/${userId}`, "User").then(
       (response) => {
         console.log(response.data);
         setCurrentUser(response.data.user);

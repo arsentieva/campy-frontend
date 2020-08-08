@@ -70,7 +70,9 @@ export const Location = () => {
   };
   if (currentLocation){
     return (
-      
+      <Grid container className={classes.root}>
+        
+      </Grid>
     )
   }
 

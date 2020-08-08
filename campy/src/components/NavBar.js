@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {AuthOptions} from './auth/AuthOptions'
+import { AuthOptions } from "./auth/AuthOptions";
 import MobilerightMenuSlider from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
@@ -15,15 +15,16 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
-import {  Home, Info, Explore } from "@material-ui/icons";
+import { Home, Info, Explore } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import logo from "../assets/campySimpleLogo.png";
+import logo from "../assets/lightLogo2.png";
+import logo2 from "../assets/darkLogo.png";
 
 //CSS Styles
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: "#80ED99",
+    background: theme.palette.secondary.main,
     height: "100%",
   },
   logo: {
@@ -75,7 +76,7 @@ export const NavBar = () => {
       onClick={toggleSlider(slider, false)}
     >
       <a href="/">
-        <img className={classes.logo} src={logo} alt="campy logo" />
+        <img className={classes.logo} src={logo2} alt="campy logo" />
       </a>
       <Divider />
 
@@ -103,22 +104,32 @@ export const NavBar = () => {
         <AppBar
           className={classes.appBar}
           position="fixed"
-          style={{ background: "#80ED99" }}
+          style={{ background: "#245B7F", color: "#FFFFC7" }}
         >
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <a href="/">
               <img className={classes.logo} src={logo} alt="campy logo" />
             </a>
-
-            <IconButton onClick={toggleSlider("right", true)}>
-              <Typography
-                variant="h5"
-                style={{ color: "#22577A", textAlign: "end" }}
-              >
-                MENU
-              </Typography>
-              <MenuIcon style={{ color: "#22577A" }} />
-            </IconButton>
+            <div>
+              <IconButton component="a" href="/locations">
+                <Explore style={{ color: "#FFFFC7" }} />
+                <Typography
+                  variant="h5"
+                  style={{ color: "#ffffC7", textAlign: "end" }}
+                >
+                  Explore
+                </Typography>
+              </IconButton>
+              <IconButton onClick={toggleSlider("right", true)}>
+                <Typography
+                  variant="h5"
+                  style={{ color: "#FFFFC7", textAlign: "end" }}
+                >
+                  MENU
+                </Typography>
+                <MenuIcon style={{ color: "#FFFFC7" }} />
+              </IconButton>
+            </div>
 
             <MobilerightMenuSlider
               anchor="right"
