@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box'
 import Checkbox from '@material-ui/core/Checkbox'
 import CircleChecked from '@material-ui/icons/CheckCircleOutline'
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked'
-
+import url from '../config';
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -112,10 +112,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const LocationDetail = (props) => {
 
-
-  const hostedURL = 'https://campy-backend.herokuapp.com'
-  const localhost = 'http://localhost:5000'
-
   const classes = useStyles()
   const { id } = useParams()
   // const id = props.match.params.id
@@ -126,13 +122,13 @@ export const LocationDetail = (props) => {
 
   useEffect(() => {
     (async function fetchLocation() {
-      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}`)
+      const res = await fetch(`${url}/locations/${id}`)
       const json = await res.json()
       setLocation(json.location)
     })(); // semi-colon is needed for IIFE to work
 
     (async function fetchReview() {
-      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}/reviews`)
+      const res = await fetch(`${url}/locations/${id}/reviews`)
       const json = await res.json()
       setReview(json.reviews)
     })();

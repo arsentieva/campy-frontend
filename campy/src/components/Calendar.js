@@ -6,7 +6,7 @@ import {
     Button,
     TextField
 } from '@material-ui/core'
-
+import url from '../config';
 import DateFnsUtils from '@date-io/date-fns';
 import Axios from 'axios';
 import { CampyContext } from "../context/CampyContext";
@@ -15,9 +15,6 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-
-const hostedURL = 'https://campy-backend.herokuapp.com'
-const localhost = 'http://localhost:5000'
 
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
@@ -44,7 +41,6 @@ export default function CalendarMaterialUIPickers() {
     }
 
     const handleStartDateChange = (date) => {
-        // console.log(date)
         setSelectedStartDate(date);
     };
 
@@ -58,7 +54,8 @@ export default function CalendarMaterialUIPickers() {
         // console.log(formatDate(selectedEndDate), "end date selected")
         // console.log(id, "id")
 
-      await Axios.post(`https://campy-backend.herokuapp.com/locations/${id}/calendar/`, {
+        await Axios.post(`${url}/locations/${id}/calendar/`, {
+
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,
@@ -78,7 +75,7 @@ export default function CalendarMaterialUIPickers() {
 
     useEffect(() => {
         (async function getLocationCalendarDates() {
-          let dates = await fetch(`https://campy-backend.herokuapp.com/locations/${id}/calendar/`);
+            let dates = await fetch(`${url}/locations/${id}/calendar/`);
             let json = await dates.json();
             setLocationCalendar(json.dates)
         })();

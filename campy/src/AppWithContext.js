@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import App from "./App";
 import { CampyContext } from "./context/CampyContext";
 import Axios from "axios";
+import url from './config';
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("access_token");
@@ -11,15 +12,8 @@ export const AppWithContext = () => {
   const [currentUser, setCurrentUser] = useState();
   const [userID, setUserID] = useState(user_id);
 
-  // if (accessToken) {
-  //   setAuthToken(accessToken);
-  // }
-  // console.log('+++')
-
-  const apiUrl = "https://campy-backend.herokuapp.com";
-
   const authAxios = Axios.create({
-    baseURL: apiUrl,
+    baseURL: url,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -66,7 +60,7 @@ export const AppWithContext = () => {
         setUserID,
         getUser,
         authAxios,
-        apiUrl,
+        url,
       }}
     >
       <App accessToken={accessToken} />

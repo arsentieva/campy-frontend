@@ -6,6 +6,7 @@ import Axios from "axios";
 import { CampyContext } from "../../context/CampyContext";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
+import url from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -31,7 +32,7 @@ export const SignUp = () => {
 
   const loginNewUser = () => {
     Axios
-      .post("https://campy-backend.herokuapp.com/auth/login", {
+      .post(`${url}/auth/login`, {
         email,
         password,
       })
@@ -49,7 +50,7 @@ export const SignUp = () => {
       });
   };
   const postRegister = () => {
-    Axios.post("https://campy-backend.herokuapp.com/auth/signup", {
+    Axios.post(`${url}/auth/signup`, {
       firstName,
       lastName,
       email,
