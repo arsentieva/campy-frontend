@@ -6,6 +6,7 @@ import Axios from "axios";
 import { CampyContext } from "../../context/CampyContext";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
+import url from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -46,7 +47,7 @@ if (authToken) {
       });
   };
   const postRegister = () => {
-    Axios.post("https://campy-backend.herokuapp.com/auth/signup", {
+    Axios.post(`${url}/auth/signup`, {
       firstName,
       lastName,
       email,
@@ -54,7 +55,7 @@ if (authToken) {
       phoneNumber,
     }).then(({ email, password }) => loginNewUser({ email, password }));
   };
-  
+
 
   return (
     <div>
@@ -72,7 +73,7 @@ if (authToken) {
             }}
           />
         </Grid>
-        
+
         <Grid
           className={classes.formContainer}
           component="form"

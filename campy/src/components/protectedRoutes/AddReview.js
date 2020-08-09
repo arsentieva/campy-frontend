@@ -27,7 +27,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Button from '@material-ui/core/Button'
 import Axios from "axios"
-
+import url from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -96,7 +96,6 @@ export const AddReview = () => {
   const [success, setSuccess] = useState(false)
 
   const { id } = useParams()
-  const url = 'https://localhost:5000/'
   const token = JSON.parse(localStorage.getItem("tokens"))
   const { user_id } = token
 
@@ -125,7 +124,7 @@ export const AddReview = () => {
 
   useEffect(() => {
     (async function fetchLocation() {
-      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}`)
+      const res = await fetch(`${url}/locations/${id}`)
       const json = await res.json()
       setLocation(json.location)
     })(); // semi-colon is needed for IIFE to work

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import App from "./App";
 import { CampyContext } from "./context/CampyContext";
 import Axios from "axios";
+import url from './config';
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -11,10 +12,8 @@ export const AppWithContext = () => {
   const [currentUser, setCurrentUser] = useState();
   const [userID, setUserID] = useState(user_id);
 
-  const apiUrl = "http://localhost:5000";
-
   const authAxios = Axios.create({
-    baseURL: apiUrl,
+    baseURL: url,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -59,7 +58,7 @@ export const AppWithContext = () => {
         setUserID,
         getUser,
         authAxios,
-        apiUrl,
+        url,
       }}
     >
       <App accessToken={accessToken} />
