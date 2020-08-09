@@ -25,12 +25,12 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 
 function App() {
-  const { authToken } = useContext(CampyContext);
+  const { authToken, currentUser } = useContext(CampyContext);
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <CssBaseline>
-          {authToken !== null ? <UserNavBar /> : <NavBar />}
+          {authToken !== null ? <UserNavBar currentUser={currentUser}/> : <NavBar />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />

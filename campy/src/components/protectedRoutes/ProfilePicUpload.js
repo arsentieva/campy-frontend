@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProfilePicUpload = () => {
-  const { currentUser, userID, authAxios } = useContext(CampyContext);
-
+  const { currentUser, userID, authAxios, getUser } = useContext(CampyContext);
+  const history = useHistory();
   const classes = useStyles();
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
@@ -80,6 +80,7 @@ export const ProfilePicUpload = () => {
       .then((result) => {
         if (result.status === 200) {
           setSuccess(true);
+          history.push('/account')
         } else {
           setIsError(true);
         }
@@ -88,10 +89,14 @@ export const ProfilePicUpload = () => {
         console.log(err) && setIsError(err);
       });
   };
-  if (success) {
-    return <Redirect to="/account" />;
-  }
-  return (
+  
+  useEffect(() => {
+    const getUserData = async () => {
+      await getUser(userID)
+    }
+    getUserData();
+  }, [userID])
+  return currentUser ? (
     <Grid container className={classes.root}>
       <Grid
         item
@@ -146,5 +151,5 @@ export const ProfilePicUpload = () => {
         </IconButton>
       </Grid>
     </Grid>
-  );
+  ) : null;
 };

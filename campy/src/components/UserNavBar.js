@@ -58,6 +58,11 @@ const menuItems = [
     listPath: "/",
   },
   {
+    listIcon: <Explore />,
+    listText: "Explore",
+    listPath: "/locations",
+  },
+  {
     listIcon: <AccountBox />,
     listText: "My Account",
     listPath: "/account",
@@ -79,22 +84,14 @@ const menuItems = [
   },
 
   {
-    listIcon: <Explore />,
-    listText: "Explore",
-    listPath: "/locations",
-  },
-
-  {
     listIcon: <Info />,
     listText: "About",
     listPath: "/about",
   },
 ];
 
-export const UserNavBar = () => {
-  const { currentUser, userID, getUser } = useContext(CampyContext);
-  console.log(userID)
-  // const currentUser = getUser(userID)
+export const UserNavBar = ({ currentUser }) => {
+  const { userID, getUser } = useContext(CampyContext);
   const [state, setState] = useState({
     right: false,
   });
@@ -138,11 +135,11 @@ export const UserNavBar = () => {
   );
   useEffect(() => {
     const getUserData = async () => {
-      await getUser(userID)
-    }
+      await getUser(userID);
+    };
     getUserData();
-  }, [userID])
-  
+  }, [userID]);
+
   return (
     <>
       <Box component="nav">
