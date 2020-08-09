@@ -19,7 +19,7 @@ import {
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const { currentUser, userID } = useContext(CampyContext);
+    const { currentUser, getUser, userID } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
@@ -32,12 +32,8 @@ export default function CalendarMaterialUIPickers() {
             month: "2-digit",
             day: "2-digit",
           }).split("/")
-
-        // let s = [fdate.slice(0, 1)]
           const s = [fdate[2],fdate[0],fdate[1]].join("-")
-
         return s;
-
     }
 
     const handleStartDateChange = (date) => {
@@ -53,6 +49,9 @@ export default function CalendarMaterialUIPickers() {
         console.log(formatDate(selectedStartDate), "start date selected")
         console.log(formatDate(selectedEndDate), "end date selected")
         console.log(id, "id")
+        console.log(userID, "user ID")
+        console.log(currentUser, "current user")
+        console.log(CampyContext, "Campy Context")
 
         await Axios.post(`${url}/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
@@ -72,6 +71,7 @@ export default function CalendarMaterialUIPickers() {
         });
     }
 
+
     useEffect(() => {
         (async function getLocationCalendarDates() {
             let dates = await fetch(`${url}/locations/${id}/calendar/`);
@@ -80,10 +80,19 @@ export default function CalendarMaterialUIPickers() {
         })();
     }, []);
 
-    return (
-        // use direction="column" to display down
+    useEffect(() => {
+        const getUserData = async () => {
+            await getUser(userID)
+        }
+        getUserData();
+    }, [userID])
+
+    return /* currentUser ? */ (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container direction="column">
+                <Grid container>
+                    <h1>Calendar!</h1>
+                </Grid>
                 <Grid container justify="space-around">
                     <KeyboardDatePicker
                         disableToolbar
@@ -112,13 +121,16 @@ export default function CalendarMaterialUIPickers() {
                         }}
                     />
                 </Grid>
+                <Grid container alignContent="center">
+                    error stuff
+                </Grid>
             </Grid>
             <Grid>
                 <Button variant="contained" color="primary" onClick={postCalendar}>Submit</Button>
                 <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button>
             </Grid>
         </MuiPickersUtilsProvider>
-    );
+    )// : null;
 }
 
 /**
