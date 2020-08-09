@@ -68,16 +68,6 @@ export const ProfilePicUpload = () => {
   };
   console.log(url);
   const handleUpdate = () => {
-<<<<<<< HEAD
-    console.log(url);
-    console.log(authTokens.first_name);
-    Axios.put(`https://campy-backend.herokuapp.com/users/${userId}`, {
-      firstName: authTokens.first_name || currentUser.first_name,
-      lastName: authTokens.last_name || currentUser.last_name,
-      phoneNumber: authTokens.phone_number || currentUser.phone_number,
-      domicileType: authTokens.domicile_type || currentUser.user_info,
-      userInfo: authTokens.user_info || currentUser.user_info,
-=======
    
     authAxios.put(`/users/${userID}`, {
       firstName: currentUser.first_name,
@@ -85,7 +75,6 @@ export const ProfilePicUpload = () => {
       phoneNumber: currentUser.phone_number,
       domicileType: currentUser.user_info,
       userInfo: currentUser.user_info,
->>>>>>> master
       imageURL: url,
     })
       .then((result) => {
