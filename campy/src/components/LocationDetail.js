@@ -126,13 +126,13 @@ export const LocationDetail = (props) => {
 
   useEffect(() => {
     (async function fetchLocation() {
-      const res = await fetch(`${hostedURL}/locations/${id}`)
+      const res = await fetch(`${localhost}/locations/${id}`)
       const json = await res.json()
       setLocation(json.location)
     })(); // semi-colon is needed for IIFE to work
 
     (async function fetchReview() {
-      const res = await fetch(`${hostedURL}/locations/${id}/reviews`)
+      const res = await fetch(`${localhost}/locations/${id}/reviews`)
       const json = await res.json()
       setReview(json.reviews)
     })();
