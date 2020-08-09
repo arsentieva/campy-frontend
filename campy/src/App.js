@@ -26,6 +26,7 @@ import theme from "./theme";
 
 function App() {
   const { authToken, currentUser, userID } = useContext(CampyContext);
+  console.log(authToken, currentUser, '****')
   return (
     <ThemeProvider theme={theme}>
       <Router>

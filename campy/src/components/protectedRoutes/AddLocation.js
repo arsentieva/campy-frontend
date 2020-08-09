@@ -6,7 +6,9 @@ import {
   FormGroup,
   FormLabel,
   FormControlLabel,
+  Checkbox,
   TextField,
+  Input,
   TextareaAutosize,
   IconButton,
 } from "@material-ui/core";
@@ -25,9 +27,9 @@ export const AddLocation = () => {
   const [gps_coords, setGPS_Coords] = useState("");
   const image_urls = [];
   const [website, setWebsite] = useState("");
-  const [description, sestDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [host_notes, setHost_Notes] = useState("");
-  const [active, setActive] = useState(true);
+  const active = true;
   const user_id = userID;
   const location_data = {
     address,
@@ -48,7 +50,7 @@ export const AddLocation = () => {
   const [tow_vehicle_parking, setTow_Vehicle_Parking] = useState(false);
   const [trash_removal, setTrash_Removal] = useState(false);
   const [pets_allowed, setPets_Allowed] = useState(false);
-  const [internet_access, setInternet_Ac] = useState(false);
+  const [internet_access, setInternet_Access] = useState(false);
   const amenity_data = {
     electric_hookup,
     water_hookup,
@@ -63,22 +65,14 @@ export const AddLocation = () => {
   const [rv_compatible, setRv_Compatible] = useState(false);
   const [generators_allowed, setGenerators_Allowed] = useState(false);
   const [fires_allowed, setFires_Allowed] = useState(false);
-  const [max_days, setMax_Days] = useState(false);
-  const [pad_type, setPet_Type] = useState(false);
+  const [max_days, setMax_Days] = useState(0);
+  const [pad_type, setPad_Type] = useState("");
   const necessity_data = {
     rv_compatible,
     generators_allowed,
     fires_allowed,
     max_days,
     pad_type,
-  };
-
-  const handlePut = (id) => {
-    authAxios.put(`http://localhost:5000/locations/${id}`, {
-      location_data,
-      amenity_data,
-      necessity_data,
-    });
   };
 
   const handleSubmit = () => {
@@ -92,7 +86,15 @@ export const AddLocation = () => {
           const { id } = res.data;
           setId(id);
         }
-      }).then((id) => handlePut(id));
+      })
+      .then((id) => handlePut(id));
+  };
+  const handlePut = (id) => {
+    authAxios.put(`http://localhost:5000/locations/${id}`, {
+      location_data,
+      amenity_data,
+      necessity_data,
+    });
   };
 
   useEffect(() => {
@@ -103,7 +105,7 @@ export const AddLocation = () => {
   }, [userID]);
   return currentUser ? (
     <Grid container component="form" onSubmit={handleSubmit}>
-      <Grid item container>
+      <Grid item container direction="column">
         <TextField
           lable="Street Address"
           placeholder="123 Main St."
@@ -144,9 +146,23 @@ export const AddLocation = () => {
           value={description}
           placeholder="ex: Lovely waterfront cement pad with hookups"
           margin="dense"
-          onChange={(e) => sestDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <TextField
+          lable="Pad Type"
+          value={pad_type}
+          placeholder="ex: paved, dirt, etc."
+          margin="dense"
+          onChange={(e) => setPad_Type(e.target.value)}
         />
 
+        <Input
+          type="number"
+          lable="Max Days to Stay"
+          value={max_days}
+          margin="dense"
+          onChange={(e) => setPad_Type(e.target.value)}
+        />
         <TextareaAutosize
           value={host_notes}
           rowsMin={8}
@@ -157,7 +173,119 @@ export const AddLocation = () => {
         <TextField />
       </Grid>
       <Grid item container>
-        <FormGroup></FormGroup>
+        <Grid item>
+          <FormControl component="fieldset" className={classes.FormControl}>
+            <FormLabel component="legend">Ammenities</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={electric_hookup}
+                    onChange={(e) => setElectric_Hookup(e.target.value)}
+                  />
+                }
+                label="Electric Hookup"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={water_hookup}
+                    onChange={(e) => setWater_Hookup(e.target.value)}
+                  />
+                }
+                label="Water Hookup"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={septic_hookup}
+                    onChange={(e) => setSeptic_Hookup(e.target.value)}
+                  />
+                }
+                label="Septic Hookup"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={assigned_parking}
+                    onChange={(e) => setAssigned_Parking(e.target.value)}
+                  />
+                }
+                label="Assigned Parking"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={tow_vehicle_parking}
+                    onChange={(e) => setTow_Vehicle_Parking(e.target.value)}
+                  />
+                }
+                label="Parking for Tow Vehicle"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={trash_removal}
+                    onChange={(e) => setTrash_Removal(e.target.value)}
+                  />
+                }
+                label="Trash Removal"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={pets_allowed}
+                    onChange={(e) => setPets_Allowed(e.target.value)}
+                  />
+                }
+                label="Pets Allowed"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={internet_access}
+                    onChange={(e) => setInternet_Access(e.target.value)}
+                  />
+                }
+                label="Internet Access"
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <FormControl component="fieldset" className={classes.FormControl}>
+            <FormLabel component="legend">Necessities</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={rv_compatible}
+                    onChange={(e) => setRv_Compatible(e.target.value)}
+                  />
+                }
+                label="RV Compatible"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={generators_allowed}
+                    onChange={(e) => setGenerators_Allowed(e.target.value)}
+                  />
+                }
+                label="Generators Allowed"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value={fires_allowed}
+                    onChange={(e) => setFires_Allowed(e.target.value)}
+                  />
+                }
+                label="Fires Allowed"
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
       </Grid>
       <Grid item container>
         <FormGroup></FormGroup>

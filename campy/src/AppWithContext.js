@@ -4,12 +4,17 @@ import { CampyContext } from "./context/CampyContext";
 import Axios from "axios";
 
 export const AppWithContext = () => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("access_token");
   const user_id = localStorage.getItem("user_id");
   const [authToken, setAuthToken] = useState(accessToken);
   const [isLoggedIn, setIsLoggedIn] = useState(!accessToken);
   const [currentUser, setCurrentUser] = useState();
   const [userID, setUserID] = useState(user_id);
+
+  // if (accessToken) {
+  //   setAuthToken(accessToken);
+  // }
+  // console.log('+++')
 
   const apiUrl = "http://localhost:5000";
 
@@ -22,6 +27,7 @@ export const AppWithContext = () => {
 
   const login = (token) => {
     window.localStorage.setItem("access_token", token);
+    console.log(token)
     setAuthToken(token);
     setIsLoggedIn(true);
   };
@@ -32,13 +38,13 @@ export const AppWithContext = () => {
   };
 
   const getUser = async (userID) => {
-    console.log(userID);
-    console.log(accessToken);
+    // console.log(userID);
+    // console.log(accessToken);
     if (!userID) {
       return {};
     }
     const User = await authAxios.get(`/users/${userID}`, "User").then((response) => {
-      console.log(response);
+      // console.log(response);
       const { user } = response.data;
       setCurrentUser(user);
     });
