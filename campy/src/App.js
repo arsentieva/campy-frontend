@@ -8,7 +8,6 @@ import { SignUp } from "./components/auth/SignUp";
 import { AddLocation } from "./components/protectedRoutes/AddLocation";
 import { LocationList } from "./components/LocationList";
 import { LocationDetail } from "./components/LocationDetail";
-import CalendarApp from "./components/Calendar";
 import { AccountPage } from "./components/protectedRoutes/AccountPage";
 import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
@@ -26,12 +25,16 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 
 function App() {
-  const { authToken, currentUser } = useContext(CampyContext);
+  const { authToken, currentUser, userID } = useContext(CampyContext);
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <CssBaseline>
-          {authToken !== null ? <UserNavBar currentUser={currentUser}/> : <NavBar />}
+          {authToken !== null ? (
+            <UserNavBar currentUser={currentUser} />
+          ) : (
+            <NavBar />
+          )}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
@@ -40,17 +43,35 @@ function App() {
             <Route path="/location-detail/:id" component={LocationDetail} />
             <Route path="/locations" component={LocationList} />
             <Route path="/reviews" component={Reviews} />
-            <ProtectedRoute path="/add-location" component={AddLocation} />
-            <ProtectedRoute path="/account" component={AccountPage} />
             <ProtectedRoute
-              path="/edit-profile-pic"
+              path="/users/:userID/add-location"
+              component={AddLocation}
+            />
+            <ProtectedRoute
+              path="/users/:userID/account"
+              component={AccountPage}
+            />
+            <ProtectedRoute
+              path="/users/:userID/edit-profile-pic"
               component={ProfilePicUpload}
             />
-            <ProtectedRoute path="/my-messages" component={MyMessages} />
-            <ProtectedRoute path="/message-detail" component={MessageDetail} />
+            <ProtectedRoute
+              path="/users/:userID/my-messages"
+              component={MyMessages}
+            />
+            <ProtectedRoute
+              path="/users/:userID/my-messages/:messageID"
+              component={MessageDetail}
+            />
 
-            <ProtectedRoute path="/edit-account" component={EditAccount} />
-            <ProtectedRoute path="/locations/:id/add-review" component={AddReview} />
+            <ProtectedRoute
+              path="/users/:userID/edit-account"
+              component={EditAccount}
+            />
+            <ProtectedRoute
+              path="/locations/:id/add-review"
+              component={AddReview}
+            />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
           </Switch>
           <Footer />

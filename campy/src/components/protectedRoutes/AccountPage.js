@@ -20,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export const AccountPage = () => {
   const { currentUser, getUser, userID } = useContext(CampyContext);
-
+  const editLink = `/users/${userID}/edit-account`;
+const editPictureLink = `/users/${userID}/edit-profile-pic`;
+  
   const classes = useStyles();
   useEffect(() => {
     const getUserData = async () => {
@@ -49,13 +51,13 @@ export const AccountPage = () => {
             )}
           </Grid>
           <Grid item>
-            <IconButton component={Link} to="/edit-profile-pic">
+            <IconButton component={Link} to={editPictureLink}>
               <Edit />
               <Typography>Edit Profile Picture</Typography>
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton component={Link} to="/edit-account">
+            <IconButton component={Link} to={editLink}>
               <Edit />
               <Typography>Edit Account Information</Typography>
             </IconButton>

@@ -80,7 +80,7 @@ export const ProfilePicUpload = () => {
       .then((result) => {
         if (result.status === 200) {
           setSuccess(true);
-          history.push('/account')
+          history.push(`/users/${userID}/account`)
         } else {
           setIsError(true);
         }

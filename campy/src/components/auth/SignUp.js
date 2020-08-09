@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const SignUp = () => {
   const classes = useStyles();
-  const {login, authToken, setUserID, getUser, authAxios} = useContext(CampyContext)
+  const { login, authToken, setUserID, getUser, authAxios } = useContext(
+    CampyContext
+  );
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -24,22 +26,23 @@ export const SignUp = () => {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-if (authToken) {
-    return <Redirect to='/' />
+  if (authToken) {
+    return <Redirect to="/" />;
   }
 
   const loginNewUser = () => {
-    authAxios.post("/auth/login", {
-      email,
-      password,
-    })
+    Axios
+      .post(`${url}/auth/login`, {
+        email,
+        password,
+      })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         if (res.status === 200) {
           const { access_token, user_id } = res.data;
           login(access_token);
           setUserID(user_id);
-          getUser(user_id)
+          getUser(user_id);
         }
       })
       .catch((err) => {
@@ -55,7 +58,6 @@ if (authToken) {
       phoneNumber,
     }).then(({ email, password }) => loginNewUser({ email, password }));
   };
-
 
   return (
     <div>

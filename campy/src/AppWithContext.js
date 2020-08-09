@@ -30,13 +30,13 @@ export const AppWithContext = () => {
     setIsLoggedIn(false);
   };
 
-  const getUser = (userID) => {
+  const getUser = async (userID) => {
     console.log(userID);
     console.log(accessToken);
     if (!userID) {
       return {};
     }
-    const User = authAxios.get(`/users/${userID}`, "User").then((response) => {
+    const User = await authAxios.get(`/users/${userID}`, "User").then((response) => {
       console.log(response);
       const { user } = response.data;
       setCurrentUser(user);
@@ -44,6 +44,7 @@ export const AppWithContext = () => {
 
     return User;
   };
+  
 
   return (
     <CampyContext.Provider

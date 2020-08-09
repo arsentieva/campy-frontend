@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,

@@ -51,47 +51,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const menuItems = [
-  {
-    listIcon: <Home />,
-    listText: "Home",
-    listPath: "/",
-  },
-  {
-    listIcon: <Explore />,
-    listText: "Explore",
-    listPath: "/locations",
-  },
-  {
-    listIcon: <AccountBox />,
-    listText: "My Account",
-    listPath: "/account",
-  },
-  {
-    listIcon: <AddLocation />,
-    listText: "Host a location",
-    listPath: "/add-location",
-  },
-  {
-    listIcon: <CalendarToday />,
-    listText: "My Adventures",
-    listPath: "/schedule",
-  },
-  {
-    listIcon: <Email />,
-    listText: "My Messages",
-    listPath: "/my-messages",
-  },
 
-  {
-    listIcon: <Info />,
-    listText: "About",
-    listPath: "/about",
-  },
-];
 
 export const UserNavBar = ({ currentUser }) => {
   const { userID, getUser } = useContext(CampyContext);
+  const menuItems = [
+    {
+      listIcon: <Home />,
+      listText: "Home",
+      listPath: "/",
+    },
+    {
+      listIcon: <Explore />,
+      listText: "Explore",
+      listPath: "/locations",
+    },
+    {
+      listIcon: <AccountBox />,
+      listText: "My Account",
+      listPath: `/users/${userID}/account`,
+    },
+    {
+      listIcon: <AddLocation />,
+      listText: "Host a location",
+      listPath: `/users/${userID}/add-location`,
+    },
+    {
+      listIcon: <CalendarToday />,
+      listText: "My Adventures",
+      listPath: `/users/${userID}/schedule`,
+    },
+    {
+      listIcon: <Email />,
+      listText: "My Messages",
+      listPath: `/users/${userID}/my-messages`,
+    },
+
+    {
+      listIcon: <Info />,
+      listText: "About",
+      listPath: "/about",
+    },
+  ];
+  
   const [state, setState] = useState({
     right: false,
   });
