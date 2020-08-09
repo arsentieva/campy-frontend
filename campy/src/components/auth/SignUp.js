@@ -26,7 +26,7 @@ export const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const { setAuthTokens } = useAuth("");
   const login = () => {
-    Axios.post("https://campy-backend.herokuapp.com/auth/login", {
+    Axios.post("https://localhost:5000/auth/login", {
       email,
       password,
     })

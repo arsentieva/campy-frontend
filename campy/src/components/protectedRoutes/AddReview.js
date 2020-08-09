@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AddReview = () => {
-  
+
   const classes = useStyles();
   const [rate, setRate] = useState('FREE!')
   const [daysStayed, setDaysStayed] = useState('')
@@ -80,7 +80,7 @@ export const AddReview = () => {
   const [success, setSuccess] = useState(false)
 
   const { id } = useParams()
-  const url = 'https://campy-backend.herokuapp.com/'
+  const url = 'https://localhost:5000/'
   const token = JSON.parse(localStorage.getItem("tokens"))
   const { user_id } = token
 
@@ -96,11 +96,11 @@ export const AddReview = () => {
   const handleSubmit = async () => {
     const res = await Axios.post(`${url}locations/${id}/reviews`, {
       'overall_rating': overallRating,
-      noise, 
-      safety, 
-      cleanliness, 
+      noise,
+      safety,
+      cleanliness,
       access,
-      'site_quality': siteQuality, 
+      'site_quality': siteQuality,
       comments,
       user_id,
       'location_id': id
@@ -150,7 +150,7 @@ export const AddReview = () => {
             <Typography component="legend">Noise</Typography>
             <Rating
               value={noise}
-              name='noise' 
+              name='noise'
               size='small'
               onChange={(event, newValue) => {
                 setNoise(newValue);
@@ -187,7 +187,7 @@ export const AddReview = () => {
               onChange={(event, newValue) => {
                 setAccess(newValue);
               }} />
-          </Box>  
+          </Box>
         </Grid>
         <Grid item xs={3}>
           <Grid item className={classes.whiteFontColor} xs>
@@ -212,9 +212,9 @@ export const AddReview = () => {
               placeholder='Enter Comments' />
           </Grid>
           <Grid item>
-            <Button 
-              className={classes.button} 
-              variant='outlined' 
+            <Button
+              className={classes.button}
+              variant='outlined'
               color='primary'
               onClick={handleSubmit}>
                 Submit</Button>
