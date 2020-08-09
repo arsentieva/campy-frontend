@@ -18,7 +18,7 @@ import {
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const { currentUser, getUser, userID, authAxios } = useContext(CampyContext);
+    const {getUser, userID, authAxios } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
@@ -44,10 +44,8 @@ export default function CalendarMaterialUIPickers() {
         setSelectedEndDate(date);
     }
 
-
     const postCalendar = async () => {
-
-        await Axios.post(`${url}/locations/${id}/calendar/`, {
+        await authAxios.post(`/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,
@@ -85,7 +83,7 @@ export default function CalendarMaterialUIPickers() {
         getUserData();
     }, [userID])
 
-    return /* currentUser ? */ (
+    return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container direction="column">
                 <Grid container>
@@ -119,21 +117,14 @@ export default function CalendarMaterialUIPickers() {
                         }}
                     />
                 </Grid>
-
                 <Grid container alignContent="center" justify="center">
                     {message}
                 </Grid>
             </Grid>
             <Grid>
                 <Button variant="contained" color="primary" onClick={postCalendar}>Submit</Button>
-                <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button>
+                {/* <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button> */}
             </Grid>
         </MuiPickersUtilsProvider>
-    )// : null;
+    )
 }
-
-/**
- * TODO:
- * Set up Error Message Handling for returns from backend routes
- *
- */
