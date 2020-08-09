@@ -1,8 +1,14 @@
 import 'date-fns';
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+    Grid,
+    Button,
+    TextField
+} from '@material-ui/core'
+
 import DateFnsUtils from '@date-io/date-fns';
-import { TextField } from '@material-ui/core';
+import Axios from 'axios';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -10,9 +16,10 @@ import {
 
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
+    const { id } = useParams();
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
-    let tomorrow = new Date()
-    const [selectedEndDate, setSelectedEndDate] = React.useState(tomorrow.getDate() + 1);
+    const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
+    const [locationCalendar, setLocationCalendar] = React.useState(undefined);
 
     const handleStartDateChange = (date) => {
         setSelectedStartDate(date);
@@ -20,6 +27,12 @@ export default function CalendarMaterialUIPickers() {
 
     const handleEndDateChange = date => {
         setSelectedEndDate(date);
+    }
+
+    const getLocationCalendar = async () => {
+        let dates = await fetch(`http://localhost:5000/locations/${id}/calendar/`);
+        let json = await dates.json();
+        return json;
     }
 
     return (
@@ -49,8 +62,11 @@ export default function CalendarMaterialUIPickers() {
                     onChange={handleEndDateChange}
                     KeyboardButtonProps={{
                         'aria-label': 'change date',
-                    }}//
+                    }}
                 />
+            </Grid>
+            <Grid>
+                <Button variant="contained" color="primary" onClick={() => console.log(getLocationCalendar())}>Submit</Button>
             </Grid>
         </MuiPickersUtilsProvider>
     );
