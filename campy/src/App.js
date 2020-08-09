@@ -8,6 +8,7 @@ import { SignUp } from "./components/auth/SignUp";
 import { AddLocation } from "./components/protectedRoutes/AddLocation";
 import { LocationList } from "./components/LocationList";
 import { LocationDetail } from "./components/LocationDetail";
+import CalendarApp from "./components/Calendar";
 import { AccountPage } from "./components/protectedRoutes/AccountPage";
 import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
@@ -55,7 +56,7 @@ function App() {
             <ProtectedRoute path="/edit-account" component={EditAccount} />
             <ProtectedRoute path="/locations/:id/add-review" component={AddReview} />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
-           
+
           </Switch>
           <Footer />
         </CssBaseline>
