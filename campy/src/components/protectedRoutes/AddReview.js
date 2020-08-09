@@ -94,17 +94,33 @@ export const AddReview = () => {
     setComments(e.target.value)
   }
   const handleSubmit = async () => {
-    const res = await Axios.post(`${url}locations/${id}/reviews`, {
+    const data = {
       'overall_rating': overallRating,
-      noise, 
-      safety, 
-      cleanliness, 
+      noise,
+      safety,
+      cleanliness,
       access,
-      'site_quality': siteQuality, 
+      'site_quality': siteQuality,
       comments,
       user_id,
       'location_id': id
-    })
+    }
+    try {
+      const res = await fetch(`${url}locations/${id}/reviews`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      if (res.ok) {
+        const json = await res.json()
+        console.log(json)
+      }
+    } catch(e) {
+
+    }
   }
 
   useEffect(() => {
@@ -215,7 +231,7 @@ export const AddReview = () => {
             <Button 
               className={classes.button} 
               variant='outlined' 
-              color='primary'
+              color='secondary'
               onClick={handleSubmit}>
                 Submit</Button>
           </Grid>
