@@ -31,7 +31,7 @@ export const SignUp = () => {
 
   const loginNewUser = () => {
     Axios
-      .post("http://localhost:5000/auth/login", {
+      .post("https://campy-backend.herokuapp.com/auth/login", {
         email,
         password,
       })
@@ -49,7 +49,7 @@ export const SignUp = () => {
       });
   };
   const postRegister = () => {
-    Axios.post("http://localhost:5000/auth/signup", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/signup", {
       firstName,
       lastName,
       email,

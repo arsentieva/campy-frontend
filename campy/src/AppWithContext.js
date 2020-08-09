@@ -16,7 +16,7 @@ export const AppWithContext = () => {
   // }
   // console.log('+++')
 
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://campy-backend.herokuapp.com";
 
   const authAxios = Axios.create({
     baseURL: apiUrl,

@@ -77,7 +77,7 @@ export const AddLocation = () => {
 
   const handleSubmit = () => {
     authAxios
-      .post("https://localhost:5000/locations", {
+      .post("https://campy-backend.herokuapp.com/locations", {
         amenity_data,
         necessity_data,
       })
@@ -90,7 +90,7 @@ export const AddLocation = () => {
       .then((id) => handlePut(id));
   };
   const handlePut = (id) => {
-    authAxios.put(`http://localhost:5000/locations/${id}`, {
+    authAxios.put(`https://campy-backend.herokuapp.com/locations/${id}`, {
       location_data,
       amenity_data,
       necessity_data,
