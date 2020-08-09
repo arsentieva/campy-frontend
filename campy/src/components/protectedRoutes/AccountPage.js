@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+import React, {  useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  Grid,
-  Typography,
-  IconButton,
-  Avatar,
-} from "@material-ui/core";
+import { Grid, Typography, IconButton, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Edit } from "@material-ui/icons";
-import Axios from "axios";
-import { useAuth } from "../../context/AuthContext";
+import { CampyContext } from "../../context/CampyContext";
 import { MyLocations } from "./MyLocations";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,17 +18,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export const AccountPage = () => {
-  const { authTokens } = useAuth();
-  const [currentUser, setCurrentUser] = useState(undefined);
-
-  const userId = authTokens.user_id;
-
+  const { currentUser, getUser, userID } = useContext(CampyContext);
+  const editLink = `/users/${userID}/edit-account`;
+const editPictureLink = `/users/${userID}/edit-profile-pic`;
+  
   const classes = useStyles();
-  if (currentUser) {
-    return (
-      <Grid container className={classes.root}>
-        <Grid container item>
+  useEffect(() => {
+    const getUserData = async () => {
+      await getUser(userID)
+    }
+    getUserData();
+  }, [userID])
 
+  return currentUser ? (
+    <Grid container className={classes.root}>
+      <Grid container item>
         <Grid
           item
           container
@@ -52,16 +50,15 @@ export const AccountPage = () => {
             )}
           </Grid>
           <Grid item>
-            <IconButton component={Link} to="/edit-profile-pic">
+            <IconButton component={Link} to={editPictureLink}>
               <Edit />
               <Typography>Edit Profile Picture</Typography>
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton component={Link} to="/edit-account">
+            <IconButton component={Link} to={editLink}>
               <Edit />
               <Typography>Edit Account Information</Typography>
-
             </IconButton>
           </Grid>
         </Grid>
@@ -99,21 +96,11 @@ export const AccountPage = () => {
             <Typography>{currentUser.user_info || ""}</Typography>
           </Grid>
         </Grid>
-        <Grid container justify="center"  xs={4} item>
-        </Grid>
+        <Grid container justify="center" xs={4} item></Grid>
       </Grid>
-          <Grid item>
-            <MyLocations />
-          </Grid>
-        </Grid>
-    );
-  } else {
-    Axios.get(`https://campy-backend.herokuapp.com/users/${userId}`, "User").then(
-      (response) => {
-        console.log(response.data);
-        setCurrentUser(response.data.user);
-      }
-    );
-    return null;
-  }
+      <Grid item>
+        <MyLocations />
+      </Grid>
+    </Grid>
+  ) : null;
 };

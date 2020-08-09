@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import { MeetingRoom } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import {CampyContext} from '../../context/CampyContext'
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -12,16 +12,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Logout = () => {
+  const { logOut } = useContext(CampyContext);
   const history = useHistory();
   const classes = useStyles();
-  const { setAuthTokens } = useAuth();
-  const logOut = () => {
-    setAuthTokens(null);
+  const handleLogOut = () => {
+    logOut();
     history.push("/login");
   };
   return (
     <div>
-      <ListItem button onClick={logOut}>
+      <ListItem button onClick={handleLogOut}>
         <ListItemIcon className={classes.listItem} >
           <MeetingRoom className={classes.listItem} />
           <ListItemText className={classes.listItem}>Logout</ListItemText>

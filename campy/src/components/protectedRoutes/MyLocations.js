@@ -1,13 +1,17 @@
-import React from 'react'
-
+import React, { useContext, useEffect } from 'react'
+import { CampyContext } from '../../context/CampyContext'
 export const MyLocations = () => {
-  return (
-    <div>
-      <h1>My Locations</h1>
-      <h1>HELLO</h1>
-      <h1>HELLO</h1>
-      <h1>HELLO</h1>
+  const { currentUser, getUser, userID } = useContext(CampyContext);
 
+  useEffect(() => {
+    const getUserData = async () => {
+      await getUser(userID)
+    }
+    getUserData();
+  }, [userID])
+  return currentUser ? (
+    <div>
+      Add location stuff
     </div>
-  )
+  ) : null;
 }

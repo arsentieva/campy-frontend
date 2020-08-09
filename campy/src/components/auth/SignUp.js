@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Typography } from "@material-ui/core";
 import Axios from "axios";
-import { useAuth } from "../../context/AuthContext";
-import { ErrorNotice } from "../ErrorNotice";
+import { CampyContext } from "../../context/CampyContext";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
 
@@ -16,44 +15,48 @@ const useStyles = makeStyles((theme) => ({
 
 export const SignUp = () => {
   const classes = useStyles();
+  const { login, authToken, setUserID, getUser, authAxios } = useContext(
+    CampyContext
+  );
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const { setAuthTokens } = useAuth("");
-  const login = () => {
-    Axios.post("https://campy-backend.herokuapp.com/auth/login", {
-      email,
-      password,
-    })
-      .then((result) => {
-        if (result.status === 200) {
-          setAuthTokens(result.data);
-          setLoggedIn(true);
-        } else {
-          setIsError(true);
+
+  if (authToken) {
+    return <Redirect to="/" />;
+  }
+
+  const loginNewUser = () => {
+    Axios
+      .post("http://localhost:5000/auth/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          const { access_token, user_id } = res.data;
+          login(access_token);
+          setUserID(user_id);
+          getUser(user_id);
         }
       })
       .catch((err) => {
-        console.log(err) && setIsError(err);
+        console.log(err);
       });
   };
   const postRegister = () => {
-    Axios.post("https://campy-backend.herokuapp.com/auth/signup", {
+    Axios.post("http://localhost:5000/auth/signup", {
       firstName,
       lastName,
       email,
       password,
       phoneNumber,
-    }).then(({ email, password }) => login({ email, password }));
+    }).then(({ email, password }) => loginNewUser({ email, password }));
   };
-  if (isLoggedIn) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <div>
@@ -71,12 +74,7 @@ export const SignUp = () => {
             }}
           />
         </Grid>
-        {isError && (
-          <ErrorNotice
-            message={isError}
-            clearError={() => setIsError(undefined)}
-          />
-        )}
+
         <Grid
           className={classes.formContainer}
           component="form"

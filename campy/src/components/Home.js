@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AirportShuttle } from "@material-ui/icons";
 
-import { Grid, Typography, IconButton } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import sittingOnCamper from "../assets/sittingOnCamper.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   hereoMessage: {
     width: "100%",
     backgroundColor: "rgba(36, 91, 127, 0.3)",
-    color: "#ffffc7",
+    color: "#f0eace",
   },
 }));
 
@@ -48,10 +47,10 @@ export const Home = () => {
         alignContent="center"
       >
         <Grid item className={classes.hereoMessage}>
-          <Typography variant="h1" >
-            Where do you want to go?
+          <Typography variant="h1">Where do you want to go?</Typography>
+          <Typography variant="h4">
+            Click Explore to plan your next adventure!
           </Typography>
-          <Typography variant="h4">Click Explore to plan your next adventure!</Typography>
         </Grid>
       </Grid>
     </Grid>

@@ -1,15 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Route, Redirect } from "react-router-dom";
-import {useAuth} from '../../context/AuthContext'
+import {CampyContext} from '../../context/CampyContext'
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { authTokens } = useAuth();
-
+  // const { authToken } = useContext(CampyContext);
+  const accessToken = localStorage.getItem("access_token");
+  
+  console.log(accessToken, '.........')
   return (
     <Route
       {...rest}
       render={props =>
-        authTokens ? (
+        accessToken ? (
           <Component {...props} />
         ) : (
           <Redirect to="/login" />

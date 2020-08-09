@@ -1,3 +1,19 @@
+// import React, { useContext, useEffect } from 'react'
+// import { CampyContext } from '../../context/CampyContext'
+// export const AddReview = () => {
+//   const { currentUser, getUser, userID } = useContext(CampyContext);
+
+//   useEffect(() => {
+//     const getUserData = async () => {
+//       await getUser(userID)
+//     }
+//     getUserData();
+//   }, [userID])
+//   return currentUser ? (
+//     <div>
+//       Add location stuff
+//     </div>
+//   ) : null;
 import React, { useState, useEffect } from 'react'
 import { Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -64,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AddReview = () => {
-  
+
   const classes = useStyles();
   const [rate, setRate] = useState('FREE!')
   const [daysStayed, setDaysStayed] = useState('')
@@ -80,7 +96,7 @@ export const AddReview = () => {
   const [success, setSuccess] = useState(false)
 
   const { id } = useParams()
-  const url = 'https://campy-backend.herokuapp.com/'
+  const url = 'https://localhost:5000/'
   const token = JSON.parse(localStorage.getItem("tokens"))
   const { user_id } = token
 
@@ -166,7 +182,7 @@ export const AddReview = () => {
             <Typography component="legend">Noise</Typography>
             <Rating
               value={noise}
-              name='noise' 
+              name='noise'
               size='small'
               onChange={(event, newValue) => {
                 setNoise(newValue);
@@ -203,7 +219,7 @@ export const AddReview = () => {
               onChange={(event, newValue) => {
                 setAccess(newValue);
               }} />
-          </Box>  
+          </Box>
         </Grid>
         <Grid item xs={3}>
           <Grid item className={classes.whiteFontColor} xs>
@@ -228,10 +244,10 @@ export const AddReview = () => {
               placeholder='Enter Comments' />
           </Grid>
           <Grid item>
-            <Button 
-              className={classes.button} 
-              variant='outlined' 
-              color='secondary'
+            <Button
+              className={classes.button}
+              variant='outlined'
+              color='primary'
               onClick={handleSubmit}>
                 Submit</Button>
           </Grid>
