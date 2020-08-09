@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core'
 import url from '../config';
 import DateFnsUtils from '@date-io/date-fns';
-import Axios from 'axios';
 import { CampyContext } from "../context/CampyContext";
 import { ErrorNotice } from "./ErrorNotice";
 import {
@@ -19,10 +18,11 @@ import {
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const { currentUser, getUser, userID } = useContext(CampyContext);
+    const { currentUser, getUser, userID, authAxios } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
+    const [message, setMessage] = React.useState(undefined)
     const [success, setSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -46,23 +46,21 @@ export default function CalendarMaterialUIPickers() {
 
 
     const postCalendar = async () => {
-        console.log(formatDate(selectedStartDate), "start date selected")
-        console.log(formatDate(selectedEndDate), "end date selected")
-        console.log(id, "id")
-        console.log(userID, "user ID")
-        console.log(currentUser, "current user")
-        console.log(CampyContext, "Campy Context")
-
-        await Axios.post(`${url}/locations/${id}/calendar/`, {
+        await authAxios.post(`/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,
             user_id: userID,
         })
         .then((result) => {
+            console.log(result)
             if (result.status === 200) {
+                setMessage(result.data["message"])
                 setSuccess(true)
-            } else {
+            } else if (result.status === 202) {
+                setMessage(result.data["message"])
+            }
+            else {
                 setIsError(true)
             }
         })
@@ -70,7 +68,6 @@ export default function CalendarMaterialUIPickers() {
             console.error(err) && setIsError(err);
         });
     }
-
 
     useEffect(() => {
         (async function getLocationCalendarDates() {
@@ -121,8 +118,9 @@ export default function CalendarMaterialUIPickers() {
                         }}
                     />
                 </Grid>
-                <Grid container alignContent="center">
-                    error stuff
+
+                <Grid container alignContent="center" justify="center">
+                    {message}
                 </Grid>
             </Grid>
             <Grid>
