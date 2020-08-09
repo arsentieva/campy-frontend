@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import { AddAPhoto, Send, Save } from "@material-ui/icons";
-import { useAuth } from "../../context/AuthContext";
+import { CampyContext } from "../../context/CampyContext";
 import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,11 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProfilePicUpload = () => {
-  const { authTokens } = useAuth();
-  const userId = authTokens.user_id;
+  const { currentUser, userID, authAxios } = useContext(CampyContext);
 
   const classes = useStyles();
-  const [currentUser, setCurrentUser] = useState(undefined);
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -70,14 +68,13 @@ export const ProfilePicUpload = () => {
   };
   console.log(url);
   const handleUpdate = () => {
-    console.log(url);
-    console.log(authTokens.first_name);
-    Axios.put(`http://localhost:5000/users/${userId}`, {
-      firstName: authTokens.first_name || currentUser.first_name,
-      lastName: authTokens.last_name || currentUser.last_name,
-      phoneNumber: authTokens.phone_number || currentUser.phone_number,
-      domicileType: authTokens.domicile_type || currentUser.user_info,
-      userInfo: authTokens.user_info || currentUser.user_info,
+   
+    authAxios.put(`/users/${userID}`, {
+      firstName: currentUser.first_name,
+      lastName: currentUser.last_name,
+      phoneNumber: currentUser.phone_number,
+      domicileType: currentUser.user_info,
+      userInfo: currentUser.user_info,
       imageURL: url,
     })
       .then((result) => {
@@ -94,70 +91,60 @@ export const ProfilePicUpload = () => {
   if (success) {
     return <Redirect to="/account" />;
   }
-  if (currentUser) {
-    return (
-      <Grid container className={classes.root}>
-        <Grid
-          item
-          container
-          direction="column"
-          justify="space-around"
-          alignContent="center"
-          spacing={4}
-          xs
-        >
-          <Grid item>
-            <InputLabel>
-              <AddAPhoto />
-              Upload New Profile Pic
-            </InputLabel>
-          </Grid>
-          <Grid item>
-            <TextField type="file" onChange={handleChange} />
-          </Grid>
-          <Grid item>
-            <IconButton onClick={handleUpload}>
-              <Send />
-              <Typography>Upload</Typography>
-            </IconButton>
-          </Grid>
+  return (
+    <Grid container className={classes.root}>
+      <Grid
+        item
+        container
+        direction="column"
+        justify="space-around"
+        alignContent="center"
+        spacing={4}
+        xs
+      >
+        <Grid item>
+          <InputLabel>
+            <AddAPhoto />
+            Upload New Profile Pic
+          </InputLabel>
         </Grid>
-        <Grid
-          item
-          xs
-          container
-          direction="column"
-          justify="space-around"
-          alignContent="center"
-        >
-          <Avatar
-            src={url}
-            alt="Profile"
-            style={{ width: "200px", height: "200px" }}
-          />
+        <Grid item>
+          <TextField type="file" onChange={handleChange} />
         </Grid>
-        <Grid
-          xs
-          item
-          container
-          direction="column"
-          justify="space-around"
-          alignContent="center"
-        >
-          <IconButton onClick={handleUpdate}>
-            <Save />
-            Save Changes
+        <Grid item>
+          <IconButton onClick={handleUpload}>
+            <Send />
+            <Typography>Upload</Typography>
           </IconButton>
         </Grid>
       </Grid>
-    );
-  } else {
-    Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
-      (response) => {
-        console.log(response.data);
-        setCurrentUser(response.data.user);
-      }
-    );
-    return null;
-  }
+      <Grid
+        item
+        xs
+        container
+        direction="column"
+        justify="space-around"
+        alignContent="center"
+      >
+        <Avatar
+          src={url}
+          alt="Profile"
+          style={{ width: "200px", height: "200px" }}
+        />
+      </Grid>
+      <Grid
+        xs
+        item
+        container
+        direction="column"
+        justify="space-around"
+        alignContent="center"
+      >
+        <IconButton onClick={handleUpdate}>
+          <Save />
+          Save Changes
+        </IconButton>
+      </Grid>
+    </Grid>
+  );
 };

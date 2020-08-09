@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
 } from "@material-ui/core";
 import { PermIdentity } from "@material-ui/icons";
+import {CampyContext} from '../../context/CampyContext'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -17,29 +17,34 @@ const useStyles = makeStyles((theme) => ({
 export const DemoUser = () => {
   const classes = useStyles();
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
- 
-  const { setAuthTokens } = useAuth();
+  const { login, authToken, setUserID, getUser, authAxios } = useContext(CampyContext);
+
+  const email = 'demo@mail.com'
+  const password = 'password';
+
+  if (authToken) {
+    return <Redirect to='/' />
+  }
 
   const postLogin = () => {
-    Axios.post("http://localhost:5000/auth/login", {
-      email: 'demo@mail.com',
-      password: 'password',
+    authAxios.post("/auth/login", {
+      email,
+      password,
     })
-      .then((result) => {
-        if (result.status === 200) {
-          setAuthTokens(result.data);
-          setLoggedIn(true);
-        } 
+      .then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          const { access_token, user_id } = res.data;
+          login(access_token);
+          setUserID(user_id);
+          getUser(user_id)
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
   };
 
-  if (isLoggedIn) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <div>

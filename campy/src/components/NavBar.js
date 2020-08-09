@@ -24,7 +24,7 @@ import logo2 from "../assets/darkLogo.png";
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: theme.palette.secondary.main,
+    background: '#f0eace',
     height: "100%",
   },
   logo: {

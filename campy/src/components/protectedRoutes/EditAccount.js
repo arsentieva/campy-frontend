@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 
 import {
@@ -10,10 +10,9 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Save, } from "@material-ui/icons";
+import { Save } from "@material-ui/icons";
 import Axios from "axios";
-import { useAuth } from "../../context/AuthContext";
-import { ErrorNotice } from "../ErrorNotice";
+import { CampyContext } from "../../context/CampyContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,11 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const EditAccount = () => {
   const classes = useStyles();
-  const { authTokens } = useAuth();
-  const userId = authTokens.user_id;
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const { currentUser, userID, authAxios } = useContext(CampyContext);
   const [success, setSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
@@ -41,7 +37,7 @@ export const EditAccount = () => {
   const [userInfo, setUserInfo] = useState();
 
   const handleUpdate = () => {
-    Axios.put(`http://localhost:5000/users/${userId}`, {
+    authAxios.put(`/users/${userID}`, {
       firstName: firstName || currentUser.first_name,
       lastName: lastName || currentUser.last_name,
       phoneNumber: phoneNumber || currentUser.phone_number,
@@ -52,28 +48,20 @@ export const EditAccount = () => {
       .then((result) => {
         if (result.status === 200) {
           setSuccess(true);
-        } else {
-          setIsError(true);
         }
       })
       .catch((err) => {
-        console.log(err) && setIsError(err);
+        console.log(err)
       });
   };
   if (success) {
     return <Redirect to="/account" />;
   }
-  if (currentUser) {
     return (
       <Grid container className={classes.root}>
         <input type="hidden" defaultValue={currentUser.image_url} />
         <Grid item container justify="center" alignContent="center" xs={4}>
-          {isError && (
-            <ErrorNotice
-              message={isError}
-              clearError={() => setIsError(undefined)}
-            />
-          )}
+          
           <Grid item>
             {currentUser.image_url !== null ? (
               <Avatar className={classes.picture} src={currentUser.image_url} />
@@ -159,13 +147,5 @@ export const EditAccount = () => {
         </Grid>
       </Grid>
     );
-  } else {
-    Axios.get(`http://localhost:5000/users/${userId}`, "User").then(
-      (response) => {
-        console.log(response.data);
-        setCurrentUser(response.data.user);
-      }
-    );
-    return null;
-  }
+ 
 };

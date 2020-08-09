@@ -1,9 +1,9 @@
-import React from 'react'
-import { useAuth } from "../../context/AuthContext";
+import React, {useContext} from 'react'
+import { CampyContext } from "../../context/CampyContext";
 
 
 export const MyMessages = () => {
-  const { authTokens } = useAuth();
+  const { currentUser } = useContext(CampyContext);
   return (
     <div>
 

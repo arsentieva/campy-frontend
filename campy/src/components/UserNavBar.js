@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Logout } from "./auth/Logout";
 import MobilerightMenuSlider from "@material-ui/core/Drawer";
@@ -29,13 +29,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/lightLogo2.png";
 import logo2 from "../assets/darkLogo.png";
 
-import { useAuth } from "../context/AuthContext";
+import { CampyContext } from "../context/CampyContext";
 
 //CSS Styles
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: "#FFFFC7",
+    background: "#f0eace",
     height: "100%",
   },
   logo: {
@@ -92,9 +92,9 @@ const menuItems = [
 ];
 
 export const UserNavBar = () => {
-  const { authTokens } = useAuth();
-  const userFirstName = authTokens.user_first_name;
-  const userImageUrl = authTokens.image_url;
+  const { currentUser, userID, getUser } = useContext(CampyContext);
+  console.log(userID)
+  // const currentUser = getUser(userID)
   const [state, setState] = useState({
     right: false,
   });
@@ -115,9 +115,9 @@ export const UserNavBar = () => {
       <Divider />
       <List>
         <ListItem justify="center">
-          <Avatar src={userImageUrl} />
+          <Avatar src={currentUser.image_url} />
           <ListItemText className={classes.listItem}>
-            Hello {`${userFirstName}`}!
+            Hello {`${currentUser.first_name}`}!
           </ListItemText>
         </ListItem>
         {menuItems.map((listItem, key) => (
@@ -136,7 +136,13 @@ export const UserNavBar = () => {
       </List>
     </Box>
   );
-
+  useEffect(() => {
+    const getUserData = async () => {
+      await getUser(userID)
+    }
+    getUserData();
+  }, [userID])
+  
   return (
     <>
       <Box component="nav">
@@ -175,7 +181,7 @@ export const UserNavBar = () => {
               open={state.right}
               onClose={toggleSlider("right", false)}
             >
-              {sideList("right")}
+              {currentUser ? sideList("right") : null}
             </MobilerightMenuSlider>
           </Toolbar>
         </AppBar>

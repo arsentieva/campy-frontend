@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { NavBar } from "./components/NavBar";
 import { UserNavBar } from "./components/UserNavBar";
 import { Home } from "./components/Home";
@@ -19,23 +19,18 @@ import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { ProfilePicUpload } from "./components/protectedRoutes/ProfilePicUpload";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
-import { AuthContext } from "./context/AuthContext";
+import { CampyContext } from "./context/CampyContext";
 import { CssBaseline } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
 
 function App() {
-  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
-  const [authTokens, setAuthTokens] = useState(existingTokens);
-
-  const setTokens = (data) => {
-    localStorage.setItem("tokens", JSON.stringify(data));
-    setAuthTokens(data);
-  };
-
+  const { authToken } = useContext(CampyContext);
   return (
-    <Router>
-      <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+    <ThemeProvider theme={theme}>
+      <Router>
         <CssBaseline>
-          {existingTokens !== null ? <UserNavBar /> : <NavBar />}
+          {authToken !== null ? <UserNavBar /> : <NavBar />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
@@ -51,16 +46,16 @@ function App() {
               component={ProfilePicUpload}
             />
             <ProtectedRoute path="/my-messages" component={MyMessages} />
+            <ProtectedRoute path="/message-detail" component={MessageDetail} />
 
             <ProtectedRoute path="/edit-account" component={EditAccount} />
             <ProtectedRoute path="/add-review" component={AddReview} />
             <ProtectedRoute path="/edit-location" component={EditLocation} />
-           
           </Switch>
           <Footer />
         </CssBaseline>
-      </AuthContext.Provider>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { ErrorNotice } from "../ErrorNotice";
+import { CampyContext } from "../../context/CampyContext";
 import { DemoUser } from "./DemoUser";
 import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,41 +17,40 @@ import logo from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#f0eace",
   },
 }));
 
 export const Login = () => {
   const classes = useStyles();
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const { login, authToken, setUserID, getUser} = useContext(CampyContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setAuthTokens } = useAuth();
 
   const postLogin = () => {
     Axios.post("http://localhost:5000/auth/login", {
       email,
       password,
     })
-      .then((result) => {
-        if (result.status === 200) {
-          setAuthTokens(result.data);
-          setLoggedIn(true);
-        } else {
-          setIsError(true);
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          const { access_token, user_id } = res.data;
+          login(access_token);
+          setUserID(user_id);
+          window.localStorage.setItem("user_id", user_id);
+          getUser(user_id);
         }
       })
       .catch((err) => {
-        console.log(err) && setIsError(err);
+        console.log(err);
       });
   };
-
-  if (isLoggedIn) {
+  if (authToken) {
     return <Redirect to="/" />;
   }
-
   return (
     <>
       <Grid container style={{ minHeight: "100vh" }}>
@@ -86,12 +84,6 @@ export const Login = () => {
             <Grid container justify="center">
               <img src={logo} alt="campy logo" width={300} />
             </Grid>
-            {isError && (
-              <ErrorNotice
-                message={isError}
-                clearError={() => setIsError(undefined)}
-              />
-            )}
 
             <TextField
               label="Email"
@@ -118,20 +110,24 @@ export const Login = () => {
                 ),
               }}
             />
-            <Grid container item direction='column' justify='center' alignContent='center'>
-              
-              <div style={{ height: 20 }} />
-            <Button
-              color="primary"
-              variant="contained"
-              width="100%"
-              onClick={postLogin}
+            <Grid
+              container
+              item
+              direction="column"
+              justify="center"
+              alignContent="center"
             >
-              Login
-            </Button>
-            <DemoUser />
-            <div style={{ height: 20 }} />
-
+              <div style={{ height: 20 }} />
+              <Button
+                color="primary"
+                variant="contained"
+                width="100%"
+                onClick={postLogin}
+              >
+                Login
+              </Button>
+              <DemoUser />
+              <div style={{ height: 20 }} />
             </Grid>
             <div style={{ height: 20 }} />
             <Typography>
