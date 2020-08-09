@@ -45,7 +45,7 @@ export const AppWithContext = () => {
 
     return User;
   };
-  
+
 
   return (
     <CampyContext.Provider
