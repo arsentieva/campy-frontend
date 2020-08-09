@@ -46,7 +46,8 @@ export default function CalendarMaterialUIPickers() {
 
 
     const postCalendar = async () => {
-        await authAxios.post(`/locations/${id}/calendar/`, {
+
+        await Axios.post(`${url}/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,

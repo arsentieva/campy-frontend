@@ -26,7 +26,7 @@ import theme from "./theme";
 
 function App() {
   const { authToken, currentUser, userID } = useContext(CampyContext);
-  console.log(authToken, currentUser, '****')
+  // console.log(authToken, currentUser, '****')
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -42,7 +42,7 @@ function App() {
             <Route path="/sign-up" component={SignUp} />
             <Route exact path="/about" component={About} />
             <Route path="/location-detail/:id" component={LocationDetail} />
-            <Route path="/locations" component={LocationList} />
+            <Route exact path="/locations" component={LocationList} />
             <Route path="/reviews" component={Reviews} />
             <ProtectedRoute
               path="/users/:userID/add-location"
