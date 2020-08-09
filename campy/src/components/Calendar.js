@@ -1,5 +1,5 @@
 import 'date-fns';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     Grid,
@@ -9,7 +9,7 @@ import {
 
 import DateFnsUtils from '@date-io/date-fns';
 import Axios from 'axios';
-import { useAuth } from "../context/AuthContext";
+import { CampyContext } from "../context/CampyContext";
 import { ErrorNotice } from "./ErrorNotice";
 import {
     MuiPickersUtilsProvider,
@@ -22,8 +22,7 @@ const localhost = 'http://localhost:5000'
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const { authTokens } = useAuth();
-    const user_id = authTokens.user_id;
+    const { currentUser, userID } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
@@ -58,13 +57,12 @@ export default function CalendarMaterialUIPickers() {
         console.log(formatDate(selectedStartDate), "start date selected")
         console.log(formatDate(selectedEndDate), "end date selected")
         console.log(id, "id")
-        console.log(user_id, "user_id")
 
         await Axios.post(`${localhost}/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,
-            user_id: user_id,
+            user_id: userID,
         })
         .then((result) => {
             if (result.status === 200) {
