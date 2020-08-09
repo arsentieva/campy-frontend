@@ -50,11 +50,12 @@ export default function CalendarMaterialUIPickers() {
 
 
     const postCalendar = async () => {
-        console.log(formatDate(selectedStartDate), "start date selected")
-        console.log(formatDate(selectedEndDate), "end date selected")
-        console.log(id, "id")
+        // console.log(formatDate(selectedStartDate), "start date selected")
+        // console.log(formatDate(selectedEndDate), "end date selected")
+        // console.log(id, "id")
 
         await Axios.post(`${url}/locations/${id}/calendar/`, {
+
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,
