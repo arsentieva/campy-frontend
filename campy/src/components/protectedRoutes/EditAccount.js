@@ -149,6 +149,19 @@ export const EditAccount = () => {
           </IconButton>
         </Grid>
       </Grid>
+<<<<<<< HEAD
     </Grid>
   ) : null;
+=======
+    );
+  } else {
+    Axios.get(`https://campy-backend.herokuapp.com/users/${userId}`, "User").then(
+      (response) => {
+        console.log(response.data);
+        setCurrentUser(response.data.user);
+      }
+    );
+    return null;
+  }
+>>>>>>> 8bd48c5d793be0f023912846e2893e1f6e32c89d
 };

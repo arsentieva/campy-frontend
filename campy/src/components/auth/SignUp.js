@@ -46,7 +46,7 @@ if (authToken) {
       });
   };
   const postRegister = () => {
-    Axios.post("http://localhost:5000/auth/signup", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/signup", {
       firstName,
       lastName,
       email,
