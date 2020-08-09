@@ -30,7 +30,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
 
   const postLogin = () => {
-    Axios.post("http://localhost:5000/auth/login", {
+    Axios.post("https://campy-backend.herokuapp.com/auth/login", {
       email,
       password,
     })

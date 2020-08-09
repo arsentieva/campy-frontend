@@ -27,6 +27,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Button from '@material-ui/core/Button'
 import Axios from "axios"
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#22577A',
     height: '100vh',
     width: '100vw',
-    margin: '75px 0px 50px 0px',
+    margin: '75px 0px 0px 0px',
     paddingTop: '100px',
     color: 'white',
     '& > *': {
@@ -92,13 +93,12 @@ export const AddReview = () => {
   const [siteQuality, setSiteQuality] = useState(0)
   const [comments, setComments] = useState('')
   const [location, setLocation] = useState({ image_urls: [] })
-  const [review, setReview] = useState([])
-  const [success, setSuccess] = useState(false)
 
   const { id } = useParams()
-  const url = 'https://localhost:5000/'
+  const url = 'https://campy-backend.herokuapp.com/'
   const token = JSON.parse(localStorage.getItem("tokens"))
   const { user_id } = token
+  const history = useHistory()
 
   const handleChangeRate = e => {
     setRate(e.target.value)
@@ -122,20 +122,18 @@ export const AddReview = () => {
       'location_id': id
     }
     try {
-      const res = await fetch(`${url}locations/${id}/reviews`, {
+      const res = await fetch(`${url}locations/${id}/reviews/`, {
         method: 'POST',
-        mode: 'cors',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       })
       if (res.ok) {
-        const json = await res.json()
-        console.log(json)
+        history.push(`/location-detail/${id}`)
       }
     } catch(e) {
-
+      console.log(e)
     }
   }
 
@@ -217,7 +215,7 @@ export const AddReview = () => {
               name='siteQuality'
               size='small'
               onChange={(event, newValue) => {
-                setAccess(newValue);
+                setSiteQuality(newValue);
               }} />
           </Box>
         </Grid>
@@ -247,7 +245,7 @@ export const AddReview = () => {
             <Button
               className={classes.button}
               variant='outlined'
-              color='primary'
+              color='secondary'
               onClick={handleSubmit}>
                 Submit</Button>
           </Grid>
