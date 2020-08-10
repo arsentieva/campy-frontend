@@ -1,6 +1,6 @@
-import React, {useContext} from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {CampyContext} from '../../context/CampyContext'
+// import {CampyContext} from '../../context/CampyContext'
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
   // const { authToken } = useContext(CampyContext);

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import clsx from "clsx";
+import React, { useContext, useEffect } from "react";
 import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -15,9 +14,9 @@ import {
   Paper,
   Grid,
 } from "@material-ui/core";
-import { Edit, Today, Link } from "@material-ui/icons";
-import { red } from "@material-ui/core/colors";
+import { Edit, Today, Link, CodeSharp } from "@material-ui/icons";
 import url from "../../config";
+import defaultPic from '../../assets/default.jpg'
 
 import { CampyContext } from "../../context/CampyContext";
 
@@ -27,18 +26,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let locations = [];
 export const MyLocations = () => {
   const classes = useStyles();
-  const { currentUser, getUser, userID, authAxios } = useContext(CampyContext);
+  const { currentUser, getUser, userID } = useContext(CampyContext);
   const addLocationLink = `/users/${userID}/add-location`;
   console.log(userID);
 
-
   const getLocations = () => {
-    let locations = [];
     Axios.get(`${url}/locations/hosts/${userID}`)
       .then((response) => {
-        locations.push(response.data.locations);
+        const [result] = response.data.locations;
+        console.log(result)
+        locations.push(result)
       })
       .catch((err) => {
         console.log(err);
@@ -46,11 +46,9 @@ export const MyLocations = () => {
     return locations;
   };
   const myLocations = getLocations();
+  console.log(myLocations);
+  console.log(myLocations[0])
 
-  console.log(myLocations, "+++");
- 
-  
-  
 
   useEffect(() => {
     const getUserData = async () => {
@@ -61,20 +59,29 @@ export const MyLocations = () => {
   return currentUser ? (
     <Grid container className={classes.root}>
       <Grid item container>
-        {myLocations === [] ? (
+        {myLocations[0] === undefined ? (
           <Paper>
-              <Typography>You Do Not Have Any Locations Yet!</Typography>
-              <Typography>
-                Click <a href={addLocationLink}>HERE</a> to set one up!
-              </Typography>
+            <Typography>You Do Not Have Any Locations Yet!</Typography>
+            <Typography>
+              Click <a href={addLocationLink}>HERE</a> to set one up!
+            </Typography>
           </Paper>
         ) : (
           <Grid item container>
             {myLocations.map((location, key) => (
               <Paper key={key}>
-                <Typography variant='subtitle2' color='secondary'>{myLocations[location].address}</Typography>
-                
-             </Paper>
+                <Typography variant="subtitle2" color="primary">
+                  {myLocations[key].address}
+                </Typography>
+                {myLocations[key].image_urls !== null ? (
+                  <img
+                    src={myLocations[key].image_urls[0]}
+                    alt={myLocations[key].address}
+                  />
+                ) : (
+                  <img src={defaultPic} alt='default, no pics' />
+                )}
+              </Paper>
             ))}
           </Grid>
         )}

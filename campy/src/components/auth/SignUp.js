@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const SignUp = () => {
   const classes = useStyles();
-  const { login, authToken, setUserID, getUser, authAxios } = useContext(
+  const { login, authToken, setUserID, getUser} = useContext(
     CampyContext
   );
 

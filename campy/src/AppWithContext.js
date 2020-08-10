@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import App from "./App";
 import { CampyContext } from "./context/CampyContext";
 import Axios from "axios";
