@@ -101,6 +101,7 @@ export const ProfilePicUpload = () => {
       <Grid
         item
         container
+        component='form'
         direction="column"
         justify="space-around"
         alignContent="center"
