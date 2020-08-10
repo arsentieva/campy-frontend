@@ -6,9 +6,8 @@ import {
     Button,
     TextField
 } from '@material-ui/core'
-
+import url from '../config';
 import DateFnsUtils from '@date-io/date-fns';
-import Axios from 'axios';
 import { CampyContext } from "../context/CampyContext";
 import { ErrorNotice } from "./ErrorNotice";
 import {
@@ -16,16 +15,14 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-const hostedURL = 'https://campy-backend.herokuapp.com'
-const localhost = 'http://localhost:5000'
-
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const { currentUser, userID } = useContext(CampyContext);
+    const {getUser, userID, authAxios } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
+    const [message, setMessage] = React.useState(undefined)
     const [success, setSuccess] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -35,16 +32,11 @@ export default function CalendarMaterialUIPickers() {
             month: "2-digit",
             day: "2-digit",
           }).split("/")
-
-        // let s = [fdate.slice(0, 1)]
           const s = [fdate[2],fdate[0],fdate[1]].join("-")
-
         return s;
-
     }
 
     const handleStartDateChange = (date) => {
-        // console.log(date)
         setSelectedStartDate(date);
     };
 
@@ -52,22 +44,22 @@ export default function CalendarMaterialUIPickers() {
         setSelectedEndDate(date);
     }
 
-
     const postCalendar = async () => {
-        console.log(formatDate(selectedStartDate), "start date selected")
-        console.log(formatDate(selectedEndDate), "end date selected")
-        console.log(id, "id")
-
-        await Axios.post(`${localhost}/locations/${id}/calendar/`, {
+        await authAxios.post(`/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
             location_id: id,
             user_id: userID,
         })
         .then((result) => {
+            console.log(result)
             if (result.status === 200) {
+                setMessage(result.data["message"])
                 setSuccess(true)
-            } else {
+            } else if (result.status === 202) {
+                setMessage(result.data["message"])
+            }
+            else {
                 setIsError(true)
             }
         })
@@ -78,16 +70,25 @@ export default function CalendarMaterialUIPickers() {
 
     useEffect(() => {
         (async function getLocationCalendarDates() {
-            let dates = await fetch(`http://localhost:5000/locations/${id}/calendar/`);
+            let dates = await fetch(`${url}/locations/${id}/calendar/`);
             let json = await dates.json();
             setLocationCalendar(json.dates)
         })();
     }, []);
 
+    useEffect(() => {
+        const getUserData = async () => {
+            await getUser(userID)
+        }
+        getUserData();
+    }, [userID])
+
     return (
-        // use direction="column" to display down
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container direction="column">
+                <Grid container>
+                    <h1>Calendar!</h1>
+                </Grid>
                 <Grid container justify="space-around">
                     <KeyboardDatePicker
                         disableToolbar
@@ -116,17 +117,14 @@ export default function CalendarMaterialUIPickers() {
                         }}
                     />
                 </Grid>
+                <Grid container alignContent="center" justify="center">
+                    {message}
+                </Grid>
             </Grid>
             <Grid>
                 <Button variant="contained" color="primary" onClick={postCalendar}>Submit</Button>
-                <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button>
+                {/* <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button> */}
             </Grid>
         </MuiPickersUtilsProvider>
-    );
+    )
 }
-
-/**
- * TODO:
- * Set up Error Message Handling for returns from backend routes
- *
- */

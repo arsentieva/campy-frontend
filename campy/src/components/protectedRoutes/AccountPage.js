@@ -6,6 +6,7 @@ import { Edit } from "@material-ui/icons";
 import { CampyContext } from "../../context/CampyContext";
 import { MyLocations } from "./MyLocations";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: "72px",

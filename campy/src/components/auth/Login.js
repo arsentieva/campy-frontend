@@ -14,7 +14,7 @@ import {
 import { AccountCircle, LockRounded } from "@material-ui/icons";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
-
+import url from '../../config';
 const useStyles = makeStyles((theme) => ({
   formContainer: {
     backgroundColor: "#f0eace",
@@ -30,7 +30,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
 
   const postLogin = () => {
-    Axios.post("http://localhost:5000/auth/login", {
+    Axios.post(`${url}/auth/login`, {
       email,
       password,
     })

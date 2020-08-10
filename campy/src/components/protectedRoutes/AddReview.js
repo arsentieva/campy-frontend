@@ -27,14 +27,15 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Button from '@material-ui/core/Button'
 import Axios from "axios"
-
+import url from '../../config';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   background: {
     background: '#22577A',
     height: '100vh',
     width: '100vw',
-    margin: '75px 0px 50px 0px',
+    margin: '75px 0px 0px 0px',
     paddingTop: '100px',
     color: 'white',
     '& > *': {
@@ -92,13 +93,11 @@ export const AddReview = () => {
   const [siteQuality, setSiteQuality] = useState(0)
   const [comments, setComments] = useState('')
   const [location, setLocation] = useState({ image_urls: [] })
-  const [review, setReview] = useState([])
-  const [success, setSuccess] = useState(false)
 
   const { id } = useParams()
-  const url = 'https://localhost:5000/'
   const token = JSON.parse(localStorage.getItem("tokens"))
   const { user_id } = token
+  const history = useHistory()
 
   const handleChangeRate = e => {
     setRate(e.target.value)
@@ -110,7 +109,7 @@ export const AddReview = () => {
     setComments(e.target.value)
   }
   const handleSubmit = async () => {
-    const res = await Axios.post(`${url}locations/${id}/reviews`, {
+    const data = {
       'overall_rating': overallRating,
       noise,
       safety,
@@ -120,12 +119,26 @@ export const AddReview = () => {
       comments,
       user_id,
       'location_id': id
-    })
+    }
+    try {
+      const res = await fetch(`${url}locations/${id}/reviews/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      if (res.ok) {
+        history.push(`/location-detail/${id}`)
+      }
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
     (async function fetchLocation() {
-      const res = await fetch(`https://campy-backend.herokuapp.com/locations/${id}`)
+      const res = await fetch(`${url}/locations/${id}`)
       const json = await res.json()
       setLocation(json.location)
     })(); // semi-colon is needed for IIFE to work
@@ -201,7 +214,7 @@ export const AddReview = () => {
               name='siteQuality'
               size='small'
               onChange={(event, newValue) => {
-                setAccess(newValue);
+                setSiteQuality(newValue);
               }} />
           </Box>
         </Grid>
@@ -231,7 +244,7 @@ export const AddReview = () => {
             <Button
               className={classes.button}
               variant='outlined'
-              color='primary'
+              color='secondary'
               onClick={handleSubmit}>
                 Submit</Button>
           </Grid>
