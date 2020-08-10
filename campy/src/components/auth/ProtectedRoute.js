@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
   // const { authToken } = useContext(CampyContext);
   const accessToken = localStorage.getItem("access_token");
   
-  console.log(accessToken, '.........')
+  // console.log(accessToken, '.........')
   return (
     <Route
       {...rest}

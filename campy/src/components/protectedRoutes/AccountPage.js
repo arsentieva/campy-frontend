@@ -96,11 +96,11 @@ const editPictureLink = `/users/${userID}/edit-profile-pic`;
             <Typography>{currentUser.user_info || ""}</Typography>
           </Grid>
         </Grid>
-        <Grid container justify="center" xs={4} item></Grid>
+        <Grid container justify="center" xs={4} item>
+          <MyLocations />
+        </Grid>
       </Grid>
-      <Grid item>
-        <MyLocations />
-      </Grid>
+      <Grid item></Grid>
     </Grid>
   ) : null;
 };

@@ -88,6 +88,7 @@ export const Login = () => {
             <TextField
               label="Email"
               margin="normal"
+              autoComplete='email address'
               onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -101,6 +102,7 @@ export const Login = () => {
               label="Password"
               margin="normal"
               type="password"
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 startAdornment: (

@@ -27,7 +27,7 @@ export const AppWithContext = () => {
 
   const login = (token) => {
     window.localStorage.setItem("access_token", token);
-    console.log(token)
+    // console.log(token)
     setAuthToken(token);
     setIsLoggedIn(true);
   };

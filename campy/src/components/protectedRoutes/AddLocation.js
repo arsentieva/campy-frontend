@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CampyContext } from "../../context/CampyContext";
+import { useHistory, Redirect } from "react-router-dom";
 import {
   Grid,
   FormControl,
@@ -8,94 +9,113 @@ import {
   FormControlLabel,
   Checkbox,
   TextField,
-  Input,
+  Typography,
   TextareaAutosize,
   IconButton,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Send } from "@material-ui/icons";
+import Axios from "axios";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: "100px",
+    background: theme.palette.secondary.main,
+  },
+  button: {
+    width: "200px",
+  },
+}));
+const checkBoxStyles = (theme) => ({
+  root: {
+    "&$checked": {
+      color: "#3D70B2",
+    },
+  },
+  checked: {},
+});
 
+const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
 export const AddLocation = () => {
+  
+  const history = useHistory();
   const classes = useStyles();
   const { currentUser, getUser, userID, authAxios } = useContext(CampyContext);
-  const [id, setId] = useState(null);
+
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [gps_coords, setGPS_Coords] = useState("");
-  const image_urls = [];
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
   const [host_notes, setHost_Notes] = useState("");
-  const active = true;
   const user_id = userID;
-  const location_data = {
-    address,
-    city,
-    state,
-    gps_coords,
-    image_urls,
-    website,
-    description,
-    host_notes,
-    active,
-    user_id,
-  };
+  // console.log(user_id)
+
   const [electric_hookup, setElectric_Hookup] = useState(false);
   const [water_hookup, setWater_Hookup] = useState(false);
   const [septic_hookup, setSeptic_Hookup] = useState(false);
   const [assigned_parking, setAssigned_Parking] = useState(false);
+  const [water_front, setWater_Front] = useState(false);
   const [tow_vehicle_parking, setTow_Vehicle_Parking] = useState(false);
   const [trash_removal, setTrash_Removal] = useState(false);
   const [pets_allowed, setPets_Allowed] = useState(false);
   const [internet_access, setInternet_Access] = useState(false);
-  const amenity_data = {
-    electric_hookup,
-    water_hookup,
-    septic_hookup,
-    assigned_parking,
-    tow_vehicle_parking,
-    trash_removal,
-    pets_allowed,
-    internet_access,
-  };
 
   const [rv_compatible, setRv_Compatible] = useState(false);
   const [generators_allowed, setGenerators_Allowed] = useState(false);
   const [fires_allowed, setFires_Allowed] = useState(false);
   const [max_days, setMax_Days] = useState(0);
   const [pad_type, setPad_Type] = useState("");
-  const necessity_data = {
-    rv_compatible,
-    generators_allowed,
-    fires_allowed,
-    max_days,
-    pad_type,
-  };
+
+  let locationData = [];
 
   const handleSubmit = () => {
-    authAxios
-      .post("https://localhost:5000/locations", {
-        amenity_data,
-        necessity_data,
-      })
+    console.log(user_id);
+    Axios.post("http://localhost:5000/locations/", {
+      address: address,
+      city: city,
+      state: state,
+      gps_coords: gps_coords,
+      image_urls: [],
+      website: website,
+      description: description,
+      host_notes: host_notes,
+      active: true,
+      user_id: user_id,
+      electric_hookup: electric_hookup,
+      water_hookup: water_hookup,
+      septic_hookup: septic_hookup,
+      assigned_parking: assigned_parking,
+      tow_vehicle_parking: tow_vehicle_parking,
+      trash_removal: trash_removal,
+      water_front: water_front,
+      pets_allowed: pets_allowed,
+      internet_access: internet_access,
+      rv_compatible: rv_compatible,
+      generators_allowed: generators_allowed,
+      fires_allowed: fires_allowed,
+      max_days: max_days,
+      pad_type: pad_type,
+    })
       .then((res) => {
         if (res.status === 200) {
-          const { id } = res.data;
-          setId(id);
+          console.log(res);
+          const { location } = res.data;
+          for (const loc in location) {
+            locationData.push(`${loc}: ${location[loc]}`);
+          }
+          console.log(locationData);
+          const str = locationData[0]
+          const matches = str.match(/\d+/g);
+          const id = matches[0]
+          history.push(`/locations/${id}/edit-location-pic`);
         }
       })
-      .then((id) => handlePut(id));
+
+      .catch((err) => console.log(err));
   };
-  const handlePut = (id) => {
-    authAxios.put(`http://localhost:5000/locations/${id}`, {
-      location_data,
-      amenity_data,
-      necessity_data,
-    });
-  };
+  
 
   useEffect(() => {
     const getUserData = async () => {
@@ -104,65 +124,78 @@ export const AddLocation = () => {
     getUserData();
   }, [userID]);
   return currentUser ? (
-    <Grid container component="form" onSubmit={handleSubmit}>
-      <Grid item container direction="column">
+    <Grid
+      container
+      component="form"
+      className={classes.root}
+      spacing={5}
+      onSubmit={handleSubmit}
+    >
+      <Grid item xs={12} container justify="center">
+        <Typography color="primary" variant="h2">
+          Set Up a New Location
+        </Typography>
+      </Grid>
+      <Grid item xs={2} />
+      <Grid item xs={6} container direction="column">
         <TextField
-          lable="Street Address"
+          label="Street Address"
           placeholder="123 Main St."
           margin="dense"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
         <TextField
-          lable="City"
+          label="City"
           value={city}
           placeholder="Austin"
           margin="dense"
           onChange={(e) => setCity(e.target.value)}
         />
         <TextField
-          lable="State"
+          label="State"
           value={state}
           placeholder="Texas"
           margin="dense"
           onChange={(e) => setState(e.target.value)}
         />
         <TextField
-          lable="GPS Coordinates"
+          label="GPS Coordinates"
           value={gps_coords}
-          placeholder="ex: 90deg N, 50deg W"
+          placeholder="ex: '34.000872,-118.806839'"
           margin="dense"
           onChange={(e) => setGPS_Coords(e.target.value)}
         />
         <TextField
-          lable="Website"
+          label="Website"
           value={website}
           placeholder="ex: www.my-awesome-location.com"
           margin="dense"
           onChange={(e) => setWebsite(e.target.value)}
         />
         <TextField
-          lable="Short Description"
+          label="Short Description"
           value={description}
           placeholder="ex: Lovely waterfront cement pad with hookups"
           margin="dense"
           onChange={(e) => setDescription(e.target.value)}
         />
         <TextField
-          lable="Pad Type"
+          label="Pad Type"
           value={pad_type}
           placeholder="ex: paved, dirt, etc."
           margin="dense"
           onChange={(e) => setPad_Type(e.target.value)}
         />
-
-        <Input
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          label="Max Days Allowed"
           type="number"
-          lable="Max Days to Stay"
           value={max_days}
           margin="dense"
-          onChange={(e) => setPad_Type(e.target.value)}
+          onChange={(e) => setMax_Days(e.target.value)}
         />
+        <br />
         <TextareaAutosize
           value={host_notes}
           rowsMin={8}
@@ -170,130 +203,143 @@ export const AddLocation = () => {
           onChange={(e) => setHost_Notes(e.target.value)}
           placeholder="Enter any location specific notes you wish to share..."
         />
-        <TextField />
       </Grid>
-      <Grid item container>
-        <Grid item>
-          <FormControl component="fieldset" className={classes.FormControl}>
-            <FormLabel component="legend">Ammenities</FormLabel>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={electric_hookup}
-                    onChange={(e) => setElectric_Hookup(e.target.value)}
-                  />
-                }
-                label="Electric Hookup"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={water_hookup}
-                    onChange={(e) => setWater_Hookup(e.target.value)}
-                  />
-                }
-                label="Water Hookup"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={septic_hookup}
-                    onChange={(e) => setSeptic_Hookup(e.target.value)}
-                  />
-                }
-                label="Septic Hookup"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={assigned_parking}
-                    onChange={(e) => setAssigned_Parking(e.target.value)}
-                  />
-                }
-                label="Assigned Parking"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={tow_vehicle_parking}
-                    onChange={(e) => setTow_Vehicle_Parking(e.target.value)}
-                  />
-                }
-                label="Parking for Tow Vehicle"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={trash_removal}
-                    onChange={(e) => setTrash_Removal(e.target.value)}
-                  />
-                }
-                label="Trash Removal"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={pets_allowed}
-                    onChange={(e) => setPets_Allowed(e.target.value)}
-                  />
-                }
-                label="Pets Allowed"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={internet_access}
-                    onChange={(e) => setInternet_Access(e.target.value)}
-                  />
-                }
-                label="Internet Access"
-              />
-            </FormGroup>
-          </FormControl>
+
+      <Grid container item xs={3}>
+        <Grid item direction="column" spacing={3} container>
+          <Grid item>
+            <FormControl component="fieldset" className={classes.FormControl}>
+              <FormLabel component="legend">Ammenities</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={electric_hookup}
+                      onChange={(e) => setElectric_Hookup(!electric_hookup)}
+                    />
+                  }
+                  label="Electric Hookup"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={water_hookup}
+                      onChange={(e) => setWater_Hookup(!water_hookup)}
+                    />
+                  }
+                  label="Water Hookup"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={septic_hookup}
+                      onChange={(e) => setSeptic_Hookup(!septic_hookup)}
+                    />
+                  }
+                  label="Septic Hookup"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={assigned_parking}
+                      onChange={(e) => setAssigned_Parking(!assigned_parking)}
+                    />
+                  }
+                  label="Assigned Parking"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={tow_vehicle_parking}
+                      onChange={(e) =>
+                        setTow_Vehicle_Parking(!tow_vehicle_parking)
+                      }
+                    />
+                  }
+                  label="Parking for Tow Vehicle"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={trash_removal}
+                      onChange={(e) => setTrash_Removal(!trash_removal)}
+                    />
+                  }
+                  label="Trash Removal"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={pets_allowed}
+                      onChange={(e) => setPets_Allowed(!pets_allowed)}
+                    />
+                  }
+                  label="Pets Allowed"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={internet_access}
+                      onChange={(e) => setInternet_Access(!internet_access)}
+                    />
+                  }
+                  label="Internet Access"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={water_front}
+                      onChange={(e) => setWater_Front(!water_front)}
+                    />
+                  }
+                  label="Water Front"
+                />
+              </FormGroup>
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl component="fieldset" className={classes.FormControl}>
+              <FormLabel component="legend">Necessities</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={rv_compatible}
+                      onChange={(e) => setRv_Compatible(!rv_compatible)}
+                    />
+                  }
+                  label="RV Compatible"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={generators_allowed}
+                      onChange={(e) =>
+                        setGenerators_Allowed(!generators_allowed)
+                      }
+                    />
+                  }
+                  label="Generators Allowed"
+                />
+                <FormControlLabel
+                  control={
+                    <CustomCheckbox
+                      value={fires_allowed}
+                      onChange={(e) => setFires_Allowed(!fires_allowed)}
+                    />
+                  }
+                  label="Fires Allowed"
+                />
+                <br />
+              </FormGroup>
+              <IconButton onClick={handleSubmit} className={classes.button}>
+                <Send />
+                <Typography>Submit</Typography>
+              </IconButton>
+            </FormControl>
+          </Grid>
         </Grid>
-        <Grid item>
-          <FormControl component="fieldset" className={classes.FormControl}>
-            <FormLabel component="legend">Necessities</FormLabel>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={rv_compatible}
-                    onChange={(e) => setRv_Compatible(e.target.value)}
-                  />
-                }
-                label="RV Compatible"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={generators_allowed}
-                    onChange={(e) => setGenerators_Allowed(e.target.value)}
-                  />
-                }
-                label="Generators Allowed"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={fires_allowed}
-                    onChange={(e) => setFires_Allowed(e.target.value)}
-                  />
-                }
-                label="Fires Allowed"
-              />
-            </FormGroup>
-          </FormControl>
-        </Grid>
       </Grid>
-      <Grid item container>
-        <FormGroup></FormGroup>
-      </Grid>
-      <IconButton>
-        <Send />
-        Submit Location
-      </IconButton>
     </Grid>
   ) : null;
 };
