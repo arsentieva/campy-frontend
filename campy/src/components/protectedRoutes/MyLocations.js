@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import { Edit, Today, Link } from "@material-ui/icons";
 import { red } from "@material-ui/core/colors";
+import url from "../../config";
 
 import { CampyContext } from "../../context/CampyContext";
 
@@ -35,7 +36,7 @@ export const MyLocations = () => {
 
   const getLocations = () => {
     let locations = [];
-    Axios.get(`http://localhost:5000/locations/hosts/${userID}`)
+    Axios.get(`${url}/locations/hosts/${userID}`)
       .then((response) => {
         locations.push(response.data.locations);
       })

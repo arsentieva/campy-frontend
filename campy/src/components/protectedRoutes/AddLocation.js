@@ -16,6 +16,7 @@ import {
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Send } from "@material-ui/icons";
 import Axios from "axios";
+import url from "../../config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,7 @@ export const AddLocation = () => {
 
   const handleSubmit = () => {
     console.log(user_id);
-    Axios.post("http://localhost:5000/locations/", {
+    Axios.post(`${url}/locations`, {
       address: address,
       city: city,
       state: state,

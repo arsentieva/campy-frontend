@@ -15,6 +15,8 @@ import {
 import { AddAPhoto, Send, Save } from "@material-ui/icons";
 import { CampyContext } from "../../context/CampyContext";
 import Axios from "axios";
+import url from "../../config";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,7 +86,7 @@ export const UploadLocationPics = () => {
 
   useEffect(() => {
     (async function fetchLocation() {
-      const res = await fetch(`http://localhost:5000/locations/${id}`);
+      const res = await fetch(`${url}/locations/${id}`);
       const json = await res.json();
       setLocation(json.location);
     })(); // semi-colon is needed for IIFE to work
