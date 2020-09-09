@@ -29,8 +29,8 @@ export const AppWithContext = () => {
       } 
   
     const { user } = await response.json();
-    
     setCurrentUser(user);
+    
     } catch (error) {
       if (error) {
       console.log(error.status)

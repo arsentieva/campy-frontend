@@ -28,110 +28,52 @@ export const SignUp = () => {
     return <Redirect to="/" />;
   }
 
-  const loginNewUser = () => {
-    Axios
-      .post(`${url}/auth/login`, {
-        email,
-        password,
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          const { access_token, user_id } = res.data;
-          login(access_token);
-          getUser(user_id);
-          
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const postRegister = () => {
-    Axios.post(`${url}/auth/signup`, {
+  const handleSignup = async () => {
+    let values = {  
       firstName,
       lastName,
       email,
       password,
-      phoneNumber,
-    }).then(({ email, password }) => loginNewUser({ email, password }));
-  };
-// TODO login on a sign up/ no need to make a separate call to login
+      phoneNumber};
+
+    try{
+      const res = await fetch(`${url}/auth/signup`, {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!res.ok) {
+        throw res;
+      }
+      const { access_token, user_id } = await res.json();
+      login(access_token);
+      getUser(user_id);
+
+    } catch (error) {
+      console.log(error);
+    }
+};
+
   return (
     <div>
       <Grid container style={{ minHeight: "98vh" }}>
         <Grid item xs={12} sm={6}>
-          <img
-            src={camperPic}
-            alt="camper under stars"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              margin: 0,
-              padding: 0,
-            }}
-          />
+          <img src={camperPic} alt="camper under stars" style={{ width: "100%", height: "100%", objectFit: "cover", margin: 0, padding: 0 }}/>
         </Grid>
-
-        <Grid
-          className={classes.formContainer}
-          component="form"
-          container
-          item
-          xs={12}
-          sm={6}
-          alignItems="center"
-          justify="space-between"
-          direction="column"
-          onSubmit={postRegister}
-          style={{ padding: 10 }}
-        >
+        <Grid className={classes.formContainer} container item xs={12} sm={6} alignItems="center" justify="space-between" direction="column" style={{ padding: 10 }}>
           <div />
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Grid container justify="center">
               <img src={logo} alt="campy logo" width={300} />
             </Grid>
-            <TextField
-              label="First Name"
-              margin="normal"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <TextField
-              label="Last Name"
-              margin="normal"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            <TextField
-              type="email"
-              label="Email"
-              margin="normal"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <TextField
-              type="phone"
-              label="Phone Number"
-              margin="normal"
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <TextField
-              type="password"
-              label="Password"
-              margin="normal"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
+            <TextField label="First Name" margin="normal" onChange={(e) => setFirstName(e.target.value)}/>
+            <TextField label="Last Name" margin="normal" onChange={(e) => setLastName(e.target.value)}/>
+            <TextField type="email" label="Email" margin="normal" onChange={(e) => setEmail(e.target.value)}/>
+            <TextField type="phone" label="Phone Number" margin="normal" onChange={(e) => setPhoneNumber(e.target.value)}/>
+            <TextField type="password" label="Password" margin="normal" onChange={(e) => setPassword(e.target.value)}/>
             <div style={{ height: 20 }} />
             <div style={{ height: 20 }} />
-            <Button
-              color="primary"
-              onClick={postRegister}
-              variant="contained"
-              width="100%"
-            >
-              Submit
-            </Button>
+            <Button color="primary" onClick={handleSignup} variant="contained" width="100%">Submit</Button>
             <div style={{ height: 20 }} />
             <Typography>
               Already have an account? <a href="/login">Login Here!</a>
