@@ -27,7 +27,9 @@ export const AppWithContext = () => {
       if (!response.ok) {
         throw response;
       } 
-    const { user } = response.json();
+  
+    const { user } = await response.json();
+    
     setCurrentUser(user);
     } catch (error) {
       if (error) {
