@@ -16,9 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const SignUp = () => {
   const classes = useStyles();
-  const { login, authToken, setUserID, getUser} = useContext(
-    CampyContext
-  );
+  const { login, authToken, getUser} = useContext(CampyContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -41,8 +39,8 @@ export const SignUp = () => {
         if (res.status === 200) {
           const { access_token, user_id } = res.data;
           login(access_token);
-          setUserID(user_id);
           getUser(user_id);
+          
         }
       })
       .catch((err) => {
@@ -58,7 +56,7 @@ export const SignUp = () => {
       phoneNumber,
     }).then(({ email, password }) => loginNewUser({ email, password }));
   };
-
+// TODO login on a sign up/ no need to make a separate call to login
   return (
     <div>
       <Grid container style={{ minHeight: "98vh" }}>

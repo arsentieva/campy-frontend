@@ -52,9 +52,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-export const UserNavBar = ({ currentUser }) => {
-  const { userID, getUser } = useContext(CampyContext);
+export const UserNavBar = () => {
+  const { currentUser } = useContext(CampyContext);
   const menuItems = [
     {
       listIcon: <Home />,
@@ -69,22 +68,26 @@ export const UserNavBar = ({ currentUser }) => {
     {
       listIcon: <AccountBox />,
       listText: "My Account",
-      listPath: `/users/${userID}/account`,
+      listPath: `/user/account`,
+      // TODO do not expose the user id in the url
     },
     {
       listIcon: <AddLocation />,
       listText: "Host a location",
-      listPath: `/users/${userID}/add-location`,
+      listPath: `/user/add-location`,
+      // TODO do not expose the user id in the url
     },
     {
       listIcon: <CalendarToday />,
       listText: "My Adventures",
-      listPath: `/users/${userID}/schedule`,
+      listPath: `/user/schedule`,
+      // TODO do not expose the user id in the url
     },
     {
       listIcon: <Email />,
       listText: "My Messages",
-      listPath: `/users/${userID}/my-messages`,
+      listPath: `/user/messages`,
+      // TODO do not expose the user id in the url
     },
 
     {
@@ -135,13 +138,7 @@ export const UserNavBar = ({ currentUser }) => {
       </List>
     </Box>
   );
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID);
-    };
-    getUserData();
-  }, [userID]);
-
+ 
   return (
     <>
       <Box component="nav">

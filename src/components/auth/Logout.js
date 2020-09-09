@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Logout = () => {
-  const { logOut } = useContext(CampyContext);
+  const { logOut } = useContext(CampyContext); //TODO not need to use context to logout
   const history = useHistory();
   const classes = useStyles();
   const handleLogOut = () => {

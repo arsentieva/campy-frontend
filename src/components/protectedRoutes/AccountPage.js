@@ -19,17 +19,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export const AccountPage = () => {
-  const { currentUser, getUser, userID } = useContext(CampyContext);
-  const editLink = `/users/${userID}/edit-account`;
-const editPictureLink = `/users/${userID}/edit-profile-pic`;
+  const { currentUser } = useContext(CampyContext);
+  const editLink = `/user/edit-account`;
+const editPictureLink = `/user/edit-profile-pic`;
   
   const classes = useStyles();
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID)
-    }
-    getUserData();
-  }, [userID])
+
 
   return currentUser ? (
     <Grid container className={classes.root}>

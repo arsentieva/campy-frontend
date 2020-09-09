@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const UploadLocationPics = () => {
-  const { currentUser, userID, authAxios, getUser } = useContext(CampyContext);
+  const { currentUser, authAxios } = useContext(CampyContext);
   const history = useHistory();
   const classes = useStyles();
   const id = window.location.pathname.split("/")[2];
@@ -107,7 +107,6 @@ export const UploadLocationPics = () => {
         description: location.description,
         host_notes: location.host_notes,
         active: true,
-        user_id: userID,
         electric_hookup: location.electric_hookup,
         water_hookup: location.water_hookup,
         septic_hookup: location.septic_hookup,
@@ -138,12 +137,6 @@ export const UploadLocationPics = () => {
       });
   };
 
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID);
-    };
-    getUserData();
-  }, [userID]);
   return currentUser ? (
     <form className={classes.root}>
       <label>

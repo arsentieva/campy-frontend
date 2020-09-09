@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export const Login = () => {
   const classes = useStyles();
 
-  const { login, authToken, setUserID, getUser} = useContext(CampyContext);
+  const { login, authToken, getUser} = useContext(CampyContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,9 +39,8 @@ export const Login = () => {
         if (res.status === 200) {
           const { access_token, user_id } = res.data;
           login(access_token);
-          setUserID(user_id);
-          window.localStorage.setItem("user_id", user_id);
           getUser(user_id);
+          // TODO refactor the need of userid
         }
       })
       .catch((err) => {

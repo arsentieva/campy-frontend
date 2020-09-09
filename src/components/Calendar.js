@@ -18,7 +18,7 @@ import {
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const {getUser, userID, authAxios } = useContext(CampyContext);
+    const {getUser, authAxios } = useContext(CampyContext);   
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
@@ -48,8 +48,6 @@ export default function CalendarMaterialUIPickers() {
         await authAxios.post(`/locations/${id}/calendar/`, {
             start_date: formatDate(selectedStartDate),
             end_date: formatDate(selectedEndDate),
-            location_id: id,
-            user_id: userID,
         })
         .then((result) => {
             console.log(result)
@@ -75,13 +73,6 @@ export default function CalendarMaterialUIPickers() {
             setLocationCalendar(json.dates)
         })();
     }, []);
-
-    useEffect(() => {
-        const getUserData = async () => {
-            await getUser(userID)
-        }
-        getUserData();
-    }, [userID])
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

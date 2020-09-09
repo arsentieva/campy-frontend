@@ -41,7 +41,7 @@ export const AddLocation = () => {
   
   const history = useHistory();
   const classes = useStyles();
-  const { currentUser, getUser, userID, authAxios } = useContext(CampyContext);
+  const { currentUser, authAxios } = useContext(CampyContext);
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -50,9 +50,7 @@ export const AddLocation = () => {
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
   const [host_notes, setHost_Notes] = useState("");
-  const user_id = userID;
-  // console.log(user_id)
-
+  
   const [electric_hookup, setElectric_Hookup] = useState(false);
   const [water_hookup, setWater_Hookup] = useState(false);
   const [septic_hookup, setSeptic_Hookup] = useState(false);
@@ -72,7 +70,6 @@ export const AddLocation = () => {
   let locationData = [];
 
   const handleSubmit = () => {
-    console.log(user_id);
     Axios.post(`${url}/locations`, {
       address: address,
       city: city,
@@ -83,7 +80,6 @@ export const AddLocation = () => {
       description: description,
       host_notes: host_notes,
       active: true,
-      user_id: user_id,
       electric_hookup: electric_hookup,
       water_hookup: water_hookup,
       septic_hookup: septic_hookup,
@@ -117,13 +113,6 @@ export const AddLocation = () => {
       .catch((err) => console.log(err));
   };
   
-
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID);
-    };
-    getUserData();
-  }, [userID]);
   return currentUser ? (
     <Grid
       container

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProfilePicUpload = () => {
-  const { currentUser, userID, authAxios, getUser } = useContext(CampyContext);
+  const { currentUser, authAxios } = useContext(CampyContext);
   const history = useHistory();
   const classes = useStyles();
   const [image, setImage] = useState(null);
@@ -69,7 +69,7 @@ export const ProfilePicUpload = () => {
   console.log(url);
   const handleUpdate = () => {
    
-    authAxios.put(`/users/${userID}`, {
+    authAxios.put(`/user/`, {
       firstName: currentUser.first_name,
       lastName: currentUser.last_name,
       phoneNumber: currentUser.phone_number,
@@ -80,7 +80,7 @@ export const ProfilePicUpload = () => {
       .then((result) => {
         if (result.status === 200) {
           setSuccess(true);
-          history.push(`/users/${userID}/account`)
+          history.push(`/user/account`)
         } else {
           setIsError(true);
         }
@@ -90,12 +90,6 @@ export const ProfilePicUpload = () => {
       });
   };
   
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID)
-    }
-    getUserData();
-  }, [userID])
   return currentUser ? (
     <Grid container className={classes.root}>
       <Grid

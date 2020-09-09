@@ -6,12 +6,10 @@ import url from './config';
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("access_token");
-  const user_id = localStorage.getItem("user_id");
   const [authToken, setAuthToken] = useState(accessToken);
   const [isLoggedIn, setIsLoggedIn] = useState(!accessToken);
   const [currentUser, setCurrentUser] = useState();
-  const [userID, setUserID] = useState(user_id);
-
+  
   const authAxios = Axios.create({
     baseURL: url,
     headers: {
@@ -32,13 +30,10 @@ export const AppWithContext = () => {
   };
 
   const getUser = async (userID) => {
-    // console.log(userID);
-    // console.log(accessToken);
     if (!userID) {
       return {};
     }
-    const User = await authAxios.get(`/users/${userID}`, "User").then((response) => {
-      // console.log(response);
+    const User = await authAxios.get(`/user/${userID}`, "User").then((response) => {
       const { user } = response.data;
       setCurrentUser(user);
     });
@@ -46,24 +41,10 @@ export const AppWithContext = () => {
     return User;
   };
 
-
+  
   return (
-    <CampyContext.Provider
-      value={{
-        authToken,
-        isLoggedIn,
-        login,
-        logOut,
-        currentUser,
-        setCurrentUser,
-        userID,
-        setUserID,
-        getUser,
-        authAxios,
-        url,
-      }}
-    >
-      <App accessToken={accessToken} />
+    <CampyContext.Provider value={{ authToken, isLoggedIn, login, logOut, currentUser, getUser }}>
+      <App />
     </CampyContext.Provider>
   );
 };

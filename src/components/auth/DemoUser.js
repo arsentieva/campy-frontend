@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-} from "@material-ui/core";
+import {  Button,} from "@material-ui/core";
 import { PermIdentity } from "@material-ui/icons";
 import {CampyContext} from '../../context/CampyContext'
 
@@ -16,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 export const DemoUser = () => {
   const classes = useStyles();
 
-  const { login, authToken, setUserID, getUser, authAxios } = useContext(CampyContext);
+  const { login, authToken, getUser, authAxios } = useContext(CampyContext);
 
   const email = 'demo@mail.com'
   const password = 'password';
@@ -35,8 +33,8 @@ export const DemoUser = () => {
         if (res.status === 200) {
           const { access_token, user_id } = res.data;
           login(access_token);
-          setUserID(user_id);
           getUser(user_id)
+          //TODO Refactor the code so it does not need to acces the user id
         }
       })
       .catch((err) => {

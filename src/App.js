@@ -26,17 +26,13 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme";
 
 function App() {
-  const { authToken, currentUser, userID } = useContext(CampyContext);
-  // console.log(authToken, currentUser, '****')
+  const { authToken } = useContext(CampyContext);
+  
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <CssBaseline>
-          {authToken !== null ? (
-            <UserNavBar currentUser={currentUser} />
-          ) : (
-            <NavBar />
-          )}
+          {authToken !== null ? (<UserNavBar />) : (<NavBar />)}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
@@ -46,28 +42,28 @@ function App() {
             <Route exact path="/locations" component={LocationList} />
             <Route path="/reviews" component={Reviews} />
             <ProtectedRoute
-              path="/users/:userID/add-location"
+              path="/user/add-location"
               component={AddLocation}
             />
             <ProtectedRoute
-              path="/users/:userID/account"
+              path="/user/account"
               component={AccountPage}
             />
             <ProtectedRoute
-              path="/users/:userID/edit-profile-pic"
+              path="/user/edit-profile-pic"
               component={ProfilePicUpload}
             />
             <ProtectedRoute
-              path="/users/:userID/my-messages"
+              path="/user/messages"
               component={MyMessages}
             />
             <ProtectedRoute
-              path="/users/:userID/my-messages/:messageID"
+              path="/user/messages/:messageID"
               component={MessageDetail}
             />
 
             <ProtectedRoute
-              path="/users/:userID/edit-account"
+              path="/user/edit-account"
               component={EditAccount}
             />
             <ProtectedRoute

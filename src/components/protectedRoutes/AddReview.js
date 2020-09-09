@@ -1,19 +1,3 @@
-// import React, { useContext, useEffect } from 'react'
-// import { CampyContext } from '../../context/CampyContext'
-// export const AddReview = () => {
-//   const { currentUser, getUser, userID } = useContext(CampyContext);
-
-//   useEffect(() => {
-//     const getUserData = async () => {
-//       await getUser(userID)
-//     }
-//     getUserData();
-//   }, [userID])
-//   return currentUser ? (
-//     <div>
-//       Add location stuff
-//     </div>
-//   ) : null;
 import React, { useState, useEffect } from 'react'
 import { Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'

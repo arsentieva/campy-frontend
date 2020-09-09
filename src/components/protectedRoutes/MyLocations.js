@@ -29,12 +29,11 @@ const useStyles = makeStyles((theme) => ({
 let locations = [];
 export const MyLocations = () => {
   const classes = useStyles();
-  const { currentUser, getUser, userID } = useContext(CampyContext);
-  const addLocationLink = `/users/${userID}/add-location`;
-  console.log(userID);
+  const { currentUser, getUser } = useContext(CampyContext);
+  const addLocationLink = `/user/add-location`;
 
   const getLocations = () => {
-    Axios.get(`${url}/locations/hosts/${userID}`)
+    Axios.get(`${url}/locations/hosts`)
       .then((response) => {
         const [result] = response.data.locations;
         console.log(result)
@@ -49,13 +48,6 @@ export const MyLocations = () => {
   console.log(myLocations);
   console.log(myLocations[0])
 
-
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID);
-    };
-    getUserData();
-  }, [userID]);
   return currentUser ? (
     <Grid container className={classes.root}>
       <Grid item container>

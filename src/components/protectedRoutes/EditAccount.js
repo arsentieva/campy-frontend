@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export const EditAccount = () => {
   const history = useHistory();
   const classes = useStyles();
-  const { currentUser, userID, authAxios, getUser } = useContext(CampyContext);
+  const { currentUser, authAxios } = useContext(CampyContext);
   const [success, setSuccess] = useState(false);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
@@ -38,7 +38,7 @@ export const EditAccount = () => {
 
   const handleUpdate = () => {
     authAxios
-      .put(`/users/${userID}`, {
+      .put(`/user/`, {
         firstName: firstName || currentUser.first_name,
         lastName: lastName || currentUser.last_name,
         phoneNumber: phoneNumber || currentUser.phone_number,
@@ -49,19 +49,14 @@ export const EditAccount = () => {
       .then((result) => {
         if (result.status === 200) {
           setSuccess(true);
-          history.push(`/users/${userID}/account`);
+          history.push(`/user/account`);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  useEffect(() => {
-    const getUserData = async () => {
-      await getUser(userID);
-    };
-    getUserData();
-  }, [userID]);
+
   return currentUser ? (
     <Grid container className={classes.root}>
       <input type="hidden" defaultValue={currentUser.image_url} />
