@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { CampyContext } from "../../context/CampyContext";
-import { DemoUser } from "./DemoUser";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Typography, InputAdornment} from "@material-ui/core";
-import { AccountCircle, LockRounded } from "@material-ui/icons";
+import { AccountCircle, LockRounded, PermIdentity } from "@material-ui/icons";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
 import url from '../../config';
@@ -22,11 +21,17 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (demo=false) => {
+    let values = {email, password};
+    if(demo) {
+      values.email = "demo@email.com";
+      values.password = "password";
+    }
+
     try {
       const res = await fetch(`${url}/auth/login`,{
         method: "POST",
-        body: JSON.stringify({email, password}),
+        body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) {
@@ -36,11 +41,15 @@ export const Login = () => {
       const { access_token, user_id} = await res.json();
       login(access_token);
       getUser(user_id);
-      
+
     } catch (error){
       console.log(error);
     }
   };
+
+  const handleDemoLogin = () => {
+    handleLogin(true);
+  }
 
   if (authToken) {
     return <Redirect to="/" />;
@@ -79,7 +88,11 @@ export const Login = () => {
             <Grid container item direction="column" justify="center" alignContent="center">
               <div style={{ height: 20 }} />
               <Button color="primary" variant="contained" width="100%" onClick={handleLogin}> Login </Button>
-              <DemoUser />
+              <div style={{ height: 20 }} />
+              <Button className={classes.button} color="primary" variant="contained" width="100%" onClick={handleDemoLogin}>
+                <PermIdentity />
+                Login As Demo User
+              </Button>
               <div style={{ height: 20 }} />
             </Grid>
             <div style={{ height: 20 }} />
