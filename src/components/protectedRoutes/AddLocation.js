@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 import { useHistory, Redirect } from "react-router-dom";
 import {
   Grid,

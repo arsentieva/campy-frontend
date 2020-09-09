@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import url from '../config';
 import DateFnsUtils from '@date-io/date-fns';
-import { CampyContext } from "../context/CampyContext";
+import { CampyContext } from "../CampyContext";
 import { ErrorNotice } from "./ErrorNotice";
 import {
     MuiPickersUtilsProvider,

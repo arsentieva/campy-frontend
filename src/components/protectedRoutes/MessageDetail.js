@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { CampyContext } from '../../context/CampyContext'
+import { CampyContext } from '../../CampyContext'
 import url from "../../config";
 export const MessageDetail = () => {
   const { currentUser } = useContext(CampyContext);

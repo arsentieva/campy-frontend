@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { MeetingRoom } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import {CampyContext} from '../../context/CampyContext'
+import {CampyContext} from '../../CampyContext'
 
 const useStyles = makeStyles((theme) => ({
   listItem: {

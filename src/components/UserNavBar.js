@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/lightLogo2.png";
 import logo2 from "../assets/darkLogo.png";
 
-import { CampyContext } from "../context/CampyContext";
+import { CampyContext } from "../CampyContext";
 
 //CSS Styles
 const useStyles = makeStyles((theme) => ({

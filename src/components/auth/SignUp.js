@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Typography } from "@material-ui/core";
 import Axios from "axios";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
 import url from '../../config';

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, IconButton, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Edit } from "@material-ui/icons";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 import { MyLocations } from "./MyLocations";
 
 

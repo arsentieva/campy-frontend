@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Save } from "@material-ui/icons";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {

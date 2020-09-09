@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Typography, InputAdornment} from "@material-ui/core";
 import { AccountCircle, LockRounded, PermIdentity } from "@material-ui/icons";

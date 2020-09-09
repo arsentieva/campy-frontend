@@ -13,7 +13,7 @@ import {
   GridList,
 } from "@material-ui/core";
 import { AddAPhoto, Send, Save } from "@material-ui/icons";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 import Axios from "axios";
 import url from "../../config";
 

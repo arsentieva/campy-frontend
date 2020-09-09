@@ -18,7 +18,7 @@ import { Edit, Today, Link, CodeSharp } from "@material-ui/icons";
 import url from "../../config";
 import defaultPic from '../../assets/default.jpg'
 
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {

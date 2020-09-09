@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import App from "./App";
-import { CampyContext } from "./context/CampyContext";
+import { CampyContext } from "./CampyContext";
 import url from './config';
 import { Report } from "@material-ui/icons";
 

@@ -11,7 +11,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import { AddAPhoto, Send, Save } from "@material-ui/icons";
-import { CampyContext } from "../../context/CampyContext";
+import { CampyContext } from "../../CampyContext";
 import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
