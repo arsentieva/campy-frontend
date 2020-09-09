@@ -1,30 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Logout } from "./auth/Logout";
 import MobilerightMenuSlider from "@material-ui/core/Drawer";
 import MenuIcon from "@material-ui/icons/Menu";
-import {
-  AppBar,
-  Toolbar,
-  ListItem,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  List,
-  Typography,
-  Avatar,
-  Box,
-} from "@material-ui/core";
-import {
-  Home,
-  Info,
-  Explore,
-  AccountBox,
-  AddLocation,
-  CalendarToday,
-  Email,
-} from "@material-ui/icons";
+import { AppBar, Toolbar, ListItem, IconButton, ListItemIcon, ListItemText, Divider, List, Typography, Avatar, Box} from "@material-ui/core";
+import { Home, Info, Explore, AccountBox, AddLocation, CalendarToday, Email} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/lightLogo2.png";
 import logo2 from "../assets/darkLogo.png";

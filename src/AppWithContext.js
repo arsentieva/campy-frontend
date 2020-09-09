@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import App from "./App";
 import { CampyContext } from "./context/CampyContext";
-import Axios from "axios";
 import url from './config';
+import { Report } from "@material-ui/icons";
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("access_token");
@@ -10,16 +10,8 @@ export const AppWithContext = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!accessToken);
   const [currentUser, setCurrentUser] = useState();
   
-  const authAxios = Axios.create({
-    baseURL: url,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
   const login = (token) => {
-    window.localStorage.setItem("access_token", token);
-    // console.log(token)
+    window.localStorage.setItem("campy_token", token);
     setAuthToken(token);
     setIsLoggedIn(true);
   };
@@ -30,15 +22,19 @@ export const AppWithContext = () => {
   };
 
   const getUser = async (userID) => {
-    if (!userID) {
-      return {};
-    }
-    const User = await authAxios.get(`/user/${userID}`, "User").then((response) => {
-      const { user } = response.data;
-      setCurrentUser(user);
-    });
+  try {
+    const response = await fetch(`${url}/user/${userID}`);
+      if (!response.ok) {
+        throw response;
+      } 
+    const { user } = response.json();
+    setCurrentUser(user);
+    } catch (error) {
+      if (error) {
+      console.log(error.status)
+      }
 
-    return User;
+    };
   };
 
   
