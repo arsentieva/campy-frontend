@@ -104,12 +104,11 @@ function getCurrentPosition() {
     console.log("got location")
 }
 
-getCurrentPosition()
-
 const images = [campImageOne, campImageTwo, campImageThree, campImageFour, campImageFive, campImageSix]
 
 export const GoogleMapComponent = () => {
 
+  getCurrentPosition();
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
   const panTo = useCallback(({lat, lng})=> {
