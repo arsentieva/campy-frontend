@@ -1,6 +1,6 @@
 import React, {useState, useRef, useCallback} from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import { Grid } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import mapStyle from "./mapStyle";
 import places from "./places";
 import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomplete";
@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "absolute",
     top: theme.spacing(13),
+    left: theme.spacing(5),
     maxWidth:400,
     height: 48,
     zIndex: 10,
@@ -28,9 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const containerStyle = {
-  width: "70vw",
+  width: "100vw",
   height: "100vh",
-
 };
 
 const options = {
@@ -70,7 +70,6 @@ function getCurrentPosition() {
 }
 
 export const Map = () => {
-
   getCurrentPosition();
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
@@ -98,9 +97,9 @@ export const Map = () => {
   let imageUrl= "http://maps.google.com/mapfiles/kml/shapes/campground.png";
 
   return (
-    <div>
-      <Grid container style={{ maxHeight: "100vh" }}>
-        <Grid item lg={6} sm={8} xl={4} xs={4} container alignContent="flex-end" justify="center" direction="column">
+    <Box>
+      <Grid container>
+        <Grid item>
           <Search panTo={panTo} />
           <Locate panTo={panTo} />
           <GoogleMap mapContainerStyle={containerStyle} center={{ lat, lng }} zoom={8} options={options} onLoad={onMapLoad}>
@@ -121,16 +120,16 @@ export const Map = () => {
             ))}
             {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
                 onCloseClick={() => setSelected(null)} >
-                <div>
+                <Box>
                   <h2> {selected.campgroundName} </h2>
-                </div>
+                </Box>
               </InfoWindow>
             ) : null}
             <></>
           </GoogleMap>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }
 
@@ -176,7 +175,7 @@ function Search({panTo}){
   };
 
    return (
-    <div className={classes.search}>
+    <Box className={classes.search}>
         <Combobox onSelect={handleSelect}>
           <ComboboxInput style={{ width: 400, height:48, borderRadius: 3, border: "2px solid #39A5A7"}}
             value={value}
@@ -192,7 +191,7 @@ function Search({panTo}){
             </ComboboxList>
           </ComboboxPopover>
         </Combobox>
-      </div>
+      </Box>
   );
 }
 
