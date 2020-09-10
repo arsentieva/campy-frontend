@@ -11,16 +11,16 @@ import "@reach/combobox/styles.css";
 const useStyles = makeStyles((theme) => ({
   search: {
     position: "absolute",
-    top: theme.spacing(13),
-    left: theme.spacing(5),
+    top: theme.spacing(10),
+    left: theme.spacing(60),
     maxWidth:400,
     height: 48,
     zIndex: 10,
   },
   locate: {
     position: "absolute",
-    top: theme.spacing(13),
-    right: theme.spacing(10),
+    top: theme.spacing(10),
+    right: theme.spacing(5),
     maxWidth:400,
     height: 48,
     zIndex: 10,

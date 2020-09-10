@@ -1,5 +1,5 @@
 import React from 'react'
-import { Map } from './GoogleMaps/Map'
+import { Explore } from './GoogleMaps/Explore'
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -12,7 +12,7 @@ export const LocationList = () => {
   const classes = useStyles();
   return (
     <div>
-      <Map className={classes.map} />
+      <Explore className={classes.map} />
     </div>
   )
 }
