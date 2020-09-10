@@ -49,25 +49,21 @@ export const UserNavBar = () => {
       listIcon: <AccountBox />,
       listText: "My Account",
       listPath: `/user/account`,
-      // TODO do not expose the user id in the url
     },
     {
       listIcon: <AddLocation />,
       listText: "Host a location",
       listPath: `/user/add-location`,
-      // TODO do not expose the user id in the url
     },
     {
       listIcon: <CalendarToday />,
       listText: "My Adventures",
       listPath: `/user/schedule`,
-      // TODO do not expose the user id in the url
     },
     {
       listIcon: <Email />,
       listText: "My Messages",
       listPath: `/user/messages`,
-      // TODO do not expose the user id in the url
     },
 
     {

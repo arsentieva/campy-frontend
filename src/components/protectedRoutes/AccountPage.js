@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export const AccountPage = () => {
   const { currentUser } = useContext(CampyContext);
   const editLink = `/user/edit-account`;
-const editPictureLink = `/user/edit-profile-pic`;
+  const editPictureLink = `/user/edit-profile-pic`;
   
   const classes = useStyles();
 
@@ -29,21 +29,14 @@ const editPictureLink = `/user/edit-profile-pic`;
   return currentUser ? (
     <Grid container className={classes.root}>
       <Grid container item>
-        <Grid
-          item
-          container
-          spacing={3}
-          direction="column"
-          justify="center"
-          alignContent="center"
-          xs={4}
-        >
+        <Grid item container spacing={3} direction="column" justify="center" alignContent="center" xs={4}>
           <Grid item>
-            {currentUser.image_url !== null ? (
-              <Avatar className={classes.picture} src={currentUser.image_url} />
-            ) : (
-              <Avatar className={classes.picture} />
-            )}
+            {
+            currentUser.image_url !== null ? 
+            (<Avatar className={classes.picture} src={currentUser.image_url} />) 
+            : (<Avatar className={classes.picture} />)
+            }
+
           </Grid>
           <Grid item>
             <IconButton component={Link} to={editPictureLink}>
@@ -58,15 +51,7 @@ const editPictureLink = `/user/edit-profile-pic`;
             </IconButton>
           </Grid>
         </Grid>
-        <Grid
-          container
-          item
-          direction="column"
-          justify="space-between"
-          alignContent="center"
-          xs={4}
-          spacing={3}
-        >
+        <Grid container item direction="column" justify="space-between" alignContent="center" xs={4} spacing={3}>
           <Grid item>
             <Typography>First Name</Typography>
             <Typography>{currentUser.first_name || ""}</Typography>
