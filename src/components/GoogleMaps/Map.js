@@ -7,14 +7,6 @@ import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomp
 import { makeStyles } from "@material-ui/core/styles";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import {ComplexGrid}  from "./ComplexGrid";
-import campImageOne from "../../assets/coupleByCamper.jpg"
-import campImageTwo from "../../assets/camperInField.jpg"
-import campImageThree from "../../assets/camperUnderStars.jpg"
-import campImageFour from "../../assets/groupAtTable.jpg"
-import campImageFive from "../../assets/personOnRV.jpg"
-import campImageSix from "../../assets/sittingOnCamper.jpg";
-
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -77,9 +69,7 @@ function getCurrentPosition() {
     console.log("got location")
 }
 
-const images = [campImageOne, campImageTwo, campImageThree, campImageFour, campImageFive, campImageSix]
-
-export const GoogleMapComponent = () => {
+export const Map = () => {
 
   getCurrentPosition();
   const mapRef= useRef();
@@ -110,14 +100,6 @@ export const GoogleMapComponent = () => {
   return (
     <div>
       <Grid container style={{ maxHeight: "100vh" }}>
-        <Grid item lg={4} sm={4} xl={2} xs={0}>
-          <div style={{ height: "80px" }} />
-          {places.slice(0, 5).map((place) => (
-            <div key={place.id}>
-              <ComplexGrid imagePath={images[place.id - 1]} campTitle={place.campgroundName} campState={place.state} campRating={place.rating} campMaxDays={place.maxDays}/>
-            </div>
-          ))}
-        </Grid>
         <Grid item lg={6} sm={8} xl={4} xs={4} container alignContent="flex-end" justify="center" direction="column">
           <Search panTo={panTo} />
           <Locate panTo={panTo} />
@@ -132,16 +114,13 @@ export const GoogleMapComponent = () => {
                   origin: new window.google.maps.Point(0, 0),
                   anchor: new window.google.maps.Point(15, 15),
                 }}
-                onClick={() => {
-                  setSelected(place);
+                onClick={() => {setSelected(place);
+                  // TODO navigate to clicked location
                 }}
               />
             ))}
-            {selected ? (
-              <InfoWindow
-                position={{ lat: selected.lat, lng: selected.lng }}
-                onCloseClick={() => setSelected(null)}
-              >
+            {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
+                onCloseClick={() => setSelected(null)} >
                 <div>
                   <h2> {selected.campgroundName} </h2>
                 </div>
