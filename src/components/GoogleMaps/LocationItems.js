@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { ComplexGrid } from "./ComplexGrid";
@@ -14,10 +14,6 @@ export const LocationItems = () => {
 
     const { loadLocations, locations } = useContext(CampyContext);
     const classes = useStyles();
-
-    useEffect(()=>{
-        loadLocations();
-    }, [])
     
     return (  
         <Box className={classes.root}>
@@ -25,7 +21,7 @@ export const LocationItems = () => {
          {
              locations ===undefined ? null :
              locations.map((location) => (
-                    <ComplexGrid key={location.id} />
+                    <ComplexGrid key={location.id} location={location} />
                 ))
         }
       

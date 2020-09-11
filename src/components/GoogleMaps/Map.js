@@ -1,11 +1,11 @@
-import React, {useState, useRef, useCallback} from "react";
+import React, {useState, useRef, useCallback, useContext} from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import { Grid, Box } from "@material-ui/core";
 import mapStyle from "./mapStyle";
-import places from "./places";
 import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
+import { CampyContext } from "../../CampyContext";
 import "@reach/combobox/styles.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -71,6 +71,7 @@ function getCurrentPosition() {
 
 export const Map = () => {
   getCurrentPosition();
+  const { locations } = useContext(CampyContext);
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
   const panTo = useCallback(({lat, lng})=> {
@@ -78,6 +79,15 @@ export const Map = () => {
     mapRef.current.setZoom(10);
   }, [])
 
+  const getLat = (loc) => {
+    let currentLat= loc.split(",")[0];
+    return parseFloat(currentLat.trim());
+  }
+  const getLng = (loc) => {
+    let currentLng= loc.split(",")[1];
+    return parseFloat(currentLng.trim());
+  }
+   
   const onMapLoad = useCallback((map)=> {
     mapRef.current= map;
   }, []);
@@ -103,17 +113,17 @@ export const Map = () => {
           <Search panTo={panTo} />
           <Locate panTo={panTo} />
           <GoogleMap mapContainerStyle={containerStyle} center={{ lat, lng }} zoom={8} options={options} onLoad={onMapLoad}>
-            {places.map((place) => (
-              <Marker
-                key={place.id}
-                position={{ lat: place.lat, lng: place.lng }}
+            { locations ===undefined ? null : locations.map((location) => (
+                <Marker
+                key={location.id}
+                position={{ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords) }}
                 icon={{
                   url: imageUrl,
                   scaledSize: new window.google.maps.Size(30, 30),
                   origin: new window.google.maps.Point(0, 0),
                   anchor: new window.google.maps.Point(15, 15),
                 }}
-                onClick={() => {setSelected(place);
+                onClick={() => {setSelected(location);
                   // TODO navigate to clicked location
                 }}
               />

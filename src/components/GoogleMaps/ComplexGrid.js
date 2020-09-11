@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
       marginLeft: theme.spacing(1),
-      marginTop: theme.spacing(10.5),
+      marginTop: theme.spacing(1),
     },
     paper: {
       padding: theme.spacing(2),
@@ -35,26 +35,23 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 
-export function ComplexGrid({ imagePath, campTitle, campState, campRating, campMaxDays}) {
+export function ComplexGrid({ location }) {
     const classes = useStyles();
   
     return (
       <div className={classes.root}>
         <Paper className={classes.paper} elevation={3}>
           <Grid container spacing={4}>
-            <Grid item>
-            <CardMedia  className={classes.cover} image={imagePath} title="Live from space album cover" />
-            </Grid>
             <Grid item xs={12} sm container>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1">{campTitle}</Typography>
-                  <Typography variant="body2" gutterBottom>{campState}</Typography>
+                  <Typography gutterBottom variant="subtitle1">{location.title}</Typography>
+                  <Typography variant="body2" gutterBottom>{location.state}</Typography>
                   <Box component="fieldset" mb={3} borderColor="transparent">
                     <Typography component="legend">Overall Rating</Typography>
                     <Rating
                       name="customized-empty"
-                      defaultValue={campRating}
+                      defaultValue={3}
                       precision={0.5}
                       emptyIcon={<StarBorderIcon fontSize="inherit"
                       size="large"
@@ -67,7 +64,7 @@ export function ComplexGrid({ imagePath, campTitle, campState, campRating, campM
                 <Grid item>
                   <IconButton >
                     <NightsStayIcon style={{fontSize: 40, color: "#39A5A7"}}/>
-                    <Typography variant="subtitle1">Max {campMaxDays} </Typography>
+                    <Typography variant="subtitle1">Max {2} </Typography>
                   </IconButton>
                 </Grid>
                   <IconButton >

@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect, useContext} from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { LocationItems } from "./LocationItems";
 import { Map } from "./Map";
+import { CampyContext } from "../../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
     root: {
      
     },
   }));
+  
 
   export const Explore = () => {
+    const { loadLocations } = useContext( CampyContext);
+    useEffect(()=>{
+      loadLocations();
+  }, [])
     const classes = useStyles();
     return (
         
