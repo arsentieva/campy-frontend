@@ -126,6 +126,7 @@ export const Map = () => {
    const handleSelection = (location) => {
     setSelected(location);
     panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
+    loadLocation(location.id);
    };
 
    const handleRedirect = (id) => {
