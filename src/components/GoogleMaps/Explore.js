@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
     const { loadLocations } = useContext( CampyContext);
     useEffect(()=>{
       loadLocations();
-  }, [])
+  }, []);
+
     const classes = useStyles();
     return (
         
