@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback, useContext} from "react";
+import React, {useState, useRef, useCallback, useContext, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import { Grid, Box, Button } from "@material-ui/core";
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const containerStyle = {
-  width: "100vw",
-  height: "96vh",
+  width: "75vw",
+  height: "97vh",
 };
 
 const options = {
@@ -49,6 +49,7 @@ function showCoords(position) {
   lng = position.coords.longitude;
 
 }
+
 function geo_error(error) {
   switch(error.code) {
       case error.TIMEOUT:
@@ -73,12 +74,12 @@ function getCurrentPosition() {
 export const Map = () => {
   getCurrentPosition();
   const history = useHistory();
-  const { locations, loadLocation } = useContext(CampyContext);
+  const { locations, location, loadLocation } = useContext(CampyContext);
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
   const panTo = useCallback(({lat, lng})=> {
     mapRef.current.panTo({lat, lng})
-    mapRef.current.setZoom(10);
+    // mapRef.current.setZoom(10);
   }, [])
 
   const getLat = (loc) => {
@@ -89,7 +90,19 @@ export const Map = () => {
     let currentLng= loc.split(",")[1];
     return parseFloat(currentLng.trim());
   }
-   
+
+  useEffect(()=>{
+   if(location) {
+     setSelected(location);
+     let thisLat = getLat(location.gps_coords);
+     let thisLng = getLng(location.gps_coords);
+     console.log(thisLat, thisLng);
+     panTo({ lat:thisLat, lng: thisLng});
+   } else {
+     setSelected(null);
+   }
+  }, [location]);
+  
   const onMapLoad = useCallback((map)=> {
     mapRef.current= map;
   }, []);
@@ -101,20 +114,22 @@ export const Map = () => {
 
   if (loadError) {
     return "Error loading maps";
-  }
+  };
+
   if ( !isLoaded) {
     return "Loading Maps";
-  }
+  };
 
    const handleSelection = (location) => {
     setSelected(location);
     panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
-   }
+   };
 
    const handleRedirect = (id) => {
     loadLocation(id);
     history.push(`/location-detail/${id}`);
-   }
+   };
+
 
   let imageUrl= "http://maps.google.com/mapfiles/kml/shapes/campground.png";
 

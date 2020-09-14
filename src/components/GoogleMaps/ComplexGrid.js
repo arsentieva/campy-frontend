@@ -1,10 +1,11 @@
-import React from "react";
-import { Grid, Typography, IconButton, CardMedia, Paper, Box } from "@material-ui/core";
+import React , { useContext }from "react";
+import { Grid, Typography, IconButton, Paper, Box } from "@material-ui/core";
 import WifiIcon from '@material-ui/icons/Wifi';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { makeStyles } from "@material-ui/core/styles";
+import { CampyContext } from "../../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,9 +40,13 @@ const useStyles = makeStyles((theme) => ({
 
 export function ComplexGrid({ location }) {
     const classes = useStyles();
+    const { loadLocation } = useContext(CampyContext);
+    const handleClick = () => {
+      loadLocation(location.id);
+    }
   
     return (
-      <div className={classes.root}>
+      <div className={classes.root} onClick={handleClick}>
         <Paper className={classes.paper} elevation={3}>
           <Grid container spacing={4}>
             <Grid item xs={12} sm container>

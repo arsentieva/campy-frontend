@@ -52,7 +52,7 @@ export const AppWithContext = () => {
 
   const loadLocation = async (id) => {
     try {
-    const res = await fetch(`${url}/location/${id}`);
+    const res = await fetch(`${url}/locations/${id}`);
     if(!res.ok){
       throw res;
     }
