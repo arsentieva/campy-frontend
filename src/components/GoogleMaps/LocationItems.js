@@ -1,10 +1,12 @@
-import React, { useContext, useRef, createRef, useEffect } from "react";
+import React, { useContext,  createRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CampyContext } from "../../CampyContext";
 import { Grid, Typography, IconButton, Paper, Box } from "@material-ui/core";
 import WifiIcon from '@material-ui/icons/Wifi';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Rating from '@material-ui/lab/Rating';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,14 +48,17 @@ const useStyles = makeStyles((theme) => ({
 export const LocationItems = () => {
   const { locations, location, loadLocation } = useContext(CampyContext);
   const refs = locations ? locations.reduce((acc, value) => {
-    acc[value.id] = React.createRef();
+    acc[value.id] = createRef();
     return acc;
   }, {}) : undefined;
   
     const scrollToLocationCard = (id) => {
       refs && refs[id].current && refs[id].current.scrollIntoView({behavior: "smooth"});
       }
+
     const classes = useStyles();
+
+    const history = useHistory();
 
     const handleClick = (id) => {
       loadLocation(id);
@@ -65,6 +70,10 @@ export const LocationItems = () => {
        }
      }, [location]);
     
+     const handleRedirect = (id) => {
+      loadLocation(id);
+      history.push(`/location-detail/${id}`);
+     }
     return (  
         <Box className={classes.root}>
          {   locations === undefined ? null :
@@ -92,15 +101,19 @@ export const LocationItems = () => {
                         </Grid>
                         <Grid item>
                           <Grid item>
-                            <IconButton >
                               <NightsStayIcon style={{fontSize: 20, color: "#39A5A7"}}/>
                               <Typography variant="subtitle1">Max {2} </Typography>
-                            </IconButton>
+                           
                           </Grid>
-                            <IconButton >
+                          <Grid item>
                               <WifiIcon style={{fontSize: 20, color: "#39A5A7"}}/>
+                          </Grid>
+                          <Grid item>
+                            <IconButton onClick={()=>handleRedirect(location.id)}>
+                              <OpenInNewIcon style={{fontSize: 30, color: "#39A5A7"}}/>
                             </IconButton>
                           </Grid>
+                      </Grid>
                       </Grid>
                     </Grid>
                   </Paper>
