@@ -104,6 +104,10 @@ export const Map = () => {
     return "Loading Maps";
   }
 
+   const handleSelection = (location) => {
+    setSelected(location);
+    panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
+   }
   let imageUrl= "http://maps.google.com/mapfiles/kml/shapes/campground.png";
 
   return (
@@ -123,15 +127,13 @@ export const Map = () => {
                   origin: new window.google.maps.Point(0, 0),
                   anchor: new window.google.maps.Point(15, 15),
                 }}
-                onClick={() => {setSelected(location);
-                  // TODO navigate to clicked location
-                }}
+                onClick={() => { handleSelection(location); }}
               />
             ))}
-            {selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
+            {selected ? (<InfoWindow position={{ lat: getLat(selected.gps_coords), lng: getLng(selected.gps_coords) }}
                 onCloseClick={() => setSelected(null)} >
                 <Box>
-                  <h2> {selected.campgroundName} </h2>
+                  <h2> {selected.title} </h2>
                 </Box>
               </InfoWindow>
             ) : null}
