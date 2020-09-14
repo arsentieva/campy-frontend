@@ -72,7 +72,6 @@ function getCurrentPosition() {
 }
 
 export const Map = () => {
-  getCurrentPosition();
   const history = useHistory();
   const { locations, location, loadLocation } = useContext(CampyContext);
   const mapRef= useRef();
@@ -81,7 +80,7 @@ export const Map = () => {
     mapRef.current.panTo({lat, lng})
     // mapRef.current.setZoom(10);
   }, [])
-
+  
   const getLat = (loc) => {
     let currentLat= loc.split(",")[0];
     return parseFloat(currentLat.trim());
@@ -90,6 +89,10 @@ export const Map = () => {
     let currentLng= loc.split(",")[1];
     return parseFloat(currentLng.trim());
   }
+  
+  useEffect (()=> {
+    getCurrentPosition();
+  }, []);
 
   useEffect(()=>{
    if(location) {
