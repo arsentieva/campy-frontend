@@ -7,9 +7,9 @@ import { CampyContext } from "../../CampyContext";
 const useStyles = makeStyles(() => ({
     root: {
       flexGrow: 1,
-      marginTop: "83px",
+      marginTop: "80px",
       overflowY: "scroll",
-      height: "90vh"
+      height: "89vh"
     },
   }));
 

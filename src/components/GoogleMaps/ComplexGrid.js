@@ -13,7 +13,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(1),
     },
     paper: {
-      padding: theme.spacing(2),
+      marginLeft: theme.spacing(0.5),
+      marginRight: theme.spacing(0.5),
+      padding: theme.spacing(1.5),
       maxWidth: 550,
     },
     image: {

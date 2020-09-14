@@ -11,7 +11,7 @@ import "@reach/combobox/styles.css";
 const useStyles = makeStyles((theme) => ({
   search: {
     position: "absolute",
-    top: theme.spacing(10),
+    marginTop: theme.spacing(11),
     left: "calc(50vw - 5px)",
     maxWidth:400,
     height: 48,
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   locate: {
     position: "absolute",
-    top: theme.spacing(10),
-    right: theme.spacing(5),
+    marginTop: theme.spacing(11),
+    right: theme.spacing(3),
     maxWidth:400,
     height: 48,
     zIndex: 10,
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const containerStyle = {
   width: "100vw",
-  height: "100vh",
+  height: "96vh",
 };
 
 const options = {
