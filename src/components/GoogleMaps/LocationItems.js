@@ -7,12 +7,15 @@ import { CampyContext } from "../../CampyContext";
 const useStyles = makeStyles(() => ({
     root: {
       flexGrow: 1,
+      marginTop: "83px",
+      overflowY: "scroll",
+      height: "90vh"
     },
   }));
 
 export const LocationItems = () => {
 
-    const { loadLocations, locations } = useContext(CampyContext);
+    const { locations } = useContext(CampyContext);
     const classes = useStyles();
     
     return (  

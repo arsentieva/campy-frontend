@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "absolute",
     top: theme.spacing(10),
-    left: theme.spacing(60),
+    left: "calc(50vw - 5px)",
     maxWidth:400,
     height: 48,
     zIndex: 10,
