@@ -126,7 +126,8 @@ export const Map = () => {
    const handleSelection = (location) => {
     setSelected(location);
     panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
-    loadLocation(location.id);
+    // loadLocation(location.id); This is causing the map to center on anexpected location, 
+   //  however this is exactly what is needed to get the scroll to Location card to work.
    };
 
    const handleRedirect = (id) => {
