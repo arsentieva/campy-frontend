@@ -66,9 +66,10 @@ export const LocationItems = () => {
 
      useEffect(()=> {
        if(location){
-         scrollToLocationCard(location.id);
+        refs && refs[location.id].current && refs[location.id].current.scrollIntoView({behavior: "smooth"});
        }
-     }, [location]);
+    //  }, [location, scrollToLocationCard]);
+     }, [location, refs]);
     
      const handleRedirect = (id) => {
       loadLocation(id);

@@ -44,41 +44,52 @@ const libraries = ["places"]
 let lat=47.599361;
 let lng=-122.332111;
 
-function showCoords(position) {
-  lat = position.coords.latitude;
-  lng = position.coords.longitude;
+// function showCoords(position) {
+//   lat = position.coords.latitude;
+//   lng = position.coords.longitude;
 
-}
+// }
 
-function geo_error(error) {
-  switch(error.code) {
-      case error.TIMEOUT:
-          alert('Geolocation Timeout');
-          break;
-      case error.POSITION_UNAVAILABLE:
-          alert('Geolocation Position unavailable');
-          break;
-      case error.PERMISSION_DENIED:
-          alert('Geolocation Permission denied');
-          break;
-      default:
-          alert('Geolocation returned an unknown error code: ' + error.code);
-  }
-}
+// function geo_error(error) {
+//   switch(error.code) {
+//       case error.TIMEOUT:
+//           alert('Geolocation Timeout');
+//           break;
+//       case error.POSITION_UNAVAILABLE:
+//           alert('Geolocation Position unavailable');
+//           break;
+//       case error.PERMISSION_DENIED:
+//           alert('Geolocation Permission denied');
+//           break;
+//       default:
+//           alert('Geolocation returned an unknown error code: ' + error.code);
+//   }
+// }
 
-function getCurrentPosition() {
-    navigator.geolocation.getCurrentPosition(showCoords, geo_error)
-    console.log("got location")
-}
+// function getCurrentPosition() {
+//     navigator.geolocation.getCurrentPosition(showCoords, geo_error)
+//     console.log("got location")
+// }
 
 export const Map = () => {
   const history = useHistory();
   const { locations, location, loadLocation } = useContext(CampyContext);
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
+  const [center, setCenter ]= useState(null);
+  const [panto , setPanto ]= useState(null);
+
   const panTo = useCallback(({lat, lng})=> {
     mapRef.current.panTo({lat, lng})
     // mapRef.current.setZoom(10);
+  }, [])
+
+  // useEffect(()=> {
+  //   setCenter({lat, lng});
+  // }, [location, center])
+  
+  useEffect(()=> {
+    setPanto({lat, lng});
   }, [])
   
   const getLat = (loc) => {
@@ -90,9 +101,9 @@ export const Map = () => {
     return parseFloat(currentLng.trim());
   }
   
-  useEffect (()=> {
-    getCurrentPosition();
-  }, []);
+  // useEffect (()=> {
+  //   getCurrentPosition();
+  // }, []);
 
   useEffect(()=>{
    if(location) {
@@ -125,8 +136,11 @@ export const Map = () => {
 
    const handleSelection = (location) => {
     setSelected(location);
-    panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
-    // loadLocation(location.id); This is causing the map to center on anexpected location, 
+    setPanto({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)})
+    // mapRef.current.setCenter({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)})
+    // panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
+    loadLocation(location.id); 
+    //This is causing the map to center on anexpected location, 
    //  however this is exactly what is needed to get the scroll to Location card to work.
    };
 
@@ -144,7 +158,7 @@ export const Map = () => {
         <Grid item>
           <Search panTo={panTo} />
           <Locate panTo={panTo} />
-          <GoogleMap mapContainerStyle={containerStyle} center={{ lat, lng }} zoom={8} options={options} onLoad={onMapLoad}>
+          <GoogleMap mapContainerStyle={containerStyle} center={panto} zoom={8} options={options} onLoad={onMapLoad}>
             { locations ===undefined ? null : locations.map((location) => (
                 <Marker
                 key={location.id}
@@ -159,7 +173,7 @@ export const Map = () => {
               />
             ))}
             {selected ? (<InfoWindow position={{ lat: getLat(selected.gps_coords), lng: getLng(selected.gps_coords) }}
-                onCloseClick={() => setSelected(null)} >
+              onCloseClick={() => setSelected(null)} >
                 <Box>
                   <h2> {selected.title} </h2>
                   <Button color="primary"  size="small" onClick={()=> handleRedirect(selected.id)}> Learn More </Button>
