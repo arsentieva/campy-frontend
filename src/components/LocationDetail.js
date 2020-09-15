@@ -225,8 +225,8 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Electric Hookup:" />
                   <Checkbox
                     disabled
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                     checked={location.electric_hookup || false}
                   />
                 </ListItem>
@@ -235,8 +235,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.water_hookup || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -244,8 +244,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.septic_hookup || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -253,8 +253,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.assigned_parking || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -262,8 +262,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.tow_vehicle_parking || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -271,8 +271,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.trash_removal || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
               </List>
@@ -286,8 +286,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.water_front || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -295,8 +295,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.pets_allowed || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -304,8 +304,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.internet_access || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -313,8 +313,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.rv_compatible || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -322,8 +322,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.generators_allowed || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -331,8 +331,8 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     checked={location.fires_allowed || false}
-                    icon={<CircleUnchecked />}
-                    checkedIcon={<CircleChecked />}
+                    icon={<CircleUnchecked color="primary" />}
+                    checkedIcon={<CircleChecked color="secondary" />}
                   />
                 </ListItem>
               </List>
