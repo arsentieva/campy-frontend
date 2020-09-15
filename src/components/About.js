@@ -76,8 +76,17 @@ const useStyles = makeStyles((theme) => ({
   techStackName: {
     textAlign: "center"
   },
-  card: { maxWidth: 345, margin: 0, padding: 0 },
-  media: { height: 140 },
+  card: {
+    maxWidth: 345,
+    margin: 0,
+    padding: 0,
+  },
+  cardName: {
+    textAlign: "center",
+  },
+  media: {
+    height: 200,
+  },
   teamColumn: {
     margin: 0,
     padding: 0,
@@ -131,6 +140,10 @@ const techStackBack = [
 
 export const About = () => {
   const classes = useStyles();
+
+  function openNewWindow(url) {
+    window.open(url, "_blank")
+  }
 
   return (
     <Grid className={classes.root} container spacing={3}>
@@ -249,74 +262,52 @@ export const About = () => {
             >
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
                       image={aaron}
-                      style={{ height: 0, paddingTop: "56.25%" }}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Aaron Bruce
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/AaronTheBruce')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://aaronthebruce.github.io/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/aaronbruce555/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={anna}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Anna Arsentieva
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/arsentieva')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://arsentieva.github.io/profile/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/annaarsentieva/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
@@ -332,74 +323,52 @@ export const About = () => {
             >
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={arom}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Arom Jhee
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/aromjhee')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://aromjhee.github.io/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/arom-jhee/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={kristen}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Kristen Chauncey
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/chaunceykm')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('http://www.kristenchauncey.com/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/kristen-chauncey-2b971a179/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
