@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
-
   overlay: {
     height: "100%",
     width: "100%",
@@ -23,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
   heroMessage: {
     width: "100%",
     backgroundColor: "rgba(36, 91, 127, 0.3)",
-    color: "#f0eace",
+    // color: "#f0eace",
+    color: "#a0aec0",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -31,9 +31,12 @@ const useStyles = makeStyles((theme) => ({
   heroSubMessage: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
   },
   exploreText: {
     color: "pink",
+    fontWeight: "bold",
+    fontSize: "1em",
   }
 }));
 
@@ -60,7 +63,7 @@ export const Home = () => {
         <Grid item className={classes.heroMessage}>
           <Typography variant="h1">Where do you want to go?</Typography>
           <Typography variant="h4" className={classes.heroSubMessage}>
-            Click&nbsp;<Typography variant="h4" className={classes.exploreText}>Explore</Typography>&nbsp;to plan your next adventure!
+            Click&nbsp;<Typography className={classes.exploreText}>Explore</Typography>&nbsp;to plan your next adventure!
           </Typography>
         </Grid>
       </Grid>

@@ -24,12 +24,13 @@ import logo2 from "../assets/darkLogo.png";
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: '#f0eace',
+    // background: '#f0eace',
+    background: '#cbd5e0',
     height: "100%",
   },
   logo: {
     maxHeight: "65px",
-    marginTop: "3px",
+    margin: "20px 0 10px 3px",
   },
 
   appBar: {
@@ -106,28 +107,29 @@ export const NavBar = () => {
           position="fixed"
           style={{ background: "#245B7F", color: "#FFFFC7" }}
         >
-          <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+          <Toolbar style={{ display: "flex", justifyContent: "space-between", padding: "0 10px", }}>
             <a href="/">
               <img className={classes.logo} src={logo} alt="campy logo" />
             </a>
             <div>
               <IconButton component="a" href="/locations">
-                <Explore style={{ color: "#FFFFC7" }} />
+                {/* <Explore style={{ color: "#FFFFC7" }} /> */}
+                <Explore style={{ color: "pink" }} />
                 <Typography
                   variant="h5"
-                  style={{ color: "#ffffC7", textAlign: "end" }}
+                  style={{ color: "pink", textAlign: "end", marginLeft: "5px", fontWeight: "600" }}
                 >
                   Explore
                 </Typography>
               </IconButton>
               <IconButton onClick={toggleSlider("right", true)}>
-                <Typography
+                {/* <Typography
                   variant="h5"
-                  style={{ color: "#FFFFC7", textAlign: "end" }}
+                  style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px" }}
                 >
                   MENU
-                </Typography>
-                <MenuIcon style={{ color: "#FFFFC7" }} />
+                </Typography> */}
+                <MenuIcon style={{ color: "#FFFFC7" }} fontSize="large" />
               </IconButton>
             </div>
 
