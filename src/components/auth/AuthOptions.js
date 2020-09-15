@@ -8,6 +8,9 @@ import { Person, PersonAdd,  } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   listItem: {
     color: "#22577A",
+    width: "100%",
+    display: "flex", 
+    alignItems: "center"
   },
 }));
 
@@ -28,13 +31,13 @@ export const AuthOptions = () => {
     <List>
       <ListItem button onClick={login}>
         <ListItemIcon className={classes.listItem}>
-          <Person />
+          <Person style={{ marginRight: "33px" }}/>
           <ListItemText className={classes.listItem} primary="Login" />
         </ListItemIcon>
       </ListItem>
       <ListItem button onClick={signUp}>
         <ListItemIcon className={classes.listItem}>
-          <PersonAdd />
+          <PersonAdd style={{ marginRight: "36px", marginLeft: "-3px" }}/>
           <ListItemText className={classes.listItem} primary="Sign Up" />
         </ListItemIcon>
       </ListItem>
