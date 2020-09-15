@@ -3,8 +3,6 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CampyContext } from "../../CampyContext";
 import { Grid, Typography, IconButton, Paper, Box } from "@material-ui/core";
-import WifiIcon from '@material-ui/icons/Wifi';
-import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Rating from '@material-ui/lab/Rating';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
@@ -96,19 +94,9 @@ export const LocationItems = () => {
                           </Grid>
                         </Grid>
                         <Grid item>
-                          <Grid item>
-                              <NightsStayIcon style={{fontSize: 20, color: "#39A5A7"}}/>
-                              <Typography variant="subtitle1">Max {2} </Typography>
-                           
-                          </Grid>
-                          <Grid item>
-                              <WifiIcon style={{fontSize: 20, color: "#39A5A7"}}/>
-                          </Grid>
-                          <Grid item>
                             <IconButton onClick={()=>handleRedirect(location.id)}>
                               <OpenInNewIcon style={{fontSize: 30, color: "#39A5A7"}}/>
                             </IconButton>
-                          </Grid>
                       </Grid>
                       </Grid>
                     </Grid>
