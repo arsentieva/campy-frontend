@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     backgroundColor: "rgba(36, 91, 127, 0.3)",
     color: "#f0eace",
+    padding: "0px 10px",
   },
 }));
 

@@ -72,7 +72,7 @@ export const UserNavBar = () => {
       listPath: "/about",
     },
   ];
-  
+
   const [state, setState] = useState({right: false, });
 
   const toggleSlider = (slider, open) => () => {
@@ -110,7 +110,7 @@ export const UserNavBar = () => {
       </List>
     </Box>
   );
- 
+
   return (
     <>
       <Box component="nav">

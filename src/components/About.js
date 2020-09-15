@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "75px",
     padding: "20px",
     background: "#f0eace",
+    width: "100%",
   },
   logo: {
     maxHeight: "65px",
