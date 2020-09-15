@@ -22,21 +22,14 @@ const useStyles = makeStyles((theme) => ({
   heroMessage: {
     width: "100%",
     backgroundColor: "rgba(36, 91, 127, 0.3)",
-    // color: "#f0eace",
-    color: "#a0aec0",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    color: "#f0eace",
+    display: "grid",
+    justifyItems: "center",
   },
-  heroSubMessage: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  exploreText: {
-    color: "pink",
-    fontWeight: "bold",
-    fontSize: "1em",
+  anchor: {
+    color: "#f0eace",
+    fontWeight: "700",
+    textDecoration: "underline",
   }
 }));
 
@@ -62,8 +55,8 @@ export const Home = () => {
       >
         <Grid item className={classes.heroMessage}>
           <Typography variant="h1">Where do you want to go?</Typography>
-          <Typography variant="h4" className={classes.heroSubMessage}>
-            Click&nbsp;<Typography className={classes.exploreText}>Explore</Typography>&nbsp;to plan your next adventure!
+          <Typography variant="h4">
+            Click <a href="/locations" className={classes.anchor}>Explore</a> to plan your next adventure!
           </Typography>
         </Grid>
       </Grid>

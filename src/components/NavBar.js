@@ -123,13 +123,13 @@ export const NavBar = () => {
                 </Typography>
               </IconButton>
               <IconButton onClick={toggleSlider("right", true)}>
-                {/* <Typography
+                <Typography
                   variant="h5"
                   style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px" }}
                 >
                   MENU
-                </Typography> */}
-                <MenuIcon style={{ color: "#FFFFC7" }} fontSize="large" />
+                </Typography>
+                <MenuIcon style={{ color: "#FFFFC7" }} />
               </IconButton>
             </div>
 

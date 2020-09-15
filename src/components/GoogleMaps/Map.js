@@ -47,7 +47,6 @@ let lng=-122.332111;
 function showCoords(position) {
   lat = position.coords.latitude;
   lng = position.coords.longitude;
-
 }
 
 function geo_error(error) {
@@ -76,31 +75,36 @@ export const Map = () => {
   const { locations, location, loadLocation } = useContext(CampyContext);
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
+  const [panto , setPanto ]= useState(null);
+
   const panTo = useCallback(({lat, lng})=> {
     mapRef.current.panTo({lat, lng})
-    // mapRef.current.setZoom(10);
+  }, [])
+
+  useEffect (()=> {
+    getCurrentPosition();
+  }, []);
+
+  useEffect(()=> {
+    setPanto({lat, lng});
   }, [])
   
   const getLat = (loc) => {
     let currentLat= loc.split(",")[0];
     return parseFloat(currentLat.trim());
   }
+
   const getLng = (loc) => {
     let currentLng= loc.split(",")[1];
     return parseFloat(currentLng.trim());
   }
   
-  useEffect (()=> {
-    getCurrentPosition();
-  }, []);
-
   useEffect(()=>{
    if(location) {
      setSelected(location);
      let thisLat = getLat(location.gps_coords);
      let thisLng = getLng(location.gps_coords);
-     console.log(thisLat, thisLng);
-     panTo({ lat:thisLat, lng: thisLng});
+     setPanto({ lat:thisLat, lng: thisLng});
    } else {
      setSelected(null);
    }
@@ -125,8 +129,8 @@ export const Map = () => {
 
    const handleSelection = (location) => {
     setSelected(location);
-    panTo ({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)});
-    loadLocation(location.id);
+    setPanto({ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords)})
+    loadLocation(location.id); 
    };
 
    const handleRedirect = (id) => {
@@ -143,7 +147,7 @@ export const Map = () => {
         <Grid item>
           <Search panTo={panTo} />
           <Locate panTo={panTo} />
-          <GoogleMap mapContainerStyle={containerStyle} center={{ lat, lng }} zoom={8} options={options} onLoad={onMapLoad}>
+          <GoogleMap mapContainerStyle={containerStyle} center={panto} zoom={8} options={options} onLoad={onMapLoad}>
             { locations ===undefined ? null : locations.map((location) => (
                 <Marker
                 key={location.id}
@@ -158,7 +162,7 @@ export const Map = () => {
               />
             ))}
             {selected ? (<InfoWindow position={{ lat: getLat(selected.gps_coords), lng: getLng(selected.gps_coords) }}
-                onCloseClick={() => setSelected(null)} >
+              onCloseClick={() => setSelected(null)} >
                 <Box>
                   <h2> {selected.title} </h2>
                   <Button color="primary"  size="small" onClick={()=> handleRedirect(selected.id)}> Learn More </Button>
