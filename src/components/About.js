@@ -37,8 +37,8 @@ import arom from "../assets/team/arom.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: "75px",
-    padding: "20px",
-    background: "#f0eace",
+    padding: "20px 20px 100px 20px",
+    background: "#f7fafc",
     width: "100%",
   },
   logo: {
@@ -57,9 +57,24 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: "1.3rem",
   },
-  textStack: {
+  bottomHalf: {
+    marginTop: "10px",
+  },
+  techStackBackFrontEndSection: {
+    display: "flex",
+    flexDirection: "column",
+    // justifyContent: "flex-start"
+  },
+  techStackIconName: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  techStackIcon: {
+    display: "flex", 
     justifyContent: "center",
-    alignContent: "center",
+  },
+  techStackName: {
+    textAlign: "center"
   },
   card: { maxWidth: 345, margin: 0, padding: 0 },
   media: { height: 140 },
@@ -155,75 +170,61 @@ export const About = () => {
         </Grid>
       </Grid>
 
-      <Grid item container>
-        <Grid
-          className={classes.techStack}
-          item
-          container
-          direction="column"
-          alignContent="center"
-          spacing={3}
-          xs={6}
-        >
+      <Grid item container className={classes.bottomHalf}>
+        <Grid item container xs={6} justify="center">
           <Typography variant="h6">Tech Stack Used</Typography>
-          <Grid item>
-            <Typography variant="subtitle2">Back End</Typography>
-
-            <Grid item>
-              <List style={{ display: "inline-flex" }}>
-                {techStackBack.map((listitem, key) => (
-                  <ListItem key={key}>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={listitem.text}
-                        src={require(`../assets/techStack/${listitem.image}`)}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText primary={listitem.text} />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
+          <Grid container item xs={12} className={classes.techStackBackFrontEndSection}>
+            <Typography variant="subtitle2" style={{ textAlign: "center" }}>Back End</Typography>
+            <List style={{ display: "flex" }}>
+              {techStackBack.map((listitem, key) => (
+                <ListItem key={key} className={classes.techStackIconName}>
+                  <ListItemAvatar className={classes.techStackIcon}>
+                    <Avatar
+                      alt={listitem.text}
+                      src={require(`../assets/techStack/${listitem.image}`)}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText primary={listitem.text} className={classes.techStackName} />
+                </ListItem>
+              ))}
+            </List>
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">Front End</Typography>
-
-            <Grid item>
-              <List style={{ display: "inline-flex" }}>
-                {techStackFront.map((listitem, key) => (
-                  <ListItem key={key}>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={listitem.text}
-                        src={require(`../assets/techStack/${listitem.image}`)}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText primary={listitem.text} />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
+          <Grid item className={classes.techStackBackFrontEndSection}>
+            <Typography variant="subtitle2" style={{ textAlign: "center" }}>Front End</Typography>
+            <List style={{ display: "flex" }}>
+              {techStackFront.map((listitem, key) => (
+                <ListItem key={key} className={classes.techStackIconName}>
+                  <ListItemAvatar className={classes.techStackIcon}>
+                    <Avatar
+                      alt={listitem.text}
+                      src={require(`../assets/techStack/${listitem.image}`)}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText primary={listitem.text} className={classes.techStackName} />
+                </ListItem>
+              ))}
+            </List>
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">Front and Backends</Typography>
-            <List style={{ display: "inline-flex" }}>
-              <ListItem>
-                <ListItemAvatar>
+          <Grid item className={classes.techStackBackFrontEndSection}>
+            <Typography variant="subtitle2" style={{ textAlign: "center" }}>Front and Backends</Typography>
+            <List style={{ display: "flex" }}>
+              <ListItem className={classes.techStackIconName}>
+                <ListItemAvatar className={classes.techStackIcon}>
                   <GitHub />
                 </ListItemAvatar>
-                <ListItemText primary="GitHub Version Control" />
+                <ListItemText primary="GitHub Version Control" className={classes.techStackName} />
               </ListItem>
-              <ListItem>
-                <ListItemAvatar>
+              <ListItem className={classes.techStackIconName}>
+                <ListItemAvatar className={classes.techStackIcon}>
                   <Avatar src={require("../assets/techStack/heroku.png")} />
                 </ListItemAvatar>
-                <ListItemText primary="Heroku hosting" />
+                <ListItemText primary="Heroku hosting" className={classes.techStackName} />
               </ListItem>
-              <ListItem>
-                <ListItemAvatar>
+              <ListItem className={classes.techStackIconName}>
+                <ListItemAvatar className={classes.techStackIcon}>
                   <Avatar src={require("../assets/techStack/vscode.png")} />
                 </ListItemAvatar>
-                <ListItemText primary="VSCode" />
+                <ListItemText primary="VSCode" className={classes.techStackName} />
               </ListItem>
             </List>
           </Grid>
@@ -232,9 +233,10 @@ export const About = () => {
             <a href="https://icons8.com"> Icons8</a>.
           </Typography>
         </Grid>
+
         <Grid item container xs={6} justify="center">
           <Typography variant="h6"> Meet the Team</Typography>
-          <Grid container xs={12} item>
+          <Grid container item xs={12}>
             <Grid
               className={classes.teamColumn}
               item
