@@ -51,10 +51,6 @@ export const LocationItems = () => {
     acc[value.id] = createRef();
     return acc;
   }, {}) : undefined;
-  
-    const scrollToLocationCard = (id) => {
-      refs && refs[id].current && refs[id].current.scrollIntoView({behavior: "smooth"});
-      }
 
     const classes = useStyles();
 
@@ -66,9 +62,9 @@ export const LocationItems = () => {
 
      useEffect(()=> {
        if(location){
-         scrollToLocationCard(location.id);
+        refs && refs[location.id].current && refs[location.id].current.scrollIntoView({behavior: "smooth"});
        }
-     }, [location]);
+     }, [location, refs]);
     
      const handleRedirect = (id) => {
       loadLocation(id);

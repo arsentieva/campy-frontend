@@ -72,7 +72,7 @@ export const UserNavBar = () => {
       listPath: "/about",
     },
   ];
-  
+
   const [state, setState] = useState({right: false, });
 
   const toggleSlider = (slider, open) => () => {
@@ -110,7 +110,7 @@ export const UserNavBar = () => {
       </List>
     </Box>
   );
- 
+
   return (
     <>
       <Box component="nav">
@@ -138,7 +138,6 @@ export const UserNavBar = () => {
                   variant="h5"
                   style={{ color: "#FFFFC7", textAlign: "end" }}
                 >
-                  MENU
                 </Typography>
                 <MenuIcon style={{ color: "#FFFFC7" }} />
               </IconButton>
