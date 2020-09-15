@@ -23,7 +23,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     backgroundColor: "rgba(36, 91, 127, 0.3)",
     color: "#f0eace",
+    display: "grid",
+    justifyItems: "center",
   },
+  anchor: {
+    color: "#f0eace",
+    fontWeight: "700",
+    textDecoration: "underline",
+  }
 }));
 
 export const Home = () => {
@@ -49,7 +56,7 @@ export const Home = () => {
         <Grid item className={classes.hereoMessage}>
           <Typography variant="h1">Where do you want to go?</Typography>
           <Typography variant="h4">
-            Click Explore to plan your next adventure!
+            Click <a href="/locations" className={classes.anchor}>Explore</a> to plan your next adventure!
           </Typography>
         </Grid>
       </Grid>
