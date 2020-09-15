@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     justifyItems: "center",
   },
   anchor: {
-    color: "#f0eace",
+    // color: "#f0eace",
+    color: "pink",
     fontWeight: "700",
     textDecoration: "underline",
   }
