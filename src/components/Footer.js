@@ -8,9 +8,11 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     top: "97%",
     color: "#FFFFC7",
+    justifyContent: "center",
+    alignItems: "center"
   },
   footer: {
-    textAlign: "center",
+    textAlign: "center"
   },
 }));
 
