@@ -63,18 +63,19 @@ const useStyles = makeStyles((theme) => ({
   techStackBackFrontEndSection: {
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "flex-start"
   },
   techStackIconName: {
     display: "flex",
     flexDirection: "column",
+    color: "#4a5568"
   },
   techStackIcon: {
     display: "flex", 
     justifyContent: "center",
   },
   techStackName: {
-    textAlign: "center"
+    textAlign: "center",
+    color: "#4a5568"
   },
   card: {
     maxWidth: 345,
@@ -83,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardName: {
     textAlign: "center",
+    color: "#4a5568"
   },
   media: {
     height: 200,
@@ -156,7 +158,7 @@ export const About = () => {
             <Typography variant="subtitle2" className={classes.heading}>
               What is Campy?
             </Typography>
-            <Typography variant="body2" className={classes.info}>
+            <Typography variant="body2" className={classes.info} style={{ color: "#4a5568" }}>
               <b>Campy</b> is a platform that enables users to share their
               outside property for weary travelers. In a similar way to how you
               would rent an AirBNB. Campy enables you to find and check for
@@ -172,7 +174,7 @@ export const About = () => {
             <Typography className={classes.heading} variant="subtitle2">
               Inspiration
             </Typography>
-            <Typography variant="body2" className={classes.info}>
+            <Typography variant="body2" className={classes.info} style={{ color: "#4a5568" }} >
               AirBNB took the hotel industry by storm, travelers who previously
               would depend on motels or hotels were able to utilize a home
               sharing service similar to uber. With the onset of Covid-19, the
