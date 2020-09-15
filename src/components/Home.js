@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundImage: `url(${sittingOnCamper})`,
     height: "100vh",
-    backgroundPosition: "center",
+    backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
@@ -18,12 +18,23 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     width: "100%",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    marginBottom: "40px",
   },
-  hereoMessage: {
+  heroMessage: {
     width: "100%",
     backgroundColor: "rgba(36, 91, 127, 0.3)",
     color: "#f0eace",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
+  heroSubMessage: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  exploreText: {
+    color: "pink",
+  }
 }));
 
 export const Home = () => {
@@ -46,10 +57,10 @@ export const Home = () => {
         justify="center"
         alignContent="center"
       >
-        <Grid item className={classes.hereoMessage}>
+        <Grid item className={classes.heroMessage}>
           <Typography variant="h1">Where do you want to go?</Typography>
-          <Typography variant="h4">
-            Click Explore to plan your next adventure!
+          <Typography variant="h4" className={classes.heroSubMessage}>
+            Click&nbsp;<Typography variant="h4" className={classes.exploreText}>Explore</Typography>&nbsp;to plan your next adventure!
           </Typography>
         </Grid>
       </Grid>
