@@ -83,18 +83,20 @@ const useStyles = makeStyles((theme) => ({
   },
   revNComment: {
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    height: "400px",
-    width: "450px",
+    justifyContent: "center",
+    // flexDirection: "row",
+    // alignItems: "center",
+    // height: "400px",
     marginBottom: "70px",
-    paddingBottom: "70px",
+    // paddingBottom: "70px",
   },
   review: {
     display: "flex",
     flexDirection: "row",
     fontWeight: "bold",
     background: "#22577A",
+    minWidth: "390px",
+    maxWidth: "600px",
     padding: "5px",
     color: "white",
   },
@@ -336,7 +338,6 @@ export const LocationDetail = (props) => {
               </List>
             </Paper>
           </Grid>
-          {/* <Grid item xs={3} sm={{display: "false"}} md={{display: "false"}} lg={{display: "false"}} xl={{display: "false"}} /> */}
 
           <Grid container item xs={12} sm={12} md={5} >
             <Paper elevation={5} className={classes.calendar}>
@@ -348,67 +349,71 @@ export const LocationDetail = (props) => {
             </Paper>
           </Grid>
         </Grid>
-        {/* <Grid item xs={3} sm={{display: "false"}} md={{display: "false"}} lg={{display: "false"}} xl={{display: "false"}}/> */}
+        <Grid item xs={12}>
+          <h1 style={{display: "flex", justifyContent: "center"}}>Reviews</h1>
+        </Grid>
         {review.map((x, i) => (
-          <Box key={i} className={classes.revNComment}>
-            <Paper elevation={5} className={classes.review}>
-              <Box component="fieldset" borderColor="transparent">
-                <Typography component="legend">Overall</Typography>
-                <Rating size="small" value={x.overall_rating || 0} readOnly />
-                <Typography component="legend">Noise</Typography>
-                <Rating size="small" value={x.noise || 0} readOnly />
-                <Typography component="legend">Safety</Typography>
-                <Rating size="small" value={x.safety || 0} readOnly />
-                <Typography component="legend">Cleanliness</Typography>
-                <Rating size="small" value={x.cleanliness || 0} readOnly />
-                <Typography component="legend">Access</Typography>
-                <Rating size="small" value={x.access || 0} readOnly />
-                <Typography component="legend">Site Quality</Typography>
-                <Rating size="small" value={x.site_quality || 0} readOnly />
-              </Box>
-              <List className={classes.comment}>
-                <ListItem>
-                  <ListItemText
-                    primary={`${x.user_first_name} ${x.user_last_name}`}
-                    secondary={x.comments}
-                  />
-                </ListItem>
-              </List>
-            </Paper>
-            {/* <Paper elevation={5} className={classes.review}>
+          <Grid key={i} item xs={12} sm={6} md={3}>
+            <Box className={classes.revNComment}>
+              <Paper elevation={5} className={classes.review}>
+                <Box component="fieldset" borderColor="transparent">
+                  <Typography component="legend">Overall</Typography>
+                  <Rating size="small" value={x.overall_rating || 0} readOnly />
+                  <Typography component="legend">Noise</Typography>
+                  <Rating size="small" value={x.noise || 0} readOnly />
+                  <Typography component="legend">Safety</Typography>
+                  <Rating size="small" value={x.safety || 0} readOnly />
+                  <Typography component="legend">Cleanliness</Typography>
+                  <Rating size="small" value={x.cleanliness || 0} readOnly />
+                  <Typography component="legend">Access</Typography>
+                  <Rating size="small" value={x.access || 0} readOnly />
+                  <Typography component="legend">Site Quality</Typography>
+                  <Rating size="small" value={x.site_quality || 0} readOnly />
+                </Box>
+                <List className={classes.comment}>
+                  <ListItem>
+                    <ListItemText
+                      primary={`${x.user_first_name} ${x.user_last_name}`}
+                      secondary={x.comments}
+                    />
+                  </ListItem>
+                </List>
+              </Paper>
+              {/* <Paper elevation={5} className={classes.review}>
                 <Box component="fieldset" borderColor="transparent">
                   <Typography component="legend">Overall Rating</Typography>
                   <Rating value={x.overall_rating || 0} readOnly />
-                </Box>
-                <Box component="fieldset" borderColor="transparent">
+                  </Box>
+                  <Box component="fieldset" borderColor="transparent">
                   <Typography component="legend">Noise</Typography>
                   <Rating value={x.noise || 0} readOnly />
-                </Box>
-                <Box component="fieldset" borderColor="transparent">
+                  </Box>
+                  <Box component="fieldset" borderColor="transparent">
                   <Typography component="legend">Safety</Typography>
                   <Rating value={x.safety || 0} readOnly />
-                </Box>
-                <Box component="fieldset" borderColor="transparent">
+                  </Box>
+                  <Box component="fieldset" borderColor="transparent">
                   <Typography component="legend">Cleanliness</Typography>
                   <Rating value={x.cleanliness || 0} readOnly />
-                </Box>
+                  </Box>
                 <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Access</Typography>
-                  <Rating value={x.access || 0} readOnly />
+                <Typography component="legend">Access</Typography>
+                <Rating value={x.access || 0} readOnly />
                 </Box>
                 <Box component="fieldset" borderColor="transparent">
                   <Typography component="legend">Site Quality</Typography>
                   <Rating value={x.site_quality || 0} readOnly />
-                </Box>
-              </Paper> */}
-            {/* <Paper elevation={5} className={classes.comment}>
+                  </Box>
+                </Paper> */}
+              {/* <Paper elevation={5} className={classes.comment}>
                 <List>
-                  <ListItem>
-                    <ListItemText primary={`${x.user_first_name} ${x.user_last_name}`} secondary={x.comments} />
-                  </ListItem>
+                <ListItem>
+                <ListItemText primary={`${x.user_first_name} ${x.user_last_name}`} secondary={x.comments} />
+                </ListItem>
                 </List>
               </Paper> */}
-          </Box>
+            </Box>
+          </Grid>
         ))}
       </div>
     </Box>
