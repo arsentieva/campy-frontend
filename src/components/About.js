@@ -144,7 +144,7 @@ export const About = () => {
   const classes = useStyles();
 
   function openNewWindow(url) {
-    window.open(url, "_blank")
+    window.open(url, "_blank", "noopener")
   }
 
   return (
