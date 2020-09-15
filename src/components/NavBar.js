@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
     // background: '#f0eace',
-    background: '#cbd5e0',
+    background: '#e2e8f0',
     height: "100%",
   },
   logo: {
