@@ -138,7 +138,6 @@ export const UserNavBar = () => {
                   variant="h5"
                   style={{ color: "#FFFFC7", textAlign: "end" }}
                 >
-                  MENU
                 </Typography>
                 <MenuIcon style={{ color: "#FFFFC7" }} />
               </IconButton>
