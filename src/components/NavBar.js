@@ -115,7 +115,7 @@ export const NavBar = () => {
                 <Explore style={{ color: "pink" }} />
                 <Typography
                   variant="h5"
-                  style={{ color: "pink", textAlign: "end", marginLeft: "5px", fontWeight: "600" }}
+                  style={{ color: "pink", textAlign: "end", marginLeft: "5px", fontWeight: "600", fontFamily: "Overpass, sans-serif" }}
                 >
                   Explore
                 </Typography>
@@ -123,7 +123,7 @@ export const NavBar = () => {
               <IconButton onClick={toggleSlider("right", true)}>
                 <Typography
                   variant="h5"
-                  style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px" }}
+                  style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px", fontFamily: "Overpass, sans-serif" }}
                 >
                   MENU
                 </Typography>
