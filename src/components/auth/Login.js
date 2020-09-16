@@ -49,7 +49,7 @@ export const Login = () => {
       }
     
       const { access_token, user_id} = await res.json();
-      login(access_token);
+      login(access_token, user_id);
       getUser(user_id);
 
     } catch(error) {

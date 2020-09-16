@@ -73,7 +73,7 @@ export const UserNavBar = () => {
     },
   ];
 
-  const [state, setState] = useState({right: false, });
+  const [state, setState] = useState({ right: false });
 
   const toggleSlider = (slider, open) => () => {
     setState({ ...state, [slider]: open });
@@ -85,7 +85,7 @@ export const UserNavBar = () => {
     <Box 
       className={classes.menuSliderContainer}
       component="div"  
-      onClick={toggleSlider(slider, false)}
+      onClick={toggleSlider("right", false)}
     >
       <a href="/">
         <img className={classes.logo} src={logo2} alt="campy logo" />
