@@ -17,8 +17,7 @@ import Grid from '@material-ui/core/Grid';
 
 import url from "../config";
 import { storage, firebase } from "../Firebase/firebaseConfig";
-var file = "blake-wise-TcgASSD5G04-unsplash.jpg"
-var storageRef = storage().ref('location_images/blake-wise-TcgASSD5G04-unsplash.jpg');
+
 
 // blake-wise-TcgASSD5G04-unsplash.jpg
 
@@ -127,13 +126,11 @@ export const LocationDetail = (props) => {
   const classes = useStyles();
   // const { id } = useParams()
   const id = window.location.pathname.split("/")[2];
-  console.log(id)
   // const id = props.match.params.id
 
   const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
-
-  console.log(location);
+  const [image, setImage] = useState("")
 
   const addressMaker = (location) => {
     return `${location.address} ${location.city}, ${location.state}`
@@ -152,6 +149,17 @@ export const LocationDetail = (props) => {
       setReview(json.reviews);
     })();
   }, []);
+  const file = "blake-wisz-TcgASSD5G04-unsplash.jpg";
+  const storageRef = storage.ref(`location_images/`);
+
+  useEffect(() => {
+    (async function getFirebaseImage() {
+      const downloadUrl = await storageRef.child(file).getDownloadURL().then((url) => url)
+      setImage(downloadUrl);
+      // return downloadUrl;
+    })();
+  })
+
 
   return (
     <Box className={classes.background}>
@@ -210,11 +218,7 @@ export const LocationDetail = (props) => {
             <div className={classes.detailsImage}>
               <img
                 className={classes.pic}
-                src={storageRef.child().getDownloadURL().then(function (url) {
-                  return url;
-                }).catch(function (err) {
-                  console.error(err);
-                })}
+                src={image}
                 alt={"Firebase picture"}
               >
 

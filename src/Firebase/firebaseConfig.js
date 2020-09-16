@@ -1,9 +1,9 @@
-import * as firebase from "firebase/app";
-import "firebase/storage";
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCZYjwxYcX9ndPsAUCVJrcRTs8SN7IidFI",
+  apiKey: process.env.FIRE_BASE_API_KEY,
   authDomain: "campy-810fc.firebaseapp.com",
   databaseURL: "https://campy-810fc.firebaseio.com",
   projectId: "campy-810fc",
