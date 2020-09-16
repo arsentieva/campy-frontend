@@ -4,7 +4,42 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, InputLabel, Input, IconButton } from "@material-ui/core";
 import { AddAPhoto, Send } from "@material-ui/icons";
 
-const useStyles = makeStyles((theme) => ({}))
+// firebase import and initialization
+import {storage, firebase} from "../Firebase/firebaseConfig";
+
+// import * as firebase from 'firebase/app';
+// import 'firebase/storage';
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCZYjwxYcX9ndPsAUCVJrcRTs8SN7IidFI",
+//   authDomain: "campy-810fc.firebaseapp.com",
+//   databaseURL: "https://campy-810fc.firebaseio.com",
+//   projectId: "campy-810fc",
+//   storageBucket: "campy-810fc.appspot.com",
+//   messagingSenderId: "693403754728",
+//   appId: "1:693403754728:web:9198c8e4058bdc4742a95d"
+// }
+// firebase.initializeApp(firebaseConfig)
+
+const useStyles = makeStyles((theme) => ({
+  body: {
+    display: "flex",
+    minHeight: "100vh",
+    width: "100%",
+    padding: "0",
+    margin: "0",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
+
+  uploader: {
+    WebkitAppearance: "none",
+    appearance: "none",
+    width: "50%",
+    marginBottom: "10px",
+  }
+
+}));
 
 export const ImageUpload = (props) => {
   const classes = useStyles();
