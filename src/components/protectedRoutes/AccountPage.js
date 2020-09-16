@@ -75,9 +75,9 @@ export const AccountPage = () => {
                 <TextField id="user_info" label="Bio" multiline rows={4} defaultValue={currentUser.user_info} />
               </form>
             </Grid>
-          </Grid>
-          <Grid container item xs={4} >
-            <MyLocations />
+            <Grid container item >
+              <MyLocations />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
