@@ -37,8 +37,8 @@ import arom from "../assets/team/arom.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: "75px",
-    padding: "20px",
-    background: "#f0eace",
+    padding: "20px 20px 100px 20px",
+    background: "#f7fafc",
     width: "100%",
   },
   logo: {
@@ -57,12 +57,38 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: "1.3rem",
   },
-  textStack: {
-    justifyContent: "center",
-    alignContent: "center",
+  bottomHalf: {
+    marginTop: "10px",
   },
-  card: { maxWidth: 345, margin: 0, padding: 0 },
-  media: { height: 140 },
+  techStackBackFrontEndSection: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  techStackIconName: {
+    display: "flex",
+    flexDirection: "column",
+    color: "#4a5568"
+  },
+  techStackIcon: {
+    display: "flex", 
+    justifyContent: "center",
+  },
+  techStackName: {
+    textAlign: "center",
+    color: "#4a5568"
+  },
+  card: {
+    maxWidth: 345,
+    margin: 0,
+    padding: 0,
+  },
+  cardName: {
+    textAlign: "center",
+    color: "#4a5568"
+  },
+  media: {
+    height: 200,
+  },
   teamColumn: {
     margin: 0,
     padding: 0,
@@ -117,6 +143,10 @@ const techStackBack = [
 export const About = () => {
   const classes = useStyles();
 
+  function openNewWindow(url) {
+    window.open(url, "_blank", "noopener")
+  }
+
   return (
     <Grid className={classes.root} container spacing={3}>
       <Grid item container>
@@ -128,12 +158,12 @@ export const About = () => {
             <Typography variant="subtitle2" className={classes.heading}>
               What is Campy?
             </Typography>
-            <Typography variant="body2" className={classes.info}>
+            <Typography variant="body2" className={classes.info} style={{ color: "#4a5568" }}>
               <b>Campy</b> is a platform that enables users to share their
               outside property for weary travelers. In a similar way to how you
               would rent an AirBNB. Campy enables you to find and check for
               available locations and schedule a time where you can camp out on
-              private property without fear of being hasseled. On the flip side,
+              private property without fear of being hassled. On the flip side,
               Campy empowers users to share their yards and driveways to service
               people who find themselves displaced or just passing through and
               in need for a temporary place to camp. Campy is great for
@@ -144,10 +174,10 @@ export const About = () => {
             <Typography className={classes.heading} variant="subtitle2">
               Inspiration
             </Typography>
-            <Typography variant="body2" className={classes.info}>
+            <Typography variant="body2" className={classes.info} style={{ color: "#4a5568" }} >
               AirBNB took the hotel industry by storm, travelers who previously
               would depend on motels or hotels were able to utilize a home
-              sharing service similar to uber. With the onset of Covid-19, the
+              sharing service similar to uber. With the onset of COVID-19, the
               home sharing industry crashed, but the thirst for adventure
               remains!
             </Typography>
@@ -155,75 +185,61 @@ export const About = () => {
         </Grid>
       </Grid>
 
-      <Grid item container>
-        <Grid
-          className={classes.techStack}
-          item
-          container
-          direction="column"
-          alignContent="center"
-          spacing={3}
-          xs={6}
-        >
+      <Grid item container className={classes.bottomHalf}>
+        <Grid item container xs={6} justify="center">
           <Typography variant="h6">Tech Stack Used</Typography>
-          <Grid item>
-            <Typography variant="subtitle2">Back End</Typography>
-
-            <Grid item>
-              <List style={{ display: "inline-flex" }}>
-                {techStackBack.map((listitem, key) => (
-                  <ListItem key={key}>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={listitem.text}
-                        src={require(`../assets/techStack/${listitem.image}`)}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText primary={listitem.text} />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
+          <Grid container item xs={12} className={classes.techStackBackFrontEndSection}>
+            <Typography variant="subtitle2" style={{ textAlign: "center" }}>Back End</Typography>
+            <List style={{ display: "flex" }}>
+              {techStackBack.map((listitem, key) => (
+                <ListItem key={key} className={classes.techStackIconName}>
+                  <ListItemAvatar className={classes.techStackIcon}>
+                    <Avatar
+                      alt={listitem.text}
+                      src={require(`../assets/techStack/${listitem.image}`)}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText primary={listitem.text} className={classes.techStackName} />
+                </ListItem>
+              ))}
+            </List>
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">Front End</Typography>
-
-            <Grid item>
-              <List style={{ display: "inline-flex" }}>
-                {techStackFront.map((listitem, key) => (
-                  <ListItem key={key}>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={listitem.text}
-                        src={require(`../assets/techStack/${listitem.image}`)}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText primary={listitem.text} />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
+          <Grid item className={classes.techStackBackFrontEndSection}>
+            <Typography variant="subtitle2" style={{ textAlign: "center" }}>Front End</Typography>
+            <List style={{ display: "flex" }}>
+              {techStackFront.map((listitem, key) => (
+                <ListItem key={key} className={classes.techStackIconName}>
+                  <ListItemAvatar className={classes.techStackIcon}>
+                    <Avatar
+                      alt={listitem.text}
+                      src={require(`../assets/techStack/${listitem.image}`)}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText primary={listitem.text} className={classes.techStackName} />
+                </ListItem>
+              ))}
+            </List>
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">Front and Backends</Typography>
-            <List style={{ display: "inline-flex" }}>
-              <ListItem>
-                <ListItemAvatar>
+          <Grid item className={classes.techStackBackFrontEndSection}>
+            <Typography variant="subtitle2" style={{ textAlign: "center" }}>Front and Backends</Typography>
+            <List style={{ display: "flex" }}>
+              <ListItem className={classes.techStackIconName}>
+                <ListItemAvatar className={classes.techStackIcon}>
                   <GitHub />
                 </ListItemAvatar>
-                <ListItemText primary="GitHub Version Control" />
+                <ListItemText primary="GitHub Version Control" className={classes.techStackName} />
               </ListItem>
-              <ListItem>
-                <ListItemAvatar>
+              <ListItem className={classes.techStackIconName}>
+                <ListItemAvatar className={classes.techStackIcon}>
                   <Avatar src={require("../assets/techStack/heroku.png")} />
                 </ListItemAvatar>
-                <ListItemText primary="Heroku hosting" />
+                <ListItemText primary="Heroku hosting" className={classes.techStackName} />
               </ListItem>
-              <ListItem>
-                <ListItemAvatar>
+              <ListItem className={classes.techStackIconName}>
+                <ListItemAvatar className={classes.techStackIcon}>
                   <Avatar src={require("../assets/techStack/vscode.png")} />
                 </ListItemAvatar>
-                <ListItemText primary="VSCode" />
+                <ListItemText primary="VSCode" className={classes.techStackName} />
               </ListItem>
             </List>
           </Grid>
@@ -232,9 +248,10 @@ export const About = () => {
             <a href="https://icons8.com"> Icons8</a>.
           </Typography>
         </Grid>
+
         <Grid item container xs={6} justify="center">
           <Typography variant="h6"> Meet the Team</Typography>
-          <Grid container xs={12} item>
+          <Grid container item xs={12}>
             <Grid
               className={classes.teamColumn}
               item
@@ -247,74 +264,52 @@ export const About = () => {
             >
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
                       image={aaron}
-                      style={{ height: 0, paddingTop: "56.25%" }}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Aaron Bruce
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/AaronTheBruce')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://aaronthebruce.github.io/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/aaronbruce555/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={anna}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Anna Arsentieva
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/arsentieva')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://arsentieva.github.io/profile/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/annaarsentieva/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
@@ -330,74 +325,52 @@ export const About = () => {
             >
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={arom}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Arom Jhee
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/aromjhee')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://aromjhee.github.io/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/arom-jhee/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>
               </Grid>
               <Grid item container justify="center">
                 <Card className={classes.card}>
-                  <CardActionArea>
+                  <CardActionArea style={{ cursor: "unset" }}>
                     <CardMedia
                       className={classes.media}
-                      style={{ height: 0, paddingTop: "56.25%" }}
                       image={kristen}
-                      title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.cardName}>
                         Kristen Chauncey
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://github.com/chaunceykm')}>
                       GitHub
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => openNewWindow('http://www.kristenchauncey.com/')}>
                       Portfolio
                     </Button>
-                    <Button size="small" color="primary">
-                      Email
+                    <Button size="small" color="primary" onClick={() => openNewWindow('https://www.linkedin.com/in/kristen-chauncey-2b971a179/')}>
+                      LinkedIn
                     </Button>
                   </CardActions>
                 </Card>

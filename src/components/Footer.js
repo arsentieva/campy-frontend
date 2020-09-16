@@ -38,16 +38,16 @@ export const Footer = () => {
   return (
     <AppBar className={classes.appBar}>
       <div className={classes.root}>
-        <a href="https://github.com/chaunceykm" alt="Kristen Link">
+        <a href="https://www.linkedin.com/in/kristen-chauncey-2b971a179/" rel="noopener noreferrer" target="_blank">
           <Avatar alt="Kristen" src={kristen} />
         </a>
-        <a href="https://github.com/arsentieva">
+        <a href="https://www.linkedin.com/in/annaarsentieva/" rel="noopener noreferrer" target="_blank">
           <Avatar alt="Anna" src={anna} />
         </a>
-        <a href="https://github.com/aromjhee">
+        <a href="https://www.linkedin.com/in/arom-jhee/" rel="noopener noreferrer" target="_blank">
           <Avatar alt="Arom" src={arom} />
         </a>
-        <a href="https://github.com/AaronTheBruce/">
+        <a href="https://www.linkedin.com/in/aaronbruce555/" rel="noopener noreferrer" target="_blank">
           <Avatar alt="Aaron" src={aaron} />
         </a>
         <Typography className={classes.footer}>© Copyright 2020</Typography>
