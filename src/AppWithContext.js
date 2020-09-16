@@ -4,7 +4,7 @@ import { CampyContext } from "./CampyContext";
 import url from './config';
 
 export const AppWithContext = () => {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("campy_token");
   const [authToken, setAuthToken] = useState(accessToken);
   const [currentUser, setCurrentUser] = useState();
   const [locations, setLocations] = useState();
@@ -14,6 +14,7 @@ export const AppWithContext = () => {
     window.localStorage.setItem("campy_token", token);
     setAuthToken(token);
   };
+  
   const logOut = () => {
     window.localStorage.clear();
     setAuthToken(null);
@@ -36,7 +37,7 @@ export const AppWithContext = () => {
 
     };
   };
-
+  
   const loadLocations = async () => {
     try {
     const res = await fetch(`${url}/locations`);
@@ -62,7 +63,6 @@ export const AppWithContext = () => {
      console.log(error);
    }
   }
-
   
   return (
     <CampyContext.Provider value={{ authToken, login, logOut, currentUser, getUser, loadLocations, locations, location, loadLocation }}>
