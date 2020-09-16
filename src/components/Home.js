@@ -55,8 +55,8 @@ export const Home = () => {
         alignContent="center"
       >
         <Grid item className={classes.heroMessage}>
-          <Typography variant="h2" style={{ fontFamily: "Overpass, sans-serif" }}>Where do you want to go?</Typography>
-          <Typography variant="h5" style={{ fontFamily: "Overpass, sans-serif" }}>
+          <Typography variant="h2" style={{ fontFamily: "Arvo, serif" }}>Where do you want to go?</Typography>
+          <Typography variant="h5" style={{ fontFamily: "Arvo, serif" }}>
             Click <a href="/locations" style={{ textDecoration: "none" }} className={classes.anchor}>Explore</a> to plan your next adventure!
           </Typography>
         </Grid>
