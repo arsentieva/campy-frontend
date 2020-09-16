@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   overlay: {
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
     marginBottom: "40px",
   },
   heroMessage: {
@@ -55,9 +55,9 @@ export const Home = () => {
         alignContent="center"
       >
         <Grid item className={classes.heroMessage}>
-          <Typography variant="h1">Where do you want to go?</Typography>
-          <Typography variant="h4">
-            Click <a href="/locations" className={classes.anchor}>Explore</a> to plan your next adventure!
+          <Typography variant="h2" style={{ fontFamily: "Overpass, sans-serif" }}>Where do you want to go?</Typography>
+          <Typography variant="h5" style={{ fontFamily: "Overpass, sans-serif" }}>
+            Click <a href="/locations" style={{ textDecoration: "none" }} className={classes.anchor}>Explore</a> to plan your next adventure!
           </Typography>
         </Grid>
       </Grid>
