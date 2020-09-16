@@ -1,6 +1,6 @@
 import React, {  useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Typography, IconButton, Avatar } from "@material-ui/core";
+import { Grid, Typography, IconButton, Avatar, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Edit } from "@material-ui/icons";
 import { CampyContext } from "../../CampyContext";
@@ -9,49 +9,54 @@ import { MyLocations } from "./MyLocations";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: "72px",
-    padding: "10px",
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#f7fafc",
+    height: "100vh",
   },
   picture: {
     width: "200px",
     height: "200px",
+    margin: "8px",
   },
 }));
 export const AccountPage = () => {
   const { currentUser } = useContext(CampyContext);
-  const editLink = `/user/edit-account`;
-  const editPictureLink = `/user/edit-profile-pic`;
-  
   const classes = useStyles();
-
 
   return currentUser ? (
     <Grid container className={classes.root}>
       <Grid container item>
-        <Grid item container spacing={3} direction="column" justify="center" alignContent="center" xs={4}>
-          <Grid item>
+        <Grid container item direction="column" justify="center" alignContent="center" xs={4} spacing={3}>
+          <Grid item style={{ display: "flex", justifyContent: "center" }}>
             {
-            currentUser.image_url !== null ? 
-            (<Avatar className={classes.picture} src={currentUser.image_url} />) 
-            : (<Avatar className={classes.picture} />)
+              currentUser.image_url !== null ? 
+              (
+                <Paper elevation={5}>
+                  <Avatar className={classes.picture} src={currentUser.image_url} />
+                </Paper>
+              ) 
+              : 
+              (
+                <Paper elevation={5}>
+                  <Avatar className={classes.picture} />
+                </Paper>
+              )
             }
 
           </Grid>
-          <Grid item>
-            <IconButton component={Link} to={editPictureLink}>
-              <Edit />
+          <Grid item style={{ display: "flex", justifyContent: "center" }}>
+            <IconButton component={Link} to={`/user/edit-profile-pic`}>
+              <Edit fontSize="small" style={{ marginRight: "7px" }}/>
               <Typography>Edit Profile Picture</Typography>
             </IconButton>
           </Grid>
-          <Grid item>
-            <IconButton component={Link} to={editLink}>
+          {/* <Grid item style={{ display: "flex", justifyContent: "center" }}>
+            <IconButton component={Link} to={`/user/edit-account`}>
               <Edit />
               <Typography>Edit Account Information</Typography>
             </IconButton>
-          </Grid>
+          </Grid> */}
         </Grid>
-        <Grid container item direction="column" justify="space-between" alignContent="center" xs={4} spacing={3}>
+        <Grid container item direction="column" justify="space-between" alignContent="flex-start" xs={4} spacing={3}>
           <Grid item>
             <Typography>First Name</Typography>
             <Typography>{currentUser.first_name || ""}</Typography>
@@ -77,7 +82,7 @@ export const AccountPage = () => {
             <Typography>{currentUser.user_info || ""}</Typography>
           </Grid>
         </Grid>
-        <Grid container justify="center" xs={4} item>
+        <Grid container item justify="center" justify="space-between" alignContent="center" xs={4} >
           <MyLocations />
         </Grid>
       </Grid>
