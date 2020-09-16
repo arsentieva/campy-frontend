@@ -16,6 +16,11 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import Grid from '@material-ui/core/Grid';
 
 import url from "../config";
+import { storage, firebase } from "../Firebase/firebaseConfig";
+var file = "blake-wise-TcgASSD5G04-unsplash.jpg"
+var storageRef = storage().ref('location_images/blake-wise-TcgASSD5G04-unsplash.jpg');
+
+// blake-wise-TcgASSD5G04-unsplash.jpg
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -203,6 +208,17 @@ export const LocationDetail = (props) => {
           </Grid>
           <Grid item sm={12} md={6}>
             <div className={classes.detailsImage}>
+              <img
+                className={classes.pic}
+                src={storageRef.child().getDownloadURL().then(function (url) {
+                  return url;
+                }).catch(function (err) {
+                  console.error(err);
+                })}
+                alt={"Firebase picture"}
+              >
+
+              </img>
               {location.image_urls
                 ? location.image_urls.map((image, i) => (
                   <Paper key={i} elevation={5}>
@@ -350,7 +366,7 @@ export const LocationDetail = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <h1 style={{display: "flex", justifyContent: "center"}}>Reviews</h1>
+          <h1 style={{ display: "flex", justifyContent: "center" }}>Reviews</h1>
         </Grid>
         {review.map((x, i) => (
           <Grid key={i} item xs={12} sm={6} md={3}>
