@@ -8,6 +8,9 @@ import {CampyContext} from '../../CampyContext'
 const useStyles = makeStyles((theme) => ({
   listItem: {
     color: "#22577A",
+    width: "100%",
+    display: "flex",
+    alignItems: "center"
   },
 }));
 
@@ -23,7 +26,7 @@ export const Logout = () => {
     <div>
       <ListItem button onClick={handleLogOut}>
         <ListItemIcon className={classes.listItem} >
-          <MeetingRoom className={classes.listItem} />
+          <MeetingRoom style={{ marginRight: "33px" }} />
           <ListItemText className={classes.listItem}>Logout</ListItemText>
         </ListItemIcon>
       </ListItem>
