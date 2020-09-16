@@ -16,6 +16,10 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import Grid from '@material-ui/core/Grid';
 
 import url from "../config";
+import { storage, firebase } from "../Firebase/firebaseConfig";
+
+
+// blake-wise-TcgASSD5G04-unsplash.jpg
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -122,13 +126,11 @@ export const LocationDetail = (props) => {
   const classes = useStyles();
   // const { id } = useParams()
   const id = window.location.pathname.split("/")[2];
-  console.log(id)
   // const id = props.match.params.id
 
   const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
-
-  console.log(location);
+  const [image, setImage] = useState("")
 
   const addressMaker = (location) => {
     return `${location.address} ${location.city}, ${location.state}`
@@ -147,6 +149,17 @@ export const LocationDetail = (props) => {
       setReview(json.reviews);
     })();
   }, []);
+  const file = "blake-wisz-TcgASSD5G04-unsplash.jpg";
+  const storageRef = storage.ref(`location_images/`);
+
+  useEffect(() => {
+    (async function getFirebaseImage() {
+      const downloadUrl = await storageRef.child(file).getDownloadURL().then((url) => url)
+      setImage(downloadUrl);
+      // return downloadUrl;
+    })();
+  })
+
 
   return (
     <Box className={classes.background}>
@@ -203,6 +216,13 @@ export const LocationDetail = (props) => {
           </Grid>
           <Grid item sm={12} md={6}>
             <div className={classes.detailsImage}>
+              <img
+                className={classes.pic}
+                src={image}
+                alt={"Firebase picture"}
+              >
+
+              </img>
               {location.image_urls
                 ? location.image_urls.map((image, i) => (
                   <Paper key={i} elevation={5}>
@@ -350,7 +370,7 @@ export const LocationDetail = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <h1 style={{display: "flex", justifyContent: "center"}}>Reviews</h1>
+          <h1 style={{ display: "flex", justifyContent: "center" }}>Reviews</h1>
         </Grid>
         {review.map((x, i) => (
           <Grid key={i} item xs={12} sm={6} md={3}>
