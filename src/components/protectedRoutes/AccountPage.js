@@ -63,14 +63,14 @@ export const AccountPage = () => {
             </IconButton>
           </Grid> */}
         </Grid>
-        <Grid container item direction="column" justify="center" alignContent="center" xs={4} spacing={3}>
+        <Grid container item justify="center" alignContent="center" xs={4} spacing={3}>
           <form className={classes.userInfoForm} noValidate autoComplete="off">
-            <TextField required id="first_name" label="First Name" defaultValue={currentUser.first_name || ""} />
-            <TextField required id="last_name" label="Last Name" defaultValue={currentUser.first_name || ""} />
-            <TextField required id="email" label="Email" defaultValue={currentUser.email || ""} />
-            <TextField required id="phone_number" label="Phone Number" defaultValue={currentUser.phone_number || ""} />
-            <TextField required id="domicile_type" label="Primary Method of Camping" defaultValue={currentUser.domicile_type || ""} />
-            <TextField id="user_info" label="Bio" defaultValue={currentUser.user_info || ""} />
+            <TextField required id="first_name" label="First Name" defaultValue={currentUser.first_name} />
+            <TextField required id="last_name" label="Last Name" defaultValue={currentUser.first_name} />
+            <TextField required id="email" label="Email" defaultValue={currentUser.email} />
+            <TextField required id="phone_number" label="Phone Number" defaultValue={currentUser.phone_number} />
+            <TextField id="domicile_type" label="Primary Method of Camping" defaultValue={currentUser.domicile_type} />
+            <TextField id="user_info" label="Bio" multiline rows={4} defaultValue={currentUser.user_info} />
           </form>
         </Grid>
         <Grid container item justify="center" alignContent="center" xs={4} >
