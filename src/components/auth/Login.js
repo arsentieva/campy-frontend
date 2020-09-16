@@ -4,12 +4,19 @@ import { CampyContext } from "../../CampyContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Typography, InputAdornment} from "@material-ui/core";
 import { AccountCircle, LockRounded, PermIdentity } from "@material-ui/icons";
+import Alert from '@material-ui/lab/Alert';
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
 import url from '../../config';
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: "#f0eace",
+    backgroundColor: "#f7fafc",
+  },
+  error: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 
@@ -20,10 +27,11 @@ export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (demo=false) => {
     let values = {email, password};
-    if(demo) {
+    if (demo) {
       values.email = "demo@email.com";
       values.password = "password";
     }
@@ -35,14 +43,16 @@ export const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) {
+        const error = await res.json();
+        setError(error.message);
         throw res;
       }
     
       const { access_token, user_id} = await res.json();
-      login(access_token);
+      login(access_token, user_id);
       getUser(user_id);
 
-    } catch (error){
+    } catch(error) {
       console.log(error);
     }
   };
@@ -66,7 +76,16 @@ export const Login = () => {
             <Grid container justify="center">
               <img src={logo} alt="campy logo" width={300} />
             </Grid>
-
+            {
+              error ? (
+                <div className={classes.error}>
+                  <Alert variant="outlined" severity="error">
+                    {error}
+                  </Alert>
+                </div>
+              ) :
+              null
+            }
             <TextField label="Email" margin="normal" autoComplete='email address' onChange={(e) => setEmail(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -87,7 +106,7 @@ export const Login = () => {
             />
             <Grid container item direction="column" justify="center" alignContent="center">
               <div style={{ height: 20 }} />
-              <Button color="primary" variant="contained" width="100%" onClick={handleLogin}> Login </Button>
+              <Button color="primary" variant="contained" width="100%" onClick={() => handleLogin(false)}> Login </Button>
               <div style={{ height: 20 }} />
               <Button className={classes.button} color="primary" variant="contained" width="100%" onClick={handleDemoLogin}>
                 <PermIdentity />

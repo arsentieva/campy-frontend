@@ -15,19 +15,19 @@ import { CampyContext } from "../CampyContext";
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    background: "#f0eace",
+    background: "#e2e8f0",
     height: "100%",
   },
   logo: {
     maxHeight: "65px",
-    marginTop: "3px",
+    margin: "20px 0 10px 3px",
   },
 
   appBar: {
     maxHeight: "80px",
   },
   listItem: {
-    color: "#2D709F",
+    color: "#22577A",
   },
 }));
 
@@ -73,7 +73,7 @@ export const UserNavBar = () => {
     },
   ];
 
-  const [state, setState] = useState({right: false, });
+  const [state, setState] = useState({ right: false });
 
   const toggleSlider = (slider, open) => () => {
     setState({ ...state, [slider]: open });
@@ -82,15 +82,19 @@ export const UserNavBar = () => {
   const classes = useStyles();
 
   const sideList = (slider) => (
-    <Box className={classes.menuSliderContainer}  onClick={toggleSlider(slider, false)}>
+    <Box 
+      className={classes.menuSliderContainer}
+      component="div"  
+      onClick={toggleSlider("right", false)}
+    >
       <a href="/">
         <img className={classes.logo} src={logo2} alt="campy logo" />
       </a>
       <Divider />
       <List>
-        <ListItem justify="center">
-          <Avatar src={currentUser.image_url} />
-          <ListItemText className={classes.listItem}>
+        <ListItem style={{ display: "flex", justifyContent: "center" }}>
+          <Avatar src={currentUser.image_url} style={{ marginLeft: "30px" }} />
+          <ListItemText className={classes.listItem} style={{ marginLeft: "10px" }}>
             Hello {`${currentUser.first_name}`}!
           </ListItemText>
         </ListItem>
@@ -119,16 +123,16 @@ export const UserNavBar = () => {
           position="fixed"
           style={{ background: "#245B7F", color: "#FFFFC7" }}
         >
-          <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+          <Toolbar style={{ display: "flex", justifyContent: "space-between", padding: "0 10px" }}>
             <a href="/">
               <img className={classes.logo} src={logo} alt="campy logo" />
             </a>
             <div>
               <IconButton component="a" href="/locations">
-                <Explore style={{ color: "#FFFFC7" }} />
+                <Explore style={{ color: "pink" }} />
                 <Typography
                   variant="h5"
-                  style={{ color: "#ffffC7", textAlign: "end" }}
+                  style={{ color: "pink", textAlign: "end", marginLeft: "5px", fontWeight: "600" }}
                 >
                   Explore
                 </Typography>
@@ -136,8 +140,9 @@ export const UserNavBar = () => {
               <IconButton onClick={toggleSlider("right", true)}>
                 <Typography
                   variant="h5"
-                  style={{ color: "#FFFFC7", textAlign: "end" }}
+                  style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px" }}
                 >
+                  MENU
                 </Typography>
                 <MenuIcon style={{ color: "#FFFFC7" }} />
               </IconButton>
