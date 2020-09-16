@@ -72,12 +72,6 @@ export const AppWithContext = () => {
       getUser(userIdFromLocalStorage)
     }
   }, [userIdFromLocalStorage])
-
-  console.log("accessToken: ", accessToken)
-  console.log("authToken: ", authToken)
-  console.log("currentUser: ", currentUser)
-  console.log("locations: ", locations)
-  console.log("location: ", location)
   
   return (
     <CampyContext.Provider value={{ authToken, login, logOut, currentUser, getUser, loadLocations, locations, location, loadLocation }}>

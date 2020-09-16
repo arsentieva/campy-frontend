@@ -31,7 +31,7 @@ export const Login = () => {
 
   const handleLogin = async (demo=false) => {
     let values = {email, password};
-    if(demo) {
+    if (demo) {
       values.email = "demo@email.com";
       values.password = "password";
     }
@@ -106,7 +106,7 @@ export const Login = () => {
             />
             <Grid container item direction="column" justify="center" alignContent="center">
               <div style={{ height: 20 }} />
-              <Button color="primary" variant="contained" width="100%" onClick={handleLogin}> Login </Button>
+              <Button color="primary" variant="contained" width="100%" onClick={() => handleLogin(false)}> Login </Button>
               <div style={{ height: 20 }} />
               <Button className={classes.button} color="primary" variant="contained" width="100%" onClick={handleDemoLogin}>
                 <PermIdentity />
