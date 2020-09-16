@@ -93,9 +93,9 @@ export const UserNavBar = () => {
       <Divider />
       <List>
         <ListItem style={{ display: "flex", justifyContent: "center" }}>
-          <Avatar src={currentUser ?? currentUser.image_url} style={{ marginLeft: "30px" }} />
+          <Avatar src={ currentUser.image_url} style={{ marginLeft: "30px" }} />
           <ListItemText className={classes.listItem} style={{ marginLeft: "10px" }}>
-            Hello {currentUser ?? `${currentUser.first_name}`}!
+            Hello {`${currentUser.first_name}`}!
           </ListItemText>
         </ListItem>
         {menuItems.map((listItem, key) => (
@@ -152,7 +152,7 @@ export const UserNavBar = () => {
               open={state.right}
               onClose={toggleSlider("right", false)}
             >
-              {currentUser && (currentUser ? sideList("right") : null)}
+              {currentUser ? sideList("right") : null}
             </MobilerightMenuSlider>
           </Toolbar>
         </AppBar>
