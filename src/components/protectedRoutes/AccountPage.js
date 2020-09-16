@@ -9,8 +9,10 @@ import { MyLocations } from "./MyLocations";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#f7fafc",
+    // backgroundColor: "#f7fafc",
     height: "100vh",
+    position: "absolute",
+    top: "78px"
   },
   picture: {
     width: "200px",
@@ -32,8 +34,8 @@ export const AccountPage = () => {
   return currentUser ? (
     <Grid container className={classes.root}>
       <Grid container item>
-        <Grid container item direction="column" justify="center" alignContent="center" xs={4} spacing={3}>
-          <Grid item style={{ display: "flex", justifyContent: "center" }}>
+        <Grid container item direction="column" justify="flex-start" alignContent="center" xs={4} spacing={3}>
+          <Grid item>
             {
               currentUser.image_url !== null ? 
               (
@@ -48,7 +50,6 @@ export const AccountPage = () => {
                 </Paper>
               )
             }
-
           </Grid>
           <Grid item style={{ display: "flex", justifyContent: "center" }}>
             <IconButton component={Link} to={`/user/edit-profile-pic`}>
@@ -69,7 +70,7 @@ export const AccountPage = () => {
             <TextField required id="last_name" label="Last Name" defaultValue={currentUser.first_name} />
             <TextField required id="email" label="Email" defaultValue={currentUser.email} />
             <TextField required id="phone_number" label="Phone Number" defaultValue={currentUser.phone_number} />
-            <TextField id="domicile_type" label="Primary Method of Camping" defaultValue={currentUser.domicile_type} />
+            <TextField id="domicile_type" label="Domicile Type" helperText="Primary Method of Camping" defaultValue={currentUser.domicile_type} />
             <TextField id="user_info" label="Bio" multiline rows={4} defaultValue={currentUser.user_info} />
           </form>
         </Grid>
