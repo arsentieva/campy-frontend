@@ -130,7 +130,8 @@ export const LocationDetail = (props) => {
 
   const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
-  const [image, setImage] = useState("")
+  const [images, setImages] = useState([]);
+  const [urls, setUrls] = useState([]);
 
   const addressMaker = (location) => {
     return `${location.address} ${location.city}, ${location.state}`
@@ -153,12 +154,26 @@ export const LocationDetail = (props) => {
   const storageRef = storage.ref(`location_images/`);
 
   useEffect(() => {
-    (async function getFirebaseImage() {
-      const downloadUrl = await storageRef.child(file).getDownloadURL().then((url) => url)
-      setImage(downloadUrl);
-      // return downloadUrl;
-    })();
-  })
+    if (location) {
+      (function setFirebaseImage() {
+        setImages(location.image_urls);
+      })();
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (images) {
+      (async function getFirebaseUrls() {
+        console.log(images);
+        let urlArray = []
+        for (let i = 0; i < images.length; i++) {
+          const downloadUrl = await storageRef.child(images[i]).getDownloadURL().then((url) => url)
+          urlArray.push(downloadUrl);
+        }
+        setUrls(urlArray);
+      })();
+    }
+  }, [images]);
 
 
   return (
@@ -215,26 +230,21 @@ export const LocationDetail = (props) => {
             </Paper>
           </Grid>
           <Grid item sm={12} md={6}>
-            <div className={classes.detailsImage}>
-              <img
-                className={classes.pic}
-                src={image}
-                alt={"Firebase picture"}
-              >
-
-              </img>
+            <Grid container justify="center" alignItems="center">
               {location.image_urls
-                ? location.image_urls.map((image, i) => (
-                  <Paper key={i} elevation={5}>
+                ? urls.map((image, i) => (
+                  <Grid key={i} item>
+
                     <img
                       className={classes.pic}
                       src={image}
                       alt={`location-pic-${i}`}
                     />
-                  </Paper>
+
+                  </Grid>
                 ))
                 : "Pictures Here"}
-            </div>
+            </Grid>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -436,6 +446,6 @@ export const LocationDetail = (props) => {
           </Grid>
         ))}
       </div>
-    </Box>
+    </Box >
   );
 };
