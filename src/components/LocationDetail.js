@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import CalendarMaterialUIPickers from "./Calendar";
+import {LocationImages} from "./LocationImages";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
@@ -16,10 +17,6 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import Grid from '@material-ui/core/Grid';
 
 import url from "../config";
-import { storage, firebase } from "../Firebase/firebaseConfig";
-
-
-// blake-wise-TcgASSD5G04-unsplash.jpg
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -80,19 +77,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     fontWeight: "bold",
     background: "#22577A",
-    // height: "380px",
-    // minWidth: "380px",
-    // width: "400px",
     padding: "5px",
   },
   revNComment: {
     display: "flex",
     justifyContent: "center",
-    // flexDirection: "row",
-    // alignItems: "center",
-    // height: "400px",
     marginBottom: "70px",
-    // paddingBottom: "70px",
   },
   review: {
     display: "flex",
@@ -127,7 +117,7 @@ export const LocationDetail = (props) => {
   // const { id } = useParams()
   const id = window.location.pathname.split("/")[2];
   // const id = props.match.params.id
-
+  // const { location, loadLocation } = useContext(CampyContext);
   const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
   const [images, setImages] = useState([]);
@@ -150,31 +140,8 @@ export const LocationDetail = (props) => {
       setReview(json.reviews);
     })();
   }, []);
-  const file = "blake-wisz-TcgASSD5G04-unsplash.jpg";
-  const storageRef = storage.ref(`location_images/`);
 
-  useEffect(() => {
-    if (location) {
-      (function setFirebaseImage() {
-        setImages(location.image_urls);
-      })();
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (images) {
-      (async function getFirebaseUrls() {
-        console.log(images);
-        let urlArray = []
-        for (let i = 0; i < images.length; i++) {
-          const downloadUrl = await storageRef.child(images[i]).getDownloadURL().then((url) => url)
-          urlArray.push(downloadUrl);
-        }
-        setUrls(urlArray);
-      })();
-    }
-  }, [images]);
-
+  // use context instead
 
   return (
     <Box className={classes.background}>
@@ -230,21 +197,7 @@ export const LocationDetail = (props) => {
             </Paper>
           </Grid>
           <Grid item sm={12} md={6}>
-            <Grid container justify="center" alignItems="center">
-              {location.image_urls
-                ? urls.map((image, i) => (
-                  <Grid key={i} item>
-
-                    <img
-                      className={classes.pic}
-                      src={image}
-                      alt={`location-pic-${i}`}
-                    />
-
-                  </Grid>
-                ))
-                : "Pictures Here"}
-            </Grid>
+            <LocationImages location={location} />
           </Grid>
         </Grid>
         <Grid container spacing={3}>
