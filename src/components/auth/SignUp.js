@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, TextField, Button, Typography } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import { CampyContext } from "../../CampyContext";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
@@ -9,7 +10,13 @@ import url from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#f7fafc",
+  },
+  error: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 
@@ -22,6 +29,7 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState("");
 
   if (authToken) {
     return <Redirect to="/" />;
@@ -33,7 +41,8 @@ export const SignUp = () => {
       lastName,
       email,
       password,
-      phoneNumber};
+      phoneNumber
+    };
 
     try{
       const res = await fetch(`${url}/auth/signup`, {
@@ -42,6 +51,8 @@ export const SignUp = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) {
+        const error = await res.json();
+        setError(error.message);
         throw res;
       }
       const { access_token, user_id } = await res.json();
@@ -49,9 +60,9 @@ export const SignUp = () => {
       getUser(user_id);
 
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-};
+  };
 
   return (
     <div>
@@ -65,6 +76,16 @@ export const SignUp = () => {
             <Grid container justify="center">
               <img src={logo} alt="campy logo" width={300} />
             </Grid>
+            {
+              error ? (
+                <div className={classes.error}>
+                  <Alert variant="outlined" severity="error">
+                    {error}
+                  </Alert>
+                </div>
+              ) :
+                null
+            }
             <TextField label="First Name" margin="normal" onChange={(e) => setFirstName(e.target.value)}/>
             <TextField label="Last Name" margin="normal" onChange={(e) => setLastName(e.target.value)}/>
             <TextField type="email" label="Email" margin="normal" onChange={(e) => setEmail(e.target.value)}/>

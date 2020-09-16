@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(2),
     },
-
-  }
+  },
 }));
 
 export const Login = () => {
@@ -28,7 +27,7 @@ export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const handleLogin = async (demo=false) => {
     let values = {email, password};
@@ -44,8 +43,8 @@ export const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) {
-        const error = await res.json()
-        setError(error.message)
+        const error = await res.json();
+        setError(error.message);
         throw res;
       }
     
