@@ -1,6 +1,6 @@
-import React, {  useContext, useEffect } from "react";
+import React, {  useContext } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Typography, IconButton, Avatar, Paper } from "@material-ui/core";
+import { Grid, Typography, IconButton, Avatar, Paper, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Edit } from "@material-ui/icons";
 import { CampyContext } from "../../CampyContext";
@@ -17,7 +17,14 @@ const useStyles = makeStyles((theme) => ({
     height: "200px",
     margin: "8px",
   },
+  userInfoForm: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(2),
+      width: 200,
+    },
+  },
 }));
+
 export const AccountPage = () => {
   const { currentUser } = useContext(CampyContext);
   const classes = useStyles();
@@ -56,33 +63,17 @@ export const AccountPage = () => {
             </IconButton>
           </Grid> */}
         </Grid>
-        <Grid container item direction="column" justify="space-between" alignContent="flex-start" xs={4} spacing={3}>
-          <Grid item>
-            <Typography>First Name</Typography>
-            <Typography>{currentUser.first_name || ""}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Last Name</Typography>
-            <Typography>{currentUser.last_name || ""}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Email Address</Typography>
-            <Typography>{currentUser.email || ""}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Phone Number</Typography>
-            <Typography>{currentUser.phone_number || ""}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Primary Method of Camping</Typography>
-            <Typography>{currentUser.domicle_type || ""}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Bio</Typography>
-            <Typography>{currentUser.user_info || ""}</Typography>
-          </Grid>
+        <Grid container item direction="column" justify="center" alignContent="center" xs={4} spacing={3}>
+          <form className={classes.userInfoForm} noValidate autoComplete="off">
+            <TextField required id="first_name" label="First Name" defaultValue={currentUser.first_name || ""} />
+            <TextField required id="last_name" label="Last Name" defaultValue={currentUser.first_name || ""} />
+            <TextField required id="email" label="Email" defaultValue={currentUser.email || ""} />
+            <TextField required id="phone_number" label="Phone Number" defaultValue={currentUser.phone_number || ""} />
+            <TextField required id="domicile_type" label="Primary Method of Camping" defaultValue={currentUser.domicile_type || ""} />
+            <TextField id="user_info" label="Bio" defaultValue={currentUser.user_info || ""} />
+          </form>
         </Grid>
-        <Grid container item justify="center" justify="space-between" alignContent="center" xs={4} >
+        <Grid container item justify="center" alignContent="center" xs={4} >
           <MyLocations />
         </Grid>
       </Grid>
