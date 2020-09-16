@@ -73,7 +73,7 @@ export const UserNavBar = () => {
     },
   ];
 
-  const [state, setState] = useState({right: false, });
+   const [state, setState] = useState({right: false, });
 
   const toggleSlider = (slider, open) => () => {
     setState({ ...state, [slider]: open });
@@ -89,9 +89,9 @@ export const UserNavBar = () => {
       <Divider />
       <List>
         <ListItem justify="center">
-          <Avatar src={currentUser.image_url} />
+          <Avatar src={currentUser && currentUser.image_url} />
           <ListItemText className={classes.listItem}>
-            Hello {`${currentUser.first_name}`}!
+            Hello {currentUser && `${currentUser.first_name}`}!
           </ListItemText>
         </ListItem>
         {menuItems.map((listItem, key) => (
@@ -148,7 +148,7 @@ export const UserNavBar = () => {
               open={state.right}
               onClose={toggleSlider("right", false)}
             >
-              {currentUser ? sideList("right") : null}
+              {currentUser && (currentUser ? sideList("right") : null)}
             </MobilerightMenuSlider>
           </Toolbar>
         </AppBar>
