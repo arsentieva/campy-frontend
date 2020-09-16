@@ -24,7 +24,6 @@ import logo2 from "../assets/darkLogo.png";
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: "100%",
-    // background: '#f0eace',
     background: '#e2e8f0',
     height: "100%",
   },
@@ -113,7 +112,6 @@ export const NavBar = () => {
             </a>
             <div>
               <IconButton component="a" href="/locations">
-                {/* <Explore style={{ color: "#FFFFC7" }} /> */}
                 <Explore style={{ color: "pink" }} />
                 <Typography
                   variant="h5"
