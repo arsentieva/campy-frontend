@@ -202,10 +202,11 @@ export const LocationDetail = (props) => {
           </Grid>
           <Grid item sm={12} md={6}>
             <Grid container style={{minHeight: "400px"}} justify="center" alignContent="center">
-              {location
+              {/* {location
                 ? <LocationImages location={location} images={location.image_urls} />
                 : "Loading..."
-              }
+              } */}
+              <div>Disabled Line 206 in file LocationDetail.js</div>
             </Grid>
           </Grid>
         </Grid>
