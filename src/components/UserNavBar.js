@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Logout } from "./auth/Logout";
 import MobilerightMenuSlider from "@material-ui/core/Drawer";
@@ -12,7 +12,7 @@ import logo2 from "../assets/darkLogo.png";
 import { CampyContext } from "../CampyContext";
 
 //CSS Styles
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   menuSliderContainer: {
     width: "100%",
     background: "#e2e8f0",
@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const UserNavBar = () => {
   const { currentUser } = useContext(CampyContext);
+  const [state, setState] = useState({right: false, });
+  
   const menuItems = [
     {
       listIcon: <Home />,
@@ -73,7 +75,6 @@ export const UserNavBar = () => {
     },
   ];
 
-  const [state, setState] = useState({ right: false });
 
   const toggleSlider = (slider, open) => () => {
     setState({ ...state, [slider]: open });
@@ -93,7 +94,7 @@ export const UserNavBar = () => {
       <Divider />
       <List>
         <ListItem style={{ display: "flex", justifyContent: "center" }}>
-          <Avatar src={currentUser.image_url} style={{ marginLeft: "30px" }} />
+          <Avatar src={ currentUser.image_url} style={{ marginLeft: "30px" }} />
           <ListItemText className={classes.listItem} style={{ marginLeft: "10px" }}>
             Hello {`${currentUser.first_name}`}!
           </ListItemText>
@@ -142,7 +143,6 @@ export const UserNavBar = () => {
                   variant="h5"
                   style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px" }}
                 >
-                  MENU
                 </Typography>
                 <MenuIcon style={{ color: "#FFFFC7" }} />
               </IconButton>
@@ -153,7 +153,7 @@ export const UserNavBar = () => {
               open={state.right}
               onClose={toggleSlider("right", false)}
             >
-              {currentUser ? sideList("right") : null}
+              {currentUser && sideList("right")}
             </MobilerightMenuSlider>
           </Toolbar>
         </AppBar>
