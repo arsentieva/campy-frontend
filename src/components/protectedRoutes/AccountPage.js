@@ -1,11 +1,17 @@
 import React, {  useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { Grid, Typography, IconButton, Avatar, Paper, TextField } from "@material-ui/core";
+import { 
+  Grid, 
+  Avatar, 
+  Paper, 
+  TextField, 
+  Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Edit, Save } from "@material-ui/icons";
+import SaveIcon from '@material-ui/icons/Save';
+import EditIcon from '@material-ui/icons/Edit';
 import { CampyContext } from "../../CampyContext";
 import { MyLocations } from "./MyLocations";
 import { useHistory } from "react-router-dom";
+import url from "../../config";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,13 +28,19 @@ const useStyles = makeStyles((theme) => ({
   userInfoForm: {
     '& .MuiTextField-root': {
       margin: theme.spacing(2),
-      width: 200,
+      width: 400,
     },
+    display: "flex",
+    flexWrap: "wrap",
   },
+  flexCenter: {
+    display: "flex", 
+    justifyContent: "center"
+  }
 }));
 
 export const AccountPage = () => {
-  const { currentUser, authAxios } = useContext(CampyContext);
+  const { currentUser, authToken } = useContext(CampyContext);
   const classes = useStyles();
   const history = useHistory();
 
@@ -37,26 +49,41 @@ export const AccountPage = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [domicileType, setDomicileType] = useState();
   const [userInfo, setUserInfo] = useState();
+  const [showEditProfilePic, setShowEditProfilePic] = useState(true);
 
-  const handleUpdate = () => {
-    authAxios
-      .put(`/user/`, {
-        firstName: firstName || currentUser.first_name,
-        lastName: lastName || currentUser.last_name,
-        phoneNumber: phoneNumber || currentUser.phone_number,
-        domicileType: domicileType || currentUser.domicile_type,
-        userInfo: userInfo || currentUser.user_info,
-        imageURL: currentUser.image_url,
+  const reqBody = {
+    "first_name": firstName,
+    "last_name": lastName,
+    "phone_number": phoneNumber,
+    "domicile_type": domicileType,
+    "user_info": userInfo,
+    "image_url": currentUser ? currentUser.image_url : "",
+  }
+
+  const handleUpdate = async () => {
+    try {
+      const res = await fetch(`${url}/user/`, {
+        method: "PUT",
+        headers: { 
+          "Authorization": `Bearer ${authToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqBody)
       })
-      .then((result) => {
-        if (result.status === 200) {
-          history.push(`/user/account`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+      if (res.ok) {
+        history.push("/user/account")
+      } else {
+        throw res
+      }
+    } catch(e) {
+      console.log(e)
+    }
   };
+
+  const editProfilePic = () => {
+
+  }
 
   return currentUser ? (
     <Grid container className={classes.root}>
@@ -68,26 +95,30 @@ export const AccountPage = () => {
                 {
                   currentUser.image_url !== null ? 
                   (
-                    <Paper elevation={5} style={{ display: "flex", justifyContent: "center" }}>
+                    <Paper elevation={5} className={classes.flexCenter}>
                       <Avatar className={classes.picture} src={currentUser.image_url} />
                     </Paper>
                   ) 
                   : 
                   (
-                    <Paper elevation={5} style={{ display: "flex", justifyContent: "center" }}>
+                    <Paper elevation={5} className={classes.flexCenter}>
                       <Avatar className={classes.picture} />
                     </Paper>
                   )
                 }
               </Grid>
-              <Grid item style={{ display: "flex", justifyContent: "center" }}>
-                <IconButton component={Link} to={`/user/edit-profile-pic`}>
-                  <Edit fontSize="small" style={{ marginRight: "7px" }}/>
-                  <Typography>Edit Profile Picture</Typography>
-                </IconButton>
+              <Grid item className={classes.flexCenter}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  startIcon={<EditIcon />}
+                  onClick={editProfilePic}>
+                  Edit Profile Picture
+                </Button>
               </Grid>
             </Grid>
-            <Grid container item xs={4} spacing={3} style={{ display: "flex", justifyContent: "center" }}>
+            <Grid container item xs={4} spacing={3}>
               <form className={classes.userInfoForm} noValidate autoComplete="off">
                 <TextField 
                   required 
@@ -102,7 +133,7 @@ export const AccountPage = () => {
                   defaultValue={currentUser.last_name} 
                   onChange={(e) => setLastName(e.target.value)}/>
                 <TextField 
-                  required 
+                  InputProps={{ readOnly: true}} 
                   id="email" 
                   label="Email" 
                   defaultValue={currentUser.email} />
@@ -122,15 +153,19 @@ export const AccountPage = () => {
                   id="user_info" 
                   label="Bio" 
                   multiline 
-                  rows={4} 
+                  rows={4}
                   defaultValue={currentUser.user_info} 
                   onChange={(e) => setUserInfo(e.target.value)}/>
               </form>
               <Grid item>
-                <IconButton onClick={handleUpdate}>
-                  <Save fontSize="small" style={{ marginRight: "7px" }}/>
-                  <Typography>Save Changes</Typography>
-                </IconButton>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  startIcon={<SaveIcon />}
+                  onClick={handleUpdate}>
+                    Save
+                </Button>
               </Grid>
             </Grid>
             <Grid container item style={{ marginTop: "50px" }}>
