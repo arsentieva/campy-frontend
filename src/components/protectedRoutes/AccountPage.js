@@ -51,16 +51,17 @@ export const AccountPage = () => {
   const [userInfo, setUserInfo] = useState();
   const [showEditProfilePic, setShowEditProfilePic] = useState(true);
 
-  const reqBody = {
-    "first_name": firstName,
-    "last_name": lastName,
-    "phone_number": phoneNumber,
-    "domicile_type": domicileType,
-    "user_info": userInfo,
-    "image_url": currentUser ? currentUser.image_url : "",
-  }
-
+  const reqBody = currentUser ? {
+    "firstName": firstName ? firstName : currentUser.first_name,
+    "lastName": lastName ? lastName : currentUser.last_name,
+    "phoneNumber": phoneNumber ? phoneNumber : currentUser.phone_number,
+    "domicileType": domicileType ? domicileType : currentUser.domicile_type,
+    "userInfo": userInfo ? userInfo : currentUser.user_info,
+    "imageURL": currentUser.image_url
+  } : {}
+  
   const handleUpdate = async () => {
+    console.log('reqbody: ', reqBody)
     try {
       const res = await fetch(`${url}/user/`, {
         method: "PUT",
