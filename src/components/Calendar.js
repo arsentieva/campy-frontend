@@ -19,7 +19,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
     const { id } = useParams();
-    const { getUser, authAxios } = useContext(CampyContext);
+    const { authAxios } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);

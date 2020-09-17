@@ -5,28 +5,33 @@ import url from './config';
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("campy_token");
-  const userIdFromLocalStorage = localStorage.getItem("campy_user_id");
   const [authToken, setAuthToken] = useState(accessToken);
   const [currentUser, setCurrentUser] = useState();
   const [locations, setLocations] = useState();
   const [location, setLocation] = useState();
   
-  const login = (token, user_id) => {
+  const login = (token) => {
     window.localStorage.setItem("campy_token", token);
-    window.localStorage.setItem("campy_user_id", user_id);
-    getUser(user_id)
     setAuthToken(token);
   };
-
+  
   const logOut = () => {
     window.localStorage.clear();
     setAuthToken(null);
   };
 
-  const getUser = async (userID) => {
+  useEffect(()=>{
+    if(authToken){
+      getUser()
+    }
+  }, [authToken])
+
+  const getUser = async () => {
   try {
-    const response = await fetch(`${url}/user/${userID}`);
-      if (!response.ok) {
+    const response = await fetch(`${url}/user/`, {
+      headers: { Authorization: `Bearer ${authToken}` }
+    });
+    if (!response.ok) {
         throw response;
       } 
   
@@ -66,15 +71,9 @@ export const AppWithContext = () => {
      console.log(error);
    }
   }
-
-  useEffect(() => {
-    if (userIdFromLocalStorage) {
-      getUser(userIdFromLocalStorage)
-    }
-  }, [userIdFromLocalStorage])
   
   return (
-    <CampyContext.Provider value={{ authToken, login, logOut, currentUser, getUser, loadLocations, locations, location, loadLocation }}>
+    <CampyContext.Provider value={{ authToken, login, logOut, currentUser, loadLocations, locations, location, loadLocation }}>
       <App />
     </CampyContext.Provider>
   );
