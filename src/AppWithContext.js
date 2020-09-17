@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import App from "./App";
 import { CampyContext } from "./CampyContext";
 import url from './config';
@@ -20,10 +20,18 @@ export const AppWithContext = () => {
     setAuthToken(null);
   };
 
-  const getUser = async (userID) => {
+  useEffect(()=>{
+    if(authToken){
+      getUser()
+    }
+  }, [authToken])
+
+  const getUser = async () => {
   try {
-    const response = await fetch(`${url}/user/${userID}`);
-      if (!response.ok) {
+    const response = await fetch(`${url}/user/`, {
+      headers: { Authorization: `Bearer ${authToken}` }
+    });
+    if (!response.ok) {
         throw response;
       } 
   
@@ -65,7 +73,7 @@ export const AppWithContext = () => {
   }
   
   return (
-    <CampyContext.Provider value={{ authToken, login, logOut, currentUser, getUser, loadLocations, locations, location, loadLocation }}>
+    <CampyContext.Provider value={{ authToken, login, logOut, currentUser, loadLocations, locations, location, loadLocation }}>
       <App />
     </CampyContext.Provider>
   );

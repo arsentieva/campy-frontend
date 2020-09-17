@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const SignUp = () => {
   const classes = useStyles();
-  const { login, authToken, getUser} = useContext(CampyContext);
+  const { login, authToken } = useContext(CampyContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -55,9 +55,8 @@ export const SignUp = () => {
         setError(error.message);
         throw res;
       }
-      const { access_token, user_id } = await res.json();
+      const { access_token } = await res.json();
       login(access_token);
-      getUser(user_id);
 
     } catch (error) {
       console.log(error)
