@@ -18,6 +18,8 @@ import Grid from '@material-ui/core/Grid';
 
 import url from "../config";
 
+import { CampyContext } from "../CampyContext";
+
 const useStyles = makeStyles((theme) => ({
   background: {
     background: "#22577A",
@@ -120,8 +122,6 @@ export const LocationDetail = (props) => {
   // const { location, loadLocation } = useContext(CampyContext);
   const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
-  const [images, setImages] = useState([]);
-  const [urls, setUrls] = useState([]);
 
   const addressMaker = (location) => {
     return `${location.address} ${location.city}, ${location.state}`
