@@ -35,11 +35,11 @@ export const MyLocations = () => {
 
   // have to use useCallback to call getLocations inside useEffect
   const getLocations = useCallback( async () => {
-    console.log(authToken)
     try {
       const res = await fetch(`${url}/locations/host/`, {
-        headers: { Authorization: `Bearer ${authToken}` }
+        headers: { "Authorization": `Bearer ${authToken}` }
       });
+      console.log("----------")
       if (res.ok) {
         const json = await res.json()
         console.log(json.locations)
@@ -56,8 +56,8 @@ export const MyLocations = () => {
     getLocations()
   }, [getLocations])
 
-  // console.log(myLocations);
-  // console.log("currentUser from MyLocations.js ", currentUser)
+  console.log("myLocations: ", myLocations);
+  console.log("currentUser from MyLocations.js ", currentUser)
 
   return currentUser ? (
     <Grid container className={classes.root}>
