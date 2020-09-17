@@ -201,7 +201,7 @@ export const LocationDetail = (props) => {
             </Paper>
           </Grid>
           <Grid item sm={12} md={6}>
-            <Grid container style={{minHeight: "400px"}} justify="center" alignSelf="center">
+            <Grid container style={{minHeight: "400px"}} justify="center" alignContent="center">
               {location
                 ? <LocationImages location={location} images={location.image_urls} />
                 : "Loading..."
