@@ -16,9 +16,7 @@ import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: "25vh",
     padding: "10px",
-    backgroundColor: theme.palette.primary.main,
   },
   picture: {
     width: "200px",

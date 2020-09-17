@@ -12,6 +12,10 @@ import { CampyContext } from "../../CampyContext";
 import { MyLocations } from "./MyLocations";
 import { useHistory } from "react-router-dom";
 import url from "../../config";
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import { ProfilePicUpload } from "./ProfilePicUpload"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +40,18 @@ const useStyles = makeStyles((theme) => ({
   flexCenter: {
     display: "flex", 
     justifyContent: "center"
-  }
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 export const AccountPage = () => {
@@ -49,7 +64,7 @@ export const AccountPage = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [domicileType, setDomicileType] = useState();
   const [userInfo, setUserInfo] = useState();
-  const [showEditProfilePic, setShowEditProfilePic] = useState(true);
+  const [modal, setModal] = useState(true);
 
   const reqBody = currentUser ? {
     "firstName": firstName ? firstName : currentUser.first_name,
@@ -61,7 +76,6 @@ export const AccountPage = () => {
   } : {}
   
   const handleUpdate = async () => {
-    console.log('reqbody: ', reqBody)
     try {
       const res = await fetch(`${url}/user/`, {
         method: "PUT",
@@ -82,8 +96,12 @@ export const AccountPage = () => {
     }
   };
 
-  const editProfilePic = () => {
+  const openModal = () => {
+    setModal(true)
+  }
 
+  const closeModal = () => {
+    setModal(false)
   }
 
   return currentUser ? (
@@ -114,9 +132,27 @@ export const AccountPage = () => {
                   color="primary"
                   size="small"
                   startIcon={<EditIcon />}
-                  onClick={editProfilePic}>
+                  onClick={openModal}>
                   Edit Profile Picture
                 </Button>
+                <Modal
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  className={classes.modal}
+                  open={modal}
+                  onClose={closeModal}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={modal}>
+                    <div className={classes.paper}>
+                      <ProfilePicUpload />
+                    </div>
+                  </Fade>
+                </Modal>
               </Grid>
             </Grid>
             <Grid container item xs={4} spacing={3}>
