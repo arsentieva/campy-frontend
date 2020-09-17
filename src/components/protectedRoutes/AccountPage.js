@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "flex",
     flexWrap: "wrap",
+    justifyContent: "center",
   },
   flexCenter: {
     display: "flex", 
@@ -195,7 +196,7 @@ export const AccountPage = () => {
                   defaultValue={currentUser.user_info} 
                   onChange={(e) => setUserInfo(e.target.value)}/>
               </form>
-              <Grid item>
+              <Grid container item justify="center">
                 <Button
                   variant="contained"
                   color="primary"
