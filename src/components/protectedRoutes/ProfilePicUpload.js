@@ -116,7 +116,7 @@ export const ProfilePicUpload = () => {
         <Grid item className={classes.uploadButton}>
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             size="small"
             startIcon={<SendIcon />}
             onClick={handleUpload}>
@@ -146,7 +146,7 @@ export const ProfilePicUpload = () => {
       >
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           size="small"
           startIcon={<SaveIcon />}
           onClick={handleUpdate}

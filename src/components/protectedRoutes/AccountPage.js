@@ -20,7 +20,7 @@ import { ProfilePicUpload } from "./ProfilePicUpload"
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "auto",
     position: "absolute",
     top: "78px"
   },
