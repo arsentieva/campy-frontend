@@ -99,7 +99,7 @@ export const AccountPage = () => {
                   required 
                   id="last_name" 
                   label="Last Name" 
-                  defaultValue={currentUser.first_name} 
+                  defaultValue={currentUser.last_name} 
                   onChange={(e) => setLastName(e.target.value)}/>
                 <TextField 
                   required 

@@ -1,29 +1,37 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import Axios from "axios";
+// import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Card,
-  CardMedia,
-  CardActions,
   Typography,
-  CardHeader,
-  CardContent,
-  IconButton,
-  Collapse,
-  Avatar,
   Paper,
   Grid,
 } from "@material-ui/core";
-import { Edit, Today, Link, CodeSharp } from "@material-ui/icons";
 import url from "../../config";
 import defaultPic from '../../assets/default.jpg'
 
 import { CampyContext } from "../../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-
+  flexCenter: {
+    display: "flex", 
+    justifyContent: "center"
   },
+  noHostedLocation: {
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    minWidth: "350px", 
+    minHeight: "100px"
+  },
+  myLocations: {
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    minWidth: "350px", 
+    minHeight: "100px"
+  }
 }));
 
 export const MyLocations = () => {
@@ -39,10 +47,8 @@ export const MyLocations = () => {
       const res = await fetch(`${url}/locations/host/`, {
         headers: { "Authorization": `Bearer ${authToken}` }
       });
-      console.log("----------")
       if (res.ok) {
         const json = await res.json()
-        console.log(json.locations)
         setMyLocations(json.locations)
       } else {
         throw res
@@ -56,31 +62,30 @@ export const MyLocations = () => {
     getLocations()
   }, [getLocations])
 
-  console.log("myLocations: ", myLocations);
-  console.log("currentUser from MyLocations.js ", currentUser)
-
   return currentUser ? (
-    <Grid container className={classes.root}>
-      <Grid item container style={{ display: "flex", justifyContent: "center" }}>
+    <Grid container>
+      <Grid item container className={classes.flexCenter}>
         {myLocations[0] === undefined ? (
-          <Paper style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minWidth: "350px", minHeight: "100px" }}>
+          <Paper className={classes.noHostedLocation}>
             <Typography>You Do Not Have Any Locations Yet!</Typography>
             <Typography>
               Click <a href={addLocationLink}>HERE</a> to set one up!
             </Typography>
           </Paper>
         ) : (
-          <Grid item container>
+            <Grid item container className={classes.flexCenter}>
             {myLocations.map((location, key) => (
-              <Paper key={key}>
+              <Paper key={key} className={classes.myLocations}>
                 <Typography variant="subtitle2" color="primary">
-                  {myLocations[key].address}
+                  <a href={`/location-detail/${location.id}`}>{location.address}</a>
                 </Typography>
-                {myLocations[key].image_urls !== null ? (
-                  <img
-                    src={myLocations[key].image_urls[0]}
-                    alt={myLocations[key].address}
-                  />
+                {location.image_urls !== null ? (
+                  <a href={`/location-detail/${location.id}`}>
+                    <img
+                      src={location.image_urls[key]}
+                      alt={location.address}
+                    />
+                  </a>
                 ) : (
                   <img src={defaultPic} alt='default, no pics' />
                 )}
