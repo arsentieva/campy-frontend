@@ -35,6 +35,7 @@ export const MyLocations = () => {
 
   // have to use useCallback to call getLocations inside useEffect
   const getLocations = useCallback( async () => {
+    console.log(authToken)
     try {
       const res = await fetch(`${url}/locations/host/`, {
         headers: { Authorization: `Bearer ${authToken}` }
