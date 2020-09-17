@@ -9,7 +9,6 @@ import { AddLocation } from "./components/protectedRoutes/AddLocation";
 import { LocationList } from "./components/LocationList";
 import { LocationDetail } from "./components/LocationDetail";
 import { AccountPage } from "./components/protectedRoutes/AccountPage";
-import { EditAccount } from "./components/protectedRoutes/EditAccount";
 import { Reviews } from "./components/Reviews";
 import { AddReview } from "./components/protectedRoutes/AddReview";
 import { EditLocation } from "./components/protectedRoutes/EditLocation";
@@ -60,11 +59,6 @@ function App() {
             <ProtectedRoute
               path="/user/messages/:messageID"
               component={MessageDetail}
-            />
-
-            <ProtectedRoute
-              path="/user/edit-account"
-              component={EditAccount}
             />
             <ProtectedRoute
               path="/locations/:id/add-review"

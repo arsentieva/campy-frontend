@@ -3,29 +3,38 @@ import { Redirect, useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Typography,
-  InputLabel,
   TextField,
   Avatar,
-  IconButton,
   Grid,
+  Button
 } from "@material-ui/core";
-import { AddAPhoto, Send, Save } from "@material-ui/icons";
+import SendIcon from "@material-ui/icons/Send";
+import SaveIcon from '@material-ui/icons/Save';
 import { CampyContext } from "../../CampyContext";
 import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "10px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   picture: {
     width: "200px",
     height: "200px",
   },
+  uploadButton: {
+    display: "flex",
+    justifyContent: "center",
+    maxHeight: "80px",
+    paddingTop: "0px"
+  }
 }));
 
 export const ProfilePicUpload = () => {
-  const { currentUser, authAxios } = useContext(CampyContext);
+  const { currentUser } = useContext(CampyContext);
   const history = useHistory();
   const classes = useStyles();
   const [image, setImage] = useState(null);
@@ -39,6 +48,7 @@ export const ProfilePicUpload = () => {
       setImage(e.target.files[0]);
     }
   };
+
   const handleUpload = () => {
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
     uploadTask.on(
@@ -64,10 +74,11 @@ export const ProfilePicUpload = () => {
       }
     );
   };
+
   console.log(url);
+
   const handleUpdate = () => {
-   
-    authAxios.put(`/user/`, {
+    Axios.put(`/user/`, {
       firstName: currentUser.first_name,
       lastName: currentUser.last_name,
       phoneNumber: currentUser.phone_number,
@@ -95,25 +106,22 @@ export const ProfilePicUpload = () => {
         container
         component='form'
         direction="column"
-        justify="space-around"
-        alignContent="center"
-        spacing={4}
+        spacing={2}
         xs
+        style={{ marginBottom: "15px" }}
       >
-        <Grid item>
-          <InputLabel>
-            <AddAPhoto />
-            Upload New Profile Pic
-          </InputLabel>
-        </Grid>
-        <Grid item>
+        <Grid item style={{ maxHeight: "100px" }}>
           <TextField type="file" onChange={handleChange} />
         </Grid>
-        <Grid item>
-          <IconButton onClick={handleUpload}>
-            <Send />
-            <Typography>Upload</Typography>
-          </IconButton>
+        <Grid item className={classes.uploadButton}>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            startIcon={<SendIcon />}
+            onClick={handleUpload}>
+            Upload
+          </Button>
         </Grid>
       </Grid>
       <Grid
@@ -134,14 +142,17 @@ export const ProfilePicUpload = () => {
         xs
         item
         container
-        direction="column"
-        justify="space-around"
-        alignContent="center"
+        justify="center"
       >
-        <IconButton onClick={handleUpdate}>
-          <Save />
-          Save Changes
-        </IconButton>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          startIcon={<SaveIcon />}
+          onClick={handleUpdate}
+          style={{ marginTop: "20px" }}>
+          Save
+          </Button>
       </Grid>
     </Grid>
   ) : null;

@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
+    borderRadius: "10px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -64,7 +65,7 @@ export const AccountPage = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [domicileType, setDomicileType] = useState();
   const [userInfo, setUserInfo] = useState();
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
 
   const reqBody = currentUser ? {
     "firstName": firstName ? firstName : currentUser.first_name,
