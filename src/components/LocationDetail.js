@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 // import { useParams } from "react-router-dom";
+=======
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+>>>>>>> master
 import CalendarMaterialUIPickers from "./Calendar";
+import { LocationImages } from "./LocationImages";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
@@ -16,10 +22,8 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import Grid from '@material-ui/core/Grid';
 
 import url from "../config";
-import { storage, firebase } from "../Firebase/firebaseConfig";
 
-
-// blake-wise-TcgASSD5G04-unsplash.jpg
+import { CampyContext } from "../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -80,19 +84,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     fontWeight: "bold",
     background: "#22577A",
-    // height: "380px",
-    // minWidth: "380px",
-    // width: "400px",
     padding: "5px",
   },
   revNComment: {
     display: "flex",
     justifyContent: "center",
-    // flexDirection: "row",
-    // alignItems: "center",
-    // height: "400px",
     marginBottom: "70px",
-    // paddingBottom: "70px",
   },
   review: {
     display: "flex",
@@ -127,38 +124,32 @@ export const LocationDetail = (props) => {
   // const { id } = useParams()
   const id = window.location.pathname.split("/")[2];
   // const id = props.match.params.id
-
-  const [location, setLocation] = useState({});
+  // const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
-  const [image, setImage] = useState("")
+  const { location, loadLocation } = useContext(CampyContext);
+
 
   const addressMaker = (location) => {
     return `${location.address} ${location.city}, ${location.state}`
   }
 
   useEffect(() => {
-    (async function fetchLocation() {
-      const res = await fetch(`${url}/locations/${id}`);
-      const json = await res.json();
-      setLocation(json.location);
-    })(); // semi-colon is needed for IIFE to work
-
+    // (async function fetchLocation() {
+    //   const res = await fetch(`${url}/locations/${id}`);
+    //   const json = await res.json();
+    //   setLocation(json.location);
+    // })(); // semi-colon is needed for IIFE to work
+    if (!location) {
+      loadLocation(id)
+    }
     (async function fetchReview() {
       const res = await fetch(`${url}/locations/${id}/reviews`);
       const json = await res.json();
       setReview(json.reviews);
     })();
-  }, []);
-  const file = "blake-wisz-TcgASSD5G04-unsplash.jpg";
-  const storageRef = storage.ref(`location_images/`);
+  }, [location]);
 
-  useEffect(() => {
-    (async function getFirebaseImage() {
-      const downloadUrl = await storageRef.child(file).getDownloadURL().then((url) => url)
-      setImage(downloadUrl);
-      // return downloadUrl;
-    })();
-  })
+  // use context instead
 
 
   return (
@@ -171,70 +162,57 @@ export const LocationDetail = (props) => {
                 <ListItem>
                   <ListItemText
                     primary="Location:"
-                    secondary={addressMaker(location) || "Loading..."}
+                    secondary={location && addressMaker(location) || "Loading..."}
                   >
                   </ListItemText>
                   <ListItemText
                     primary="GPS Coordinates:"
-                    secondary={location.gps_coords || "Loading..."}
+                    secondary={location && location.gps_coords || "Loading..."}
                   />
                   <ListItemText
                     primary="Website:"
-                    secondary={location.website ? location.website : "None"}
+                    secondary={location && location.website ? location.website : "None"}
                   />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
                   <ListItemText
                     primary="Max Days:"
-                    secondary={location.max_days || "Loading..."}
+                    secondary={location && location.max_days || "Loading..."}
                   />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
                   <ListItemText
                     primary="Pad Type:"
-                    secondary={location.pad_type || "Loading..."}
+                    secondary={location && location.pad_type || "Loading..."}
                   />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
                   <ListItemText
                     primary="Description:"
-                    secondary={location.description || "Loading..."}
+                    secondary={location && location.description || "Loading..."}
                   />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
                   <ListItemText
                     primary="Host Notes:"
-                    secondary={location.host_notes || "Loading..."}
+                    secondary={location && location.host_notes || "Loading..."}
                   />
                 </ListItem>
               </List>
             </Paper>
           </Grid>
           <Grid item sm={12} md={6}>
-            <div className={classes.detailsImage}>
-              <img
-                className={classes.pic}
-                src={image}
-                alt={"Firebase picture"}
-              >
-
-              </img>
-              {location.image_urls
-                ? location.image_urls.map((image, i) => (
-                  <Paper key={i} elevation={5}>
-                    <img
-                      className={classes.pic}
-                      src={image}
-                      alt={`location-pic-${i}`}
-                    />
-                  </Paper>
-                ))
-                : "Pictures Here"}
-            </div>
+            <Grid container style={{minHeight: "400px"}} justify="center" alignContent="center">
+              {/* {location
+                ? <LocationImages location={location} images={location.image_urls} />
+                : "Loading..."
+              } */}
+              <div>Disabled Line 206 in file LocationDetail.js</div>
+            </Grid>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
@@ -247,14 +225,14 @@ export const LocationDetail = (props) => {
                     disabled
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
-                    checked={location.electric_hookup || false}
+                    checked={location && location.electric_hookup || false}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Water Hookup:" />
                   <Checkbox
                     disabled
-                    checked={location.water_hookup || false}
+                    checked={location && location.water_hookup || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -263,7 +241,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Septic Hookup:" />
                   <Checkbox
                     disabled
-                    checked={location.septic_hookup || false}
+                    checked={location && location.septic_hookup || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -272,7 +250,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Assigned Parking:" />
                   <Checkbox
                     disabled
-                    checked={location.assigned_parking || false}
+                    checked={location && location.assigned_parking || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -281,7 +259,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Tow Vehicle Parking:" />
                   <Checkbox
                     disabled
-                    checked={location.tow_vehicle_parking || false}
+                    checked={location && location.tow_vehicle_parking || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -290,7 +268,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Trash Removal:" />
                   <Checkbox
                     disabled
-                    checked={location.trash_removal || false}
+                    checked={location && location.trash_removal || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -305,7 +283,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Water Front:" />
                   <Checkbox
                     disabled
-                    checked={location.water_front || false}
+                    checked={location && location.water_front || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -314,7 +292,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Pets Allowed:" />
                   <Checkbox
                     disabled
-                    checked={location.pets_allowed || false}
+                    checked={location && location.pets_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -323,7 +301,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Internet Access:" />
                   <Checkbox
                     disabled
-                    checked={location.internet_access || false}
+                    checked={location && location.internet_access || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -332,7 +310,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="RV Compatible:" />
                   <Checkbox
                     disabled
-                    checked={location.rv_compatible || false}
+                    checked={location && location.rv_compatible || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -341,7 +319,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Generators Allowed:" />
                   <Checkbox
                     disabled
-                    checked={location.generators_allowed || false}
+                    checked={location && location.generators_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -350,7 +328,7 @@ export const LocationDetail = (props) => {
                   <ListItemText primary="Fires Allowed:" />
                   <Checkbox
                     disabled
-                    checked={location.fires_allowed || false}
+                    checked={location && location.fires_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="secondary" />}
                   />
@@ -436,6 +414,6 @@ export const LocationDetail = (props) => {
           </Grid>
         ))}
       </div>
-    </Box>
+    </Box >
   );
 };
