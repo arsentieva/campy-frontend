@@ -57,17 +57,16 @@ export const UserNavBar = () => {
       listText: "Host a location",
       listPath: `/user/add-location`,
     },
-    {
-      listIcon: <CalendarToday />,
-      listText: "My Adventures",
-      listPath: `/user/schedule`,
-    },
-    {
-      listIcon: <Email />,
-      listText: "My Messages",
-      listPath: `/user/messages`,
-    },
-
+    // {
+    //   listIcon: <CalendarToday />,
+    //   listText: "My Adventures",
+    //   listPath: `/user/schedule`,
+    // },
+    // {
+    //   listIcon: <Email />,
+    //   listText: "My Messages",
+    //   listPath: `/user/messages`,
+    // },
     {
       listIcon: <Info />,
       listText: "About",

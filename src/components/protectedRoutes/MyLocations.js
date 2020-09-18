@@ -1,75 +1,96 @@
-import React, { useContext, useEffect } from "react";
-import Axios from "axios";
+import React, { useContext, useState, useEffect, useCallback } from "react";
+// import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Card,
-  CardMedia,
-  CardActions,
   Typography,
-  CardHeader,
-  CardContent,
-  IconButton,
-  Collapse,
-  Avatar,
   Paper,
   Grid,
 } from "@material-ui/core";
-import { Edit, Today, Link, CodeSharp } from "@material-ui/icons";
 import url from "../../config";
 import defaultPic from '../../assets/default.jpg'
 
 import { CampyContext } from "../../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.palette.primary.main,
+  flexCenter: {
+    display: "flex", 
+    justifyContent: "center"
   },
+  noHostedLocation: {
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    minWidth: "350px", 
+    minHeight: "100px"
+  },
+  myLocations: {
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    minWidth: "350px", 
+    minHeight: "100px"
+  },
+  locationImage: {
+    maxHeight: "400px",
+    maxWidth: "400px",
+  }
 }));
 
-let locations = [];
 export const MyLocations = () => {
   const classes = useStyles();
-  const { currentUser, getUser } = useContext(CampyContext);
+  const { currentUser, authToken } = useContext(CampyContext);
   const addLocationLink = `/user/add-location`;
 
-  const getLocations = () => {
-    Axios.get(`${url}/locations/hosts`)
-      .then((response) => {
-        const [result] = response.data.locations;
-        console.log(result)
-        locations.push(result)
-      })
-      .catch((err) => {
-        console.log(err);
+  const [myLocations, setMyLocations] = useState([])
+
+  // have to use useCallback to call getLocations inside useEffect
+  const getLocations = useCallback( async () => {
+    try {
+      const res = await fetch(`${url}/locations/host/`, {
+        headers: { "Authorization": `Bearer ${authToken}` }
       });
-    return locations;
-  };
-  const myLocations = getLocations();
-  console.log(myLocations);
-  console.log(myLocations[0])
+      if (res.ok) {
+        const json = await res.json()
+        setMyLocations(json.locations)
+      } else {
+        throw res
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }, [authToken])
+
+  useEffect(() => {
+    getLocations()
+  }, [getLocations])
 
   return currentUser ? (
-    <Grid container className={classes.root}>
-      <Grid item container>
+    <Grid container>
+      <Grid item container className={classes.flexCenter}>
         {myLocations[0] === undefined ? (
-          <Paper>
+          <Paper className={classes.noHostedLocation}>
             <Typography>You Do Not Have Any Locations Yet!</Typography>
             <Typography>
               Click <a href={addLocationLink}>HERE</a> to set one up!
             </Typography>
           </Paper>
         ) : (
-          <Grid item container>
+            <Grid item container className={classes.flexCenter}>
             {myLocations.map((location, key) => (
-              <Paper key={key}>
+              <Paper key={key} className={classes.myLocations}>
                 <Typography variant="subtitle2" color="primary">
-                  {myLocations[key].address}
+                  <a href={`/location-detail/${location.id}`}>{location.address}</a>
                 </Typography>
-                {myLocations[key].image_urls !== null ? (
-                  <img
-                    src={myLocations[key].image_urls[0]}
-                    alt={myLocations[key].address}
-                  />
+                {location.image_urls !== null ? (
+                  <a href={`/location-detail/${location.id}`}>
+                    <img
+                      src={location.image_urls[key]}
+                      alt={location.address}
+                      className={classes.locationImage}
+                    />
+                  </a>
                 ) : (
                   <img src={defaultPic} alt='default, no pics' />
                 )}
