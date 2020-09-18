@@ -1,17 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Grid from '@material-ui/core/Grid';
+import React from 'react';
 import Carousel from 'react-material-ui-carousel'
-import { Paper } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
-import { storage, firebase } from "../Firebase/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
   pic: {
-    // width: "100%",
     maxHeight: "350px",
-  },
-  fragment: {
-    // minHeight: "394px"
   },
 }));
 
@@ -27,18 +20,15 @@ export const LocationImages = (props) => {
         className={classes.pic}
         src={props.image}
         alt={`location-pic${props.key}`}
-      >
-      </img>
+      />
     );
   }
 
   return (
-    <Carousel className={classes.fragment} interval="8000">
-
+    <Carousel className={classes.fragment} interval="10000">
         {location &&
-          props.images.map((image, i) => <React.Fragment key={i}><Image image={image} /></React.Fragment>)
+          props.images.map((image, i) => <React.Fragment key={i}><Image image={image + "&auto=format&fit=crop"} /></React.Fragment>)
         }
-
     </Carousel>
   )
 }
