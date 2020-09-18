@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
-=======
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
->>>>>>> master
 import CalendarMaterialUIPickers from "./Calendar";
 import { LocationImages } from "./LocationImages";
 import { makeStyles } from "@material-ui/core/styles";
