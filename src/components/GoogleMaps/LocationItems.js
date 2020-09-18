@@ -2,10 +2,10 @@ import React, { useContext,  createRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CampyContext } from "../../CampyContext";
-import { Grid, Typography, IconButton, Paper, Box } from "@material-ui/core";
+import { Grid, Typography, IconButton, Paper, Box, CardMedia } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import TerrainIcon from '@material-ui/icons/Terrain';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,21 +25,10 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(1.5),
       maxWidth: 550,
     },
-    image: {
-      width: 128,
-      height: 128,
-    },
-    img: {
-      margin: 'auto',
-      display: 'block',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    },
-    cover: {
-      width: 160,
-      height:160,
-      padding: 0,
-      paddingRight: 2
+    media: {
+      width: 250,
+      height: 145,
+      
     },
   }));
 
@@ -51,7 +40,6 @@ export const LocationItems = () => {
   }, {}) : undefined;
 
     const classes = useStyles();
-
     const history = useHistory();
 
     const handleClick = (id) => {
@@ -70,32 +58,28 @@ export const LocationItems = () => {
      }
     return (  
         <Box className={classes.root}>
-         {   locations === undefined ? null :
+         {   locations &&
              locations.map((location) => (
                 <Box className={classes.card} onClick={()=>handleClick(location.id)}>
                    <Paper key={location.id} ref={refs[location.id]} className={classes.paper} elevation={3}>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={2}>
+                      <Grid item>
+                        <CardMedia className={classes.media} image={location.image_urls[0]} title={location.title}/>
+                      </Grid>
                       <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                           <Grid item xs>
                             <Typography gutterBottom variant="subtitle1">{location.title}</Typography>
-                            <Typography variant="body2" gutterBottom>{location.state}</Typography>
-                            <Box component="fieldset" mb={3} borderColor="transparent">
-                              <Typography component="legend">Overall Rating</Typography>
-                              <Rating
-                                name="customized-empty"
-                                defaultValue={3}
+                              <Rating defaultValue={3}
                                 precision={0.5}
-                                emptyIcon={<StarBorderIcon fontSize="inherit"
-                                size="large"
-                                readOnly />}
+                                icon={<TerrainIcon fontSize="inherit" />}
+                                readOnly
                               />
-                           </Box>
                           </Grid>
                         </Grid>
                         <Grid item>
                             <IconButton onClick={()=>handleRedirect(location.id)}>
-                              <OpenInNewIcon style={{fontSize: 30, color: "#39A5A7"}}/>
+                              <OpenInNewIcon style={{fontSize: 30, color: "#39A5A7"}}/> 
                             </IconButton>
                       </Grid>
                       </Grid>

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 let locations = [];
 export const MyLocations = () => {
   const classes = useStyles();
-  const { currentUser, getUser } = useContext(CampyContext);
+  const { currentUser } = useContext(CampyContext);
   const addLocationLink = `/user/add-location`;
 
   const getLocations = () => {
