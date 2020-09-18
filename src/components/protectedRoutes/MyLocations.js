@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center", 
     minWidth: "350px", 
     minHeight: "100px"
+  },
+  locationImage: {
+    maxHeight: "400px",
+    maxWidth: "400px",
   }
 }));
 
@@ -84,6 +88,7 @@ export const MyLocations = () => {
                     <img
                       src={location.image_urls[key]}
                       alt={location.address}
+                      className={classes.locationImage}
                     />
                   </a>
                 ) : (
