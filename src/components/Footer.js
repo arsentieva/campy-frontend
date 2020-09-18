@@ -50,7 +50,6 @@ export const Footer = () => {
         <a href="https://www.linkedin.com/in/aaronbruce555/" rel="noopener noreferrer" target="_blank">
           <Avatar alt="Aaron" src={aaron} />
         </a>
-        <Typography className={classes.footer}>© Copyright 2020</Typography>
       </div>
     </AppBar>
   );

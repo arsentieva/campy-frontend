@@ -125,7 +125,7 @@ export const NavBar = () => {
                   variant="h5"
                   style={{ color: "#FFFFC7", textAlign: "end", marginLeft: "10px", fontFamily: "Overpass, sans-serif" }}
                 >
-                  MENU
+                  
                 </Typography>
                 <MenuIcon style={{ color: "#FFFFC7" }} />
               </IconButton>
