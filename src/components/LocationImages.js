@@ -12,30 +12,33 @@ const useStyles = makeStyles((theme) => ({
   },
   fragment: {
     // minHeight: "394px"
-  }
+  },
 }));
 
 export const LocationImages = (props) => {
 
   const location = props.location;
   const classes = useStyles();
+
+  function Image(props) {
+    const classes = useStyles();
+    return (
+      <img
+        className={classes.pic}
+        src={props.image}
+        alt={`location-pic${props.key}`}
+      >
+      </img>
+    );
+  }
+
   return (
-      <Carousel className={classes.fragment} interval="8000">
-        { location &&
+    <Carousel className={classes.fragment} interval="8000">
+
+        {location &&
           props.images.map((image, i) => <React.Fragment key={i}><Image image={image} /></React.Fragment>)
         }
-      </Carousel>
-  )
-}
 
-function Image(props) {
-  const classes = useStyles();
-  return (
-    <img
-      className={classes.pic}
-      src={props.image}
-      alt={`location-pic${props.key}`}
-    >
-    </img>
-  );
+    </Carousel>
+  )
 }
