@@ -1,13 +1,14 @@
 import React, {useState, useRef, useCallback, useContext, useEffect} from "react";
-import { useHistory } from "react-router-dom";
+
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import { Grid, Box, Button } from "@material-ui/core";
 import mapStyle from "./mapStyle";
-import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomplete";
+import { Grid, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import usePlacesAutoComplete , {getGeocode, getLatLng} from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
-import { CampyContext } from "../../CampyContext";
 import "@reach/combobox/styles.css";
+import { CampyContext } from "../../CampyContext";
+import InfoWindowCard from "./InfoWindowCard";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -71,7 +72,7 @@ function getCurrentPosition() {
 }
 
 export const Map = () => {
-  const history = useHistory();
+
   const { locations, location, loadLocation } = useContext(CampyContext);
   const mapRef= useRef();
   const [selected, setSelected ]= useState(null);
@@ -133,12 +134,7 @@ export const Map = () => {
     loadLocation(location.id); 
    };
 
-   const handleRedirect = (id) => {
-    loadLocation(id);
-    history.push(`/location-detail/${id}`);
-   };
-
-
+  
   let imageUrl= "http://maps.google.com/mapfiles/kml/shapes/campground.png";
 
   return (
@@ -163,10 +159,7 @@ export const Map = () => {
             ))}
             {selected ? (<InfoWindow position={{ lat: getLat(selected.gps_coords), lng: getLng(selected.gps_coords) }}
               onCloseClick={() => setSelected(null)} >
-                <Box>
-                  <h2> {selected.title} </h2>
-                  <Button color="primary"  size="small" onClick={()=> handleRedirect(selected.id)}> Learn More </Button>
-                </Box>
+                <InfoWindowCard title={ selected.title } id={ selected.id } image={ selected.image_urls[0] } />
               </InfoWindow>
             ) : null}
             <></>
