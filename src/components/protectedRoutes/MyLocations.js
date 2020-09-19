@@ -27,14 +27,14 @@ const useStyles = makeStyles((theme) => ({
   myLocations: {
     display: "flex", 
     flexDirection: "column", 
-    justifyContent: "center", 
+    justifyContent: "flex-start", 
     alignItems: "center", 
     minWidth: "350px", 
     minHeight: "100px"
   },
   locationImage: {
-    maxHeight: "400px",
-    maxWidth: "400px",
+    maxHeight: "300px",
+    maxWidth: "300px",
   }
 }));
 

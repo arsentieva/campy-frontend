@@ -75,7 +75,7 @@ export const ProfilePicUpload = () => {
   };
 
   const handleUpdate = () => {
-    Axios.put(`/user/`, {
+    Axios.put(`/user`, {
       firstName: currentUser.first_name,
       lastName: currentUser.last_name,
       phoneNumber: currentUser.phone_number,
@@ -127,13 +127,14 @@ export const ProfilePicUpload = () => {
         container
         direction="column"
         justify="space-around"
-        alignContent="center"
+        alignItems="center"
       >
         <Avatar
           src={url}
           alt="Profile"
           style={{ width: "200px", height: "200px" }}
         />
+        <progress value={progress} max="100" />
       </Grid>
       <Grid
         xs
@@ -141,7 +142,6 @@ export const ProfilePicUpload = () => {
         container
         justify="center"
       >
-        <progress value={progress} max="100" />
         <Button
           variant="contained"
           color="primary"
