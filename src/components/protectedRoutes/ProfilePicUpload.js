@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -34,14 +34,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProfilePicUpload = () => {
-  const { currentUser } = useContext(CampyContext);
+  const { currentUser, authToken } = useContext(CampyContext);
   const history = useHistory();
   const classes = useStyles();
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [success, setSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -75,24 +73,27 @@ export const ProfilePicUpload = () => {
   };
 
   const handleUpdate = () => {
-    Axios.put(`/user`, {
+    Axios.put(`/user/`, {
       firstName: currentUser.first_name,
       lastName: currentUser.last_name,
       phoneNumber: currentUser.phone_number,
       domicileType: currentUser.user_info,
       userInfo: currentUser.user_info,
       imageURL: url,
+    }, {
+      headers: {
+        "Authorization": `Bearer ${authToken}`
+      }
     })
       .then((result) => {
         if (result.status === 200) {
-          setSuccess(true);
           history.push(`/user/account`)
         } else {
-          setIsError(true);
+          throw result
         }
       })
       .catch((err) => {
-        console.log(err) && setIsError(err);
+        console.log(err);
       });
   };
   
