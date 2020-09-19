@@ -50,7 +50,7 @@ export const ProfilePicUpload = () => {
   };
 
   const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const uploadTask = storage.ref(`user_profile_pictures/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -64,18 +64,15 @@ export const ProfilePicUpload = () => {
       },
       () => {
         storage
-          .ref("images")
+          .ref("user_profile_pictures")
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            console.log(url);
             setUrl(url);
           });
       }
     );
   };
-
-  console.log(url);
 
   const handleUpdate = () => {
     Axios.put(`/user/`, {
@@ -144,6 +141,7 @@ export const ProfilePicUpload = () => {
         container
         justify="center"
       >
+        <progress value={progress} max="100" />
         <Button
           variant="contained"
           color="primary"
