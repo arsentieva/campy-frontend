@@ -207,7 +207,7 @@ export const AccountPage = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid container item style={{ marginTop: "50px" }}>
+            <Grid container item style={{ marginTop: "50px", marginBottom: "55px" }}>
               <MyLocations />
             </Grid>
           </Grid>
