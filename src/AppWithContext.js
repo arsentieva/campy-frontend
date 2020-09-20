@@ -61,15 +61,15 @@ export const AppWithContext = () => {
 
   const loadLocation = async (id) => {
     try {
-    const res = await fetch(`${url}/locations/${id}`);
-    if(!res.ok){
-      throw res;
+      const res = await fetch(`${url}/locations/${id}`);
+      if(!res.ok){
+        throw res;
+      }
+      const selectedActivity = await res.json();
+      setLocation(selectedActivity.location);
+    } catch (error) {
+      console.log(error);
     }
-    const selectedActivity = await res.json();
-    setLocation(selectedActivity.location);
-   } catch (error) {
-     console.log(error);
-   }
   }
   
   return (
