@@ -22,7 +22,7 @@ import { CampyContext } from "../CampyContext";
 
 const useStyles = makeStyles((theme) => ({
   background: {
-    background: "#22577A",
+    background: "#2a475c",
     height: "100vh",
     width: "100%",
     marginTop: "75px",
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       margin: "10px",
       color: "white",
     },
-    background: "#22577A",
+    background: "#2a475c",
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "space-evenly",
