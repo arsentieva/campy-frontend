@@ -143,8 +143,8 @@ export const Map = () => {
         <Grid item>
           <Search panTo={panTo} />
           <Locate panTo={panTo} />
-          <GoogleMap mapContainerStyle={containerStyle} center={panto} zoom={8} options={options} onLoad={onMapLoad}>
-            { locations ===undefined ? null : locations.map((location) => (
+          <GoogleMap mapContainerStyle={containerStyle} center={panto} zoom={6} options={options} onLoad={onMapLoad}>
+            { locations && locations.map((location) => (
                 <Marker
                 key={location.id}
                 position={{ lat: getLat(location.gps_coords), lng: getLng(location.gps_coords) }}
@@ -157,11 +157,11 @@ export const Map = () => {
                 onClick={() => { handleSelection(location); }}
               />
             ))}
-            {selected ? (<InfoWindow position={{ lat: getLat(selected.gps_coords), lng: getLng(selected.gps_coords) }}
+            { selected && <InfoWindow position={{ lat: getLat(selected.gps_coords), lng: getLng(selected.gps_coords) }}
               onCloseClick={() => setSelected(null)} >
                 <InfoWindowCard title={ selected.title } id={ selected.id } image={ selected.image_urls[0] } />
               </InfoWindow>
-            ) : null}
+            }
             <></>
           </GoogleMap>
         </Grid>
