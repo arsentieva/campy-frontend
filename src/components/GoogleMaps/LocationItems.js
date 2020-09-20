@@ -2,9 +2,8 @@ import React, { useContext,  createRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CampyContext } from "../../CampyContext";
-import { Grid, Typography, IconButton, Paper, Box, CardMedia } from "@material-ui/core";
+import { Grid, Typography, Button, Paper, Box, CardMedia } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import TerrainIcon from '@material-ui/icons/Terrain';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,9 +87,7 @@ export const LocationItems = () => {
                           </Grid>
                         </Grid>
                         <Grid item>
-                            <IconButton onClick={()=>handleRedirect(location.id)}>
-                              <OpenInNewIcon style={{fontSize: 30, color: "#39A5A7"}}/> 
-                            </IconButton>
+                         <Button color="primary" variant="outlined" size="small" onClick={()=>handleRedirect(location.id)}> Learn More </Button> 
                       </Grid>
                       </Grid>
                     </Grid>
