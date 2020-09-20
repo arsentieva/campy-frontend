@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-// import Axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 export const MyLocations = () => {
   const classes = useStyles();
   const { currentUser, authToken } = useContext(CampyContext);
-
   const addLocationLink = `/user/add-location`;
 
   const [myLocations, setMyLocations] = useState([])
