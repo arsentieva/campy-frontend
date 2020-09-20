@@ -55,30 +55,30 @@ const useStyles = makeStyles((theme) => ({
   },
   detailsInfo: {
     "& p": {
-      color: "white",
+      color: "black",
     },
     display: "flex",
     padding: "5px",
     width: "100%",
     fontWeight: "bold",
-    background: "#22577A",
+    background: "#e2e8f0",
   },
   checkbox1: {
     fontWeight: "bold",
     maxWidth: "100%",
-    background: "#22577A",
+    background: "#e2e8f0",
     height: "380px",
   },
   checkbox2: {
     fontWeight: "bold",
-    background: "#22577A",
+    background: "#e2e8f0",
     height: "380px",
   },
   calendar: {
     display: "flex",
     flexGrow: 1,
     fontWeight: "bold",
-    background: "#22577A",
+    background: "#e2e8f0",
     padding: "5px",
   },
   revNComment: {
@@ -90,15 +90,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     fontWeight: "bold",
-    background: "#22577A",
+    background: "#e2e8f0",
     minWidth: "390px",
     maxWidth: "600px",
     padding: "5px",
-    color: "white",
+    color: "black",
   },
   comment: {
     "& p": {
-      color: "white",
+      color: "black",
     },
     display: "flex",
     flexDirection: "column",
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: "5px",
     fontWeight: "bold",
-    background: "#22577A",
+    background: "#e2e8f0",
   },
   pic: {
     width: "200px",
@@ -202,11 +202,10 @@ export const LocationDetail = (props) => {
           </Grid>
           <Grid item sm={12} md={6}>
             <Grid container style={{minHeight: "400px"}} justify="center" alignContent="center">
-              {/* {location
+              {location
                 ? <LocationImages location={location} images={location.image_urls} />
                 : "Loading..."
-              } */}
-              <div>Disabled Line 206 in file LocationDetail.js</div>
+              }
             </Grid>
           </Grid>
         </Grid>
@@ -219,7 +218,7 @@ export const LocationDetail = (props) => {
                   <Checkbox
                     disabled
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                     checked={location && location.electric_hookup || false}
                   />
                 </ListItem>
@@ -229,7 +228,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.water_hookup || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -238,7 +237,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.septic_hookup || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -247,7 +246,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.assigned_parking || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -256,7 +255,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.tow_vehicle_parking || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -265,7 +264,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.trash_removal || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
               </List>
@@ -280,7 +279,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.water_front || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -289,7 +288,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.pets_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -298,7 +297,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.internet_access || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -307,7 +306,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.rv_compatible || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -316,7 +315,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.generators_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
                 <ListItem>
@@ -325,7 +324,7 @@ export const LocationDetail = (props) => {
                     disabled
                     checked={location && location.fires_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
-                    checkedIcon={<CircleChecked color="secondary" />}
+                    checkedIcon={<CircleChecked color="primary" />}
                   />
                 </ListItem>
               </List>
