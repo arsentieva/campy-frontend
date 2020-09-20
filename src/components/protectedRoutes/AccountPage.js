@@ -67,6 +67,7 @@ export const AccountPage = () => {
   const [domicileType, setDomicileType] = useState();
   const [userInfo, setUserInfo] = useState();
   const [modal, setModal] = useState(false);
+  const [imageUrl, setImageUrl] = useState(currentUser ? currentUser.image_url : null);
 
   const reqBody = currentUser ? {
     "firstName": firstName ? firstName : currentUser.first_name,
@@ -123,7 +124,7 @@ export const AccountPage = () => {
                   : 
                   (
                     <Paper elevation={5} className={classes.flexCenter}>
-                      <Avatar className={classes.picture} />
+                      <Avatar className={classes.picture} src={imageUrl}/>
                     </Paper>
                   )
                 }
@@ -151,7 +152,7 @@ export const AccountPage = () => {
                 >
                   <Fade in={modal}>
                     <div className={classes.paper}>
-                      <ProfilePicUpload />
+                      <ProfilePicUpload setModal={setModal} imageUrl={imageUrl} setImageUrl={setImageUrl} />
                     </div>
                   </Fade>
                 </Modal>
@@ -207,7 +208,7 @@ export const AccountPage = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid container item style={{ marginTop: "50px" }}>
+            <Grid container item style={{ marginTop: "50px", marginBottom: "55px" }}>
               <MyLocations />
             </Grid>
           </Grid>

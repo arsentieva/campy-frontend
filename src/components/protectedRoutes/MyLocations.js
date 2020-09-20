@@ -27,14 +27,14 @@ const useStyles = makeStyles((theme) => ({
   myLocations: {
     display: "flex", 
     flexDirection: "column", 
-    justifyContent: "center", 
+    justifyContent: "flex-start", 
     alignItems: "center", 
     minWidth: "350px", 
     minHeight: "100px"
   },
   locationImage: {
-    maxHeight: "400px",
-    maxWidth: "400px",
+    maxHeight: "300px",
+    maxWidth: "300px",
   }
 }));
 
@@ -49,7 +49,7 @@ export const MyLocations = () => {
   // have to use useCallback to call getLocations inside useEffect
   const getLocations = useCallback( async () => {
     try {
-      const res = await fetch(`${url}/locations/host/`, {
+      const res = await fetch(`${url}/locations/host`, {
         headers: { "Authorization": `Bearer ${authToken}` }
       });
       if (res.ok) {
@@ -82,12 +82,12 @@ export const MyLocations = () => {
             {myLocations.map((location, key) => (
               <Paper key={key} className={classes.myLocations}>
                 <Typography variant="subtitle2" color="primary">
-                  <a href={`/location-detail/${location.id}`}>{location.address}</a>
+                  <a href={`/location-detail/${location.id}`}>{location.title}</a>
                 </Typography>
                 {location.image_urls !== null ? (
                   <a href={`/location-detail/${location.id}`}>
                     <img
-                      src={location.image_urls[key]}
+                      src={location.image_urls[0]}
                       alt={location.address}
                       className={classes.locationImage}
                     />

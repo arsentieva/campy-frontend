@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -11,6 +11,7 @@ import {
 import SendIcon from "@material-ui/icons/Send";
 import SaveIcon from '@material-ui/icons/Save';
 import { CampyContext } from "../../CampyContext";
+import url from "../../config";
 import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,15 +34,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const ProfilePicUpload = () => {
-  const { currentUser } = useContext(CampyContext);
+export const ProfilePicUpload = ({ setModal, imageUrl, setImageUrl }) => {
+  const { currentUser, authToken } = useContext(CampyContext);
   const history = useHistory();
   const classes = useStyles();
   const [image, setImage] = useState(null);
-  const [url, setUrl] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [success, setSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -49,8 +47,8 @@ export const ProfilePicUpload = () => {
     }
   };
 
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  const handleUpload = useCallback(() => {
+    const uploadTask = storage.ref(`user_profile_pictures/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -64,40 +62,47 @@ export const ProfilePicUpload = () => {
       },
       () => {
         storage
-          .ref("images")
+          .ref("user_profile_pictures")
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            console.log(url);
-            setUrl(url);
+            setImageUrl(url);
           });
       }
     );
-  };
-
-  console.log(url);
+  }, [image, setImageUrl]);
 
   const handleUpdate = () => {
-    Axios.put(`/user/`, {
+    Axios.put(`${url}/user/`, {
       firstName: currentUser.first_name,
       lastName: currentUser.last_name,
       phoneNumber: currentUser.phone_number,
-      domicileType: currentUser.user_info,
+      domicileType: currentUser.domicile_type,
       userInfo: currentUser.user_info,
-      imageURL: url,
+      imageURL: imageUrl,
+    }, {
+      headers: {
+        "Authorization": `Bearer ${authToken}`,
+        "Content-Type": "application/json"
+      }
     })
       .then((result) => {
         if (result.status === 200) {
-          setSuccess(true);
-          history.push(`/user/account`)
+          setModal(false)
         } else {
-          setIsError(true);
+          throw result
         }
       })
       .catch((err) => {
-        console.log(err) && setIsError(err);
+        console.log(err);
       });
   };
+
+  useEffect(() => {
+    if (image) {
+      handleUpload()
+    }
+  }, [image, handleUpload])
   
   return currentUser ? (
     <Grid container className={classes.root}>
@@ -114,14 +119,7 @@ export const ProfilePicUpload = () => {
           <TextField type="file" onChange={handleChange} />
         </Grid>
         <Grid item className={classes.uploadButton}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            startIcon={<SendIcon />}
-            onClick={handleUpload}>
-            Upload
-          </Button>
+          <progress value={progress} max="100" />
         </Grid>
       </Grid>
       <Grid
@@ -130,11 +128,11 @@ export const ProfilePicUpload = () => {
         container
         direction="column"
         justify="space-around"
-        alignContent="center"
+        alignItems="center"
       >
         <Avatar
-          src={url}
-          alt="Profile"
+          src={imageUrl}
+          alt=""
           style={{ width: "200px", height: "200px" }}
         />
       </Grid>
