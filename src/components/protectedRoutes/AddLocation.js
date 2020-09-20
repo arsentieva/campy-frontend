@@ -38,7 +38,7 @@ const checkBoxStyles = (theme) => ({
 
 const CustomCheckbox = withStyles(checkBoxStyles)(Checkbox);
 export const AddLocation = () => {
-  
+
   const history = useHistory();
   const classes = useStyles();
   const { currentUser, authAxios } = useContext(CampyContext);
@@ -50,7 +50,7 @@ export const AddLocation = () => {
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
   const [host_notes, setHost_Notes] = useState("");
-  
+
   const [electric_hookup, setElectric_Hookup] = useState(false);
   const [water_hookup, setWater_Hookup] = useState(false);
   const [septic_hookup, setSeptic_Hookup] = useState(false);
@@ -112,7 +112,7 @@ export const AddLocation = () => {
 
       .catch((err) => console.log(err));
   };
-  
+
   return currentUser ? (
     <Grid
       container
