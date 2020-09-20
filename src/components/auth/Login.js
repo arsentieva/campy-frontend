@@ -7,7 +7,7 @@ import { AccountCircle, LockRounded, PermIdentity } from "@material-ui/icons";
 import Alert from '@material-ui/lab/Alert';
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
-import url from '../../config';
+import { url } from '../../config';
 const useStyles = makeStyles((theme) => ({
   formContainer: {
     backgroundColor: "#f7fafc",

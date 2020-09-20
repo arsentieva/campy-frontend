@@ -11,7 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { CampyContext } from "../../CampyContext";
 import { MyLocations } from "./MyLocations";
 import { useHistory } from "react-router-dom";
-import url from "../../config";
+import {url} from "../../config";
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CampyContext } from "../../CampyContext";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   Grid,
   FormControl,
@@ -16,7 +16,7 @@ import {
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Send } from "@material-ui/icons";
 import Axios from "axios";
-import url from "../../config";
+import {url} from "../../config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +41,7 @@ export const AddLocation = () => {
 
   const history = useHistory();
   const classes = useStyles();
-  const { currentUser, authAxios } = useContext(CampyContext);
+  const { currentUser } = useContext(CampyContext);
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");

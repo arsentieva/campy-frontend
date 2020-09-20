@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import CalendarMaterialUIPickers from "./Calendar";
 import { LocationImages } from "./LocationImages";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,7 +15,7 @@ import CircleChecked from "@material-ui/icons/CheckCircleOutline";
 import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import Grid from '@material-ui/core/Grid';
 
-import url from "../config";
+import { url } from "../config";
 
 import { CampyContext } from "../CampyContext";
 

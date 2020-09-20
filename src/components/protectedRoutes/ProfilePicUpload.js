@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -8,10 +7,10 @@ import {
   Grid,
   Button
 } from "@material-ui/core";
-import SendIcon from "@material-ui/icons/Send";
+
 import SaveIcon from '@material-ui/icons/Save';
 import { CampyContext } from "../../CampyContext";
-import url from "../../config";
+import {url} from "../../config";
 import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const ProfilePicUpload = ({ setModal, imageUrl, setImageUrl }) => {
   const { currentUser, authToken } = useContext(CampyContext);
-  const history = useHistory();
   const classes = useStyles();
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);

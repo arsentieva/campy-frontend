@@ -1,11 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Paper,
-  Grid,
-} from "@material-ui/core";
-import url from "../../config";
+import { Typography, Paper, Grid} from "@material-ui/core";
+import { url } from "../../config";
 import defaultPic from '../../assets/default.jpg'
 
 import { CampyContext } from "../../CampyContext";

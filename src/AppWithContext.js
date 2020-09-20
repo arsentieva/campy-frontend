@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import App from "./App";
 import { CampyContext } from "./CampyContext";
-import url from './config';
+import { url } from './config';
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("campy_token");

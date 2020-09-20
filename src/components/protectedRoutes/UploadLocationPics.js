@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
 import { makeStyles } from "@material-ui/core/styles";
 import { CampyContext } from "../../CampyContext";
-import url from "../../config";
+import { url } from "../../config";
 
 
 const useStyles = makeStyles((theme) => ({
