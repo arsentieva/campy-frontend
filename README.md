@@ -72,7 +72,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Campy Home Page Screen Shot][product-screenshot]](https://example.com)
+[![Campy Home Page Screen Shot][product-screenshot]](https://campy-client.herokuapp.com/images/Campy-Home.jpg)
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
@@ -211,4 +211,4 @@ Project Link: [https://github.com/arsentieva/campy-frontend](https://github.com/
 [license-url]: https://github.com/arsentieva/repo/blob/master/LICENSE.txt
 <!-- [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/github_username -->
-[product-screenshot]: https://campy-client.herokuapp.com/
+[product-screenshot]: https://campy-client.herokuapp.com/images/Campy-Home.JPG
