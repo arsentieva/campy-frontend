@@ -45,7 +45,7 @@
     <br />
     <a href="https://github.com/arsentieva/campy-frontend"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="https://github.com/arsentieva/campy-frontend">View Demo(TODO)</a>
+    <a href="https://campy-client.herokuapp.com/">View Demo</a>
     <br />
   </p>
 </p>
@@ -211,4 +211,4 @@ Project Link: [https://github.com/arsentieva/campy-frontend](https://github.com/
 [license-url]: https://github.com/arsentieva/repo/blob/master/LICENSE.txt
 <!-- [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/github_username -->
-[product-screenshot]: public/images/Campy-Home.jpg
+[product-screenshot]: https://campy-client.herokuapp.com/
