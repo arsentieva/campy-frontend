@@ -1,11 +1,15 @@
-import React, { useState, useContext } from 'react'
-import DateRangePicker from 'react-daterange-picker'
+import React, { useState, useContext, useEffect } from 'react'
+import DateRangePicker from 'react-daterange-picker';
 import { CampyContext } from "../CampyContext";
 import { useParams } from 'react-router-dom';
-import 'react-daterange-picker/dist/css/react-calendar.css' // For some basic styling. (OPTIONAL)
+import 'react-daterange-picker/dist/css/react-calendar.css'; // For some basic styling. (OPTIONAL)
 import { url } from '../config';
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
+import * as Moment from 'moment';
+import { extendMoment } from 'moment-range';
+
+const moment = extendMoment(Moment);
 
 export default function Scheduler() {
 
@@ -13,6 +17,33 @@ export default function Scheduler() {
   const { id } = useParams();
   const { authToken } = useContext(CampyContext);
   const [message, setMessage] = useState(undefined);
+  const [dateStates, setDateStates] = useState(null);
+
+  const stateDefinitions = {
+    available: {
+      color: null,
+      label: 'Available',
+    },
+    enquire: {
+      color: '#ffd200',
+      label: 'Enquire',
+    },
+    unavailable: {
+      selectable: false,
+      color: '#78818b',
+      label: 'Unavailable',
+    },
+  };
+
+  const dateRanges = [
+    {
+      state: 'unavailable',
+      range: moment.range(
+        moment().add(3, 'weeks'),
+        moment().add(3, 'weeks').add(5, 'days')
+      ),
+    },
+  ];
 
   const useStyles = makeStyles(() => ({
     stem: {
@@ -66,8 +97,16 @@ export default function Scheduler() {
       });
   }
 
-  const onSelect = dates => setDates(dates)
+  useEffect(() => {
+    (async function getDateStates() {
+      let dates = await fetch(`${url}/locations/${id}/calendar/`);
+      setDateStates(dates);
+      console.log(await dates.json());
+    })();
+  }, []);
 
+
+  const onSelect = dates => setDates(dates);
   const classes = useStyles();
   return (
     <Grid container justify="center">
@@ -79,6 +118,8 @@ export default function Scheduler() {
           numberOfCalendars={1}
           selectionType="range"
           singleDateRange={true}
+          stateDefinitions={stateDefinitions}
+          dateStates={dateRanges}
         />
       </Grid>
       <Grid item xs={12} className={classes.stem}>
