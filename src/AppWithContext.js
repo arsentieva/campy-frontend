@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import App from "./App";
 import { CampyContext } from "./CampyContext";
-import url from './config';
+import { url } from './config';
 
 export const AppWithContext = () => {
   const accessToken = localStorage.getItem("campy_token");
@@ -20,13 +20,7 @@ export const AppWithContext = () => {
     setAuthToken(null);
   };
 
-  useEffect(()=>{
-    if(authToken){
-      getUser()
-    }
-  }, [authToken])
-
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
   try {
     const response = await fetch(`${url}/user/`, {
       headers: { Authorization: `Bearer ${authToken}` }
@@ -44,7 +38,13 @@ export const AppWithContext = () => {
       }
 
     };
-  };
+  }, [authToken]);
+
+  useEffect(() => {
+    if (authToken) {
+      getUser()
+    }
+  }, [authToken, getUser])
   
   const loadLocations = async () => {
     try {
@@ -61,15 +61,15 @@ export const AppWithContext = () => {
 
   const loadLocation = async (id) => {
     try {
-    const res = await fetch(`${url}/locations/${id}`);
-    if(!res.ok){
-      throw res;
+      const res = await fetch(`${url}/locations/${id}`);
+      if(!res.ok){
+        throw res;
+      }
+      const selectedActivity = await res.json();
+      setLocation(selectedActivity.location);
+    } catch (error) {
+      console.log(error);
     }
-    const selectedActivity = await res.json();
-    setLocation(selectedActivity.location);
-   } catch (error) {
-     console.log(error);
-   }
   }
   
   return (

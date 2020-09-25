@@ -6,7 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import { CampyContext } from "../../CampyContext";
 import camperPic from "../../assets/camperUnderStars.jpg";
 import logo from "../../assets/logo.png";
-import url from '../../config';
+import { url } from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {

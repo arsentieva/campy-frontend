@@ -1,21 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { storage } from "../../Firebase/firebaseConfig";
-
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  InputLabel,
-  TextField,
-  Avatar,
-  IconButton,
-  Grid,
-  GridList,
-} from "@material-ui/core";
-import { AddAPhoto, Send, Save } from "@material-ui/icons";
 import { CampyContext } from "../../CampyContext";
-import Axios from "axios";
-import url from "../../config";
+import { url } from "../../config";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,9 +25,6 @@ export const UploadLocationPics = () => {
   const id = window.location.pathname.split("/")[2];
   const [location, setLocation] = useState();
   // console.log(id);
-
-  const [success, setSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [progress, setProgress] = useState(0);
   const [image_urls, setImageUrls] = useState([]);
 
@@ -90,7 +75,7 @@ export const UploadLocationPics = () => {
       const json = await res.json();
       setLocation(json.location);
     })(); // semi-colon is needed for IIFE to work
-  }, []);
+  }, [id]);
 
   console.log(location);
 
@@ -125,15 +110,13 @@ export const UploadLocationPics = () => {
       .then((result) => {
         if (result.status === 200) {
           const id = window.location.pathname.split("/")[2];
-
-          setSuccess(true);
           history.push(`/location-detail/${id}`);
         } else {
-          setIsError(true);
+          throw result
         }
       })
       .catch((err) => {
-        console.log(err) && setIsError(err);
+        console.log(err);
       });
   };
 
@@ -144,6 +127,7 @@ export const UploadLocationPics = () => {
         <input type="file" multiple onChange={onFileChange} />
       </label>
       <button onClick={onUploadSubmission}>Upload</button>
+      <progress value={progress} max="100" />
       <button onClick={handleUpdate}>Check Out Your Location</button>
     </form>
   ) : null;

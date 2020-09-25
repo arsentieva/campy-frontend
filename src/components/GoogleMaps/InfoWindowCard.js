@@ -28,11 +28,11 @@ export default function InfoWindowCard({ title, id, image }) {
       <CardActionArea>
         <CardMedia className={classes.media} image={image} title={title}/>
         <CardContent>
-          <Typography variant="caption">{ title }</Typography>
+          <Typography variant="body1" >{ title }</Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button color="primary"  size="small" onClick={()=> handleRedirect(id)}> Learn More </Button>
+        <Button color="primary" variant="outlined" size="small" onClick={()=> handleRedirect(id)}> Learn More </Button>
       </CardActions>
     </Card>
   );

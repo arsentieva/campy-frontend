@@ -1,5 +1,2 @@
 
-// const url = `https://campy-backend.herokuapp.com`; //TODO clean up
-const url = `http://localhost:5000`;
-
-export default url;
+export const url = process.env.REACT_APP_API_BASE_URL;

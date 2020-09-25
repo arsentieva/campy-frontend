@@ -2,9 +2,8 @@ import React, { useContext,  createRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CampyContext } from "../../CampyContext";
-import { Grid, Typography, IconButton, Paper, Box, CardMedia } from "@material-ui/core";
+import { Grid, Typography, Button, Paper, Box, CardMedia } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import TerrainIcon from '@material-ui/icons/Terrain';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,10 +33,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const LocationItems = () => {
   const { locations, location, loadLocation } = useContext(CampyContext);
-  const refs = locations ? locations.reduce((acc, value) => {
+  const refs = locations && locations.reduce((acc, value) => {
     acc[value.id] = createRef();
     return acc;
-  }, {}) : undefined;
+  }, {});
 
     const classes = useStyles();
     const history = useHistory();
@@ -56,6 +55,16 @@ export const LocationItems = () => {
       loadLocation(id);
       history.push(`/location-detail/${id}`);
      }
+
+    const getReviewScore = (reviews) => {
+      let score = 0;
+      for ( let review of reviews){
+        score += review.overall_rating;
+      }
+      return score/reviews.length;
+    };
+
+
     return (  
         <Box className={classes.root}>
          {   locations &&
@@ -70,7 +79,7 @@ export const LocationItems = () => {
                         <Grid item xs container direction="column" spacing={2}>
                           <Grid item xs>
                             <Typography gutterBottom variant="subtitle1">{location.title}</Typography>
-                              <Rating defaultValue={3}
+                              <Rating value={ getReviewScore(location.reviews)}
                                 precision={0.5}
                                 icon={<TerrainIcon fontSize="inherit" />}
                                 readOnly
@@ -78,9 +87,7 @@ export const LocationItems = () => {
                           </Grid>
                         </Grid>
                         <Grid item>
-                            <IconButton onClick={()=>handleRedirect(location.id)}>
-                              <OpenInNewIcon style={{fontSize: 30, color: "#39A5A7"}}/> 
-                            </IconButton>
+                         <Button color="primary" variant="outlined" size="small" onClick={()=>handleRedirect(location.id)}> Learn More </Button> 
                       </Grid>
                       </Grid>
                     </Grid>
