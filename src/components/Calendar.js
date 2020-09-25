@@ -18,8 +18,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
-    const { id } = useParams();
-    const { authAxios } = useContext(CampyContext);
+    const { id, user_id } = useParams();
+    const params = useParams();
+    // const { authAxios } = useContext(CampyContext);
+    const { authToken, currentUser } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
     const [locationCalendar, setLocationCalendar] = React.useState(undefined);
@@ -59,80 +61,89 @@ export default function CalendarMaterialUIPickers() {
     }
 
     const postCalendar = async () => {
-        await authAxios.post(`/locations/${id}/calendar/`, {
-            start_date: formatDate(selectedStartDate),
-            end_date: formatDate(selectedEndDate),
+        await fetch(`${url}/locations/${id}/calendar/`, {
+            method: "POST",
+            body: JSON.stringify({
+                start_date: formatDate(selectedStartDate),
+                end_date: formatDate(selectedEndDate),
+            }),
+            headers:
+            {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`
+            },
         })
-            .then((result) => {
-                console.log(result)
+            .then(async(result) => {
+                result = await result.json()
                 if (result.status === 200) {
-                    setMessage(result.data["message"])
+                    setMessage(result["message"])
                     setSuccess(true)
                 } else if (result.status === 202) {
-                    setMessage(result.data["message"])
+                    setMessage(result["message"])
                 }
                 else {
+                    setMessage(result["message"])
                     setIsError(true)
                 }
             })
-            .catch(err => {
-                console.error(err) && setIsError(err);
-            });
-    }
+        .catch(err => {
+            console.error(err) && setIsError(err);
+        });
+}
 
-    useEffect(() => {
-        (async function getLocationCalendarDates() {
-            let dates = await fetch(`${url}/locations/${id}/calendar/`);
-            let json = await dates.json();
-            setLocationCalendar(json.dates)
-        })();
-    }, []);
+useEffect(() => {
+    (async function getLocationCalendarDates() {
+        let dates = await fetch(`${url}/locations/${id}/calendar/`);
+        let json = await dates.json();
+        setLocationCalendar(json.dates)
+    })();
+}, [message]);
 
-    const classes = useStyles();
-    return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container className={classes.root}>
-                <Grid item xs={12} className={classes.stem}>
-                    <h1>Calendar</h1>
-                </Grid>
-                <Grid item xs={12} className={classes.stem}>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="Start Date"
-                        value={selectedStartDate}
-                        onChange={handleStartDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} className={classes.stem}>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="End Date"
-                        value={selectedEndDate}
-                        onChange={handleEndDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} className={classes.stem} >
-                    {message}
-                </Grid>
-                <Grid item xs={12} className={classes.stem}>
-                    <Button variant="contained" color="primary" onClick={postCalendar} className={classes.leaf}>Submit</Button>
-                    {/* <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button> */}
-                </Grid>
+const classes = useStyles();
+return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Grid container className={classes.root}>
+            <Grid item xs={12} className={classes.stem}>
+                <h1>Calendar</h1>
             </Grid>
-        </MuiPickersUtilsProvider>
-    )
+            <Grid item xs={12} className={classes.stem}>
+                <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Start Date"
+                    value={selectedStartDate}
+                    onChange={handleStartDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                />
+            </Grid>
+            <Grid item xs={12} className={classes.stem}>
+                <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="End Date"
+                    value={selectedEndDate}
+                    onChange={handleEndDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                />
+            </Grid>
+            <Grid item xs={12} className={classes.stem}>
+                <Button variant="contained" color="primary" onClick={postCalendar} className={classes.leaf}>Submit</Button>
+                {/* <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button> */}
+            </Grid>
+            <Grid item xs={12} className={classes.stem} >
+                {message}
+            </Grid>
+        </Grid>
+    </MuiPickersUtilsProvider>
+)
 }
