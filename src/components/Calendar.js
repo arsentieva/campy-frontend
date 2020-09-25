@@ -14,16 +14,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default function CalendarMaterialUIPickers() {
     // The first commit of Material-UI
-    const { id, user_id } = useParams();
-    const params = useParams();
-    // const { authAxios } = useContext(CampyContext);
-    const { authToken, currentUser } = useContext(CampyContext);
+    const { id } = useParams();
+    const { authToken } = useContext(CampyContext);
     const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
     const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
-    const [locationCalendar, setLocationCalendar] = React.useState(undefined);
     const [message, setMessage] = React.useState(undefined)
-    const [success, setSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
 
     const useStyles = makeStyles((theme) => ({
         stem: {
@@ -73,17 +68,15 @@ export default function CalendarMaterialUIPickers() {
                 result = await result.json()
                 if (result.status === 200) {
                     setMessage(result["message"])
-                    setSuccess(true)
                 } else if (result.status === 202) {
                     setMessage(result["message"])
                 }
                 else {
                     setMessage(result["message"])
-                    setIsError(true)
                 }
             })
         .catch(err => {
-            console.error(err) && setIsError(err);
+            console.error(err);
         });
 }
 
@@ -91,7 +84,6 @@ useEffect(() => {
     (async function getLocationCalendarDates() {
         let dates = await fetch(`${url}/locations/${id}/calendar/`);
         let json = await dates.json();
-        setLocationCalendar(json.dates)
     })();
 }, [message]);
 
