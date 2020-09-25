@@ -2,10 +2,9 @@ import 'date-fns';
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, Button } from '@material-ui/core'
-import {url} from '../config';
+import { url } from '../config';
 import DateFnsUtils from '@date-io/date-fns';
 import { CampyContext } from "../CampyContext";
-// import { ErrorNotice } from "./ErrorNotice";
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -13,17 +12,15 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 
 export default function CalendarMaterialUIPickers() {
-    // The first commit of Material-UI
-    const { id } = useParams();
-    const { authAxios } = useContext(CampyContext);
-    const [selectedStartDate, setSelectedStartDate] = React.useState(new Date());
-    const [selectedEndDate, setSelectedEndDate] = React.useState(new Date());
-    const [locationCalendar, setLocationCalendar] = React.useState(undefined);
-    const [message, setMessage] = React.useState(undefined)
-    const [success, setSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
 
-    const useStyles = makeStyles((theme) => ({
+    const { id } = useParams();
+    const { authToken } = useContext(CampyContext);
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+    const [message, setMessage] = useState(undefined)
+
+
+    const useStyles = makeStyles(() => ({
         stem: {
             display: "flex",
             direction: "column",
@@ -55,24 +52,31 @@ export default function CalendarMaterialUIPickers() {
     }
 
     const postCalendar = async () => {
-        await authAxios.post(`/locations/${id}/calendar/`, {
-            start_date: formatDate(selectedStartDate),
-            end_date: formatDate(selectedEndDate),
+        await fetch(`${url}/locations/${id}/calendar/`, {
+            method: "POST",
+            body: JSON.stringify({
+                start_date: formatDate(selectedStartDate),
+                end_date: formatDate(selectedEndDate),
+            }),
+            headers:
+            {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`
+            },
         })
-            .then((result) => {
-                console.log(result)
+            .then(async (result) => {
+                result = await result.json()
                 if (result.status === 200) {
-                    setMessage(result.data["message"])
-                    setSuccess(true)
+                    setMessage(result["message"])
                 } else if (result.status === 202) {
-                    setMessage(result.data["message"])
+                    setMessage(result["message"])
                 }
                 else {
-                    setIsError(true)
+                    setMessage(result["message"])
                 }
             })
             .catch(err => {
-                console.error(err) && setIsError(err);
+                console.error(err);
             });
     }
 
@@ -80,9 +84,8 @@ export default function CalendarMaterialUIPickers() {
         (async function getLocationCalendarDates() {
             let dates = await fetch(`${url}/locations/${id}/calendar/`);
             let json = await dates.json();
-            setLocationCalendar(json.dates)
         })();
-    }, []);
+    }, [message]);
 
     const classes = useStyles();
     return (
@@ -121,12 +124,11 @@ export default function CalendarMaterialUIPickers() {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12} className={classes.stem} >
-                    {message}
-                </Grid>
                 <Grid item xs={12} className={classes.stem}>
                     <Button variant="contained" color="primary" onClick={postCalendar} className={classes.leaf}>Submit</Button>
-                    {/* <Button variant="contained" color="primary" onClick={() => console.log(locationCalendar)}>Log Calendar</Button> */}
+                </Grid>
+                <Grid item xs={12} className={classes.stem} >
+                    {message}
                 </Grid>
             </Grid>
         </MuiPickersUtilsProvider>
