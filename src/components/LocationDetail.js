@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import CalendarMaterialUIPickers from "./Calendar";
+// import CalendarMaterialUIPickers from "./Calendar";
+import Scheduler from "./New-Calendar"
 import { LocationImages } from "./LocationImages";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -115,10 +116,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const LocationDetail = (props) => {
   const classes = useStyles();
-  // const { id } = useParams()
   const id = window.location.pathname.split("/")[2];
-  // const id = props.match.params.id
-  // const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
   const { location, loadLocation } = useContext(CampyContext);
 
@@ -128,11 +126,6 @@ export const LocationDetail = (props) => {
   }
 
   useEffect(() => {
-    // (async function fetchLocation() {
-    //   const res = await fetch(`${url}/locations/${id}`);
-    //   const json = await res.json();
-    //   setLocation(json.location);
-    // })(); // semi-colon is needed for IIFE to work
     if (!location) {
       loadLocation(id)
     }
@@ -142,9 +135,6 @@ export const LocationDetail = (props) => {
       setReview(json.reviews);
     })();
   }, [location]);
-
-  // use context instead
-
 
   return (
     <Box className={classes.background}>
@@ -334,7 +324,7 @@ export const LocationDetail = (props) => {
             <Paper elevation={5} className={classes.calendar}>
               <List>
                 <ListItem>
-                  <CalendarMaterialUIPickers />
+                  <Scheduler />
                 </ListItem>
               </List>
             </Paper>
@@ -370,39 +360,6 @@ export const LocationDetail = (props) => {
                   </ListItem>
                 </List>
               </Paper>
-              {/* <Paper elevation={5} className={classes.review}>
-                <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Overall Rating</Typography>
-                  <Rating value={x.overall_rating || 0} readOnly />
-                  </Box>
-                  <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Noise</Typography>
-                  <Rating value={x.noise || 0} readOnly />
-                  </Box>
-                  <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Safety</Typography>
-                  <Rating value={x.safety || 0} readOnly />
-                  </Box>
-                  <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Cleanliness</Typography>
-                  <Rating value={x.cleanliness || 0} readOnly />
-                  </Box>
-                <Box component="fieldset" borderColor="transparent">
-                <Typography component="legend">Access</Typography>
-                <Rating value={x.access || 0} readOnly />
-                </Box>
-                <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Site Quality</Typography>
-                  <Rating value={x.site_quality || 0} readOnly />
-                  </Box>
-                </Paper> */}
-              {/* <Paper elevation={5} className={classes.comment}>
-                <List>
-                <ListItem>
-                <ListItemText primary={`${x.user_first_name} ${x.user_last_name}`} secondary={x.comments} />
-                </ListItem>
-                </List>
-              </Paper> */}
             </Box>
           </Grid>
         ))}

@@ -19,7 +19,6 @@ export default function CalendarMaterialUIPickers() {
     const [selectedEndDate, setSelectedEndDate] = useState(new Date());
     const [message, setMessage] = useState(undefined)
 
-
     const useStyles = makeStyles(() => ({
         stem: {
             display: "flex",
