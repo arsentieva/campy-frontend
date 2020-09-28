@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import CalendarMaterialUIPickers from "./Calendar";
+// import CalendarMaterialUIPickers from "./Calendar";
+import DayPickerRangeControllerWrapper from "./New-Calendar";
 import { LocationImages } from "./LocationImages";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -191,10 +192,10 @@ export const LocationDetail = (props) => {
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
-                  <ListItemText
+                  {/* <ListItemText
                     primary="Host Notes:"
                     secondary={location && location.host_notes || "Loading..."}
-                  />
+                  /> */}
                 </ListItem>
               </List>
             </Paper>
@@ -334,7 +335,7 @@ export const LocationDetail = (props) => {
             <Paper elevation={5} className={classes.calendar}>
               <List>
                 <ListItem>
-                  <CalendarMaterialUIPickers />
+                  <DayPickerRangeControllerWrapper />
                 </ListItem>
               </List>
             </Paper>
