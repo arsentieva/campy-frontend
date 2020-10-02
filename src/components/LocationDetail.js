@@ -116,24 +116,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const LocationDetail = (props) => {
   const classes = useStyles();
-  // const { id } = useParams()
   const id = window.location.pathname.split("/")[2];
-  // const id = props.match.params.id
-  // const [location, setLocation] = useState({});
   const [review, setReview] = useState([]);
-  const { location, loadLocation } = useContext(CampyContext);
-
+  const { location, loadLocation, authToken } = useContext(CampyContext);
 
   const addressMaker = (location) => {
     return `${location.address} ${location.city}, ${location.state}`
   }
 
   useEffect(() => {
-    // (async function fetchLocation() {
-    //   const res = await fetch(`${url}/locations/${id}`);
-    //   const json = await res.json();
-    //   setLocation(json.location);
-    // })(); // semi-colon is needed for IIFE to work
     if (!location) {
       loadLocation(id)
     }
@@ -143,8 +134,6 @@ export const LocationDetail = (props) => {
       setReview(json.reviews);
     })();
   }, [location]);
-
-  // use context instead
 
 
   return (
@@ -158,23 +147,23 @@ export const LocationDetail = (props) => {
                   <ListItemText
                     primary="Location:"
                     secondary={location && addressMaker(location) || "Loading..."}
-                  >
+                    >
                   </ListItemText>
                   <ListItemText
                     primary="GPS Coordinates:"
                     secondary={location && location.gps_coords || "Loading..."}
-                  />
+                    />
                   <ListItemText
                     primary="Website:"
                     secondary={location && location.website ? location.website : "None"}
-                  />
+                    />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
                   <ListItemText
                     primary="Max Days:"
                     secondary={location && location.max_days || "Loading..."}
-                  />
+                    />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
@@ -188,24 +177,24 @@ export const LocationDetail = (props) => {
                   <ListItemText
                     primary="Description:"
                     secondary={location && location.description || "Loading..."}
-                  />
+                    />
                 </ListItem>
                 <Divider variant="inset" component="li" />
                 <ListItem>
-                  {/* <ListItemText
+                  <ListItemText
                     primary="Host Notes:"
                     secondary={location && location.host_notes || "Loading..."}
-                  /> */}
+                  />
                 </ListItem>
               </List>
             </Paper>
           </Grid>
           <Grid item sm={12} md={6}>
             <Grid container style={{minHeight: "400px"}} justify="center" alignContent="center">
-              {/* {location
+              {location
                 ? <LocationImages location={location} images={location.image_urls} />
                 : "Loading..."
-              } */}
+              }
             </Grid>
           </Grid>
         </Grid>
@@ -220,7 +209,7 @@ export const LocationDetail = (props) => {
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
                     checked={location && location.electric_hookup || false}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Water Hookup:" />
@@ -229,7 +218,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.water_hookup || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Septic Hookup:" />
@@ -238,7 +227,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.septic_hookup || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Assigned Parking:" />
@@ -247,7 +236,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.assigned_parking || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Tow Vehicle Parking:" />
@@ -256,7 +245,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.tow_vehicle_parking || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Trash Removal:" />
@@ -265,7 +254,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.trash_removal || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
               </List>
             </Paper>
@@ -280,7 +269,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.water_front || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Pets Allowed:" />
@@ -289,7 +278,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.pets_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Internet Access:" />
@@ -298,7 +287,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.internet_access || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="RV Compatible:" />
@@ -307,7 +296,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.rv_compatible || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Generators Allowed:" />
@@ -316,7 +305,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.generators_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
                 <ListItem>
                   <ListItemText primary="Fires Allowed:" />
@@ -325,7 +314,7 @@ export const LocationDetail = (props) => {
                     checked={location && location.fires_allowed || false}
                     icon={<CircleUnchecked color="primary" />}
                     checkedIcon={<CircleChecked color="primary" />}
-                  />
+                    />
                 </ListItem>
               </List>
             </Paper>
@@ -335,7 +324,7 @@ export const LocationDetail = (props) => {
             <Paper elevation={5} className={classes.calendar}>
               <List>
                 <ListItem>
-                  <DayPickerRangeControllerWrapper />
+                  <DayPickerRangeControllerWrapper authToken={authToken} />
                 </ListItem>
               </List>
             </Paper>
@@ -371,39 +360,6 @@ export const LocationDetail = (props) => {
                   </ListItem>
                 </List>
               </Paper>
-              {/* <Paper elevation={5} className={classes.review}>
-                <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Overall Rating</Typography>
-                  <Rating value={x.overall_rating || 0} readOnly />
-                  </Box>
-                  <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Noise</Typography>
-                  <Rating value={x.noise || 0} readOnly />
-                  </Box>
-                  <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Safety</Typography>
-                  <Rating value={x.safety || 0} readOnly />
-                  </Box>
-                  <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Cleanliness</Typography>
-                  <Rating value={x.cleanliness || 0} readOnly />
-                  </Box>
-                <Box component="fieldset" borderColor="transparent">
-                <Typography component="legend">Access</Typography>
-                <Rating value={x.access || 0} readOnly />
-                </Box>
-                <Box component="fieldset" borderColor="transparent">
-                  <Typography component="legend">Site Quality</Typography>
-                  <Rating value={x.site_quality || 0} readOnly />
-                  </Box>
-                </Paper> */}
-              {/* <Paper elevation={5} className={classes.comment}>
-                <List>
-                <ListItem>
-                <ListItemText primary={`${x.user_first_name} ${x.user_last_name}`} secondary={x.comments} />
-                </ListItem>
-                </List>
-              </Paper> */}
             </Box>
           </Grid>
         ))}

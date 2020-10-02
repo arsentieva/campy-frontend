@@ -1,40 +1,48 @@
 import 'react-dates/initialize';
 import React, { Component, useContext } from 'react'
 import { withRouter } from "react-router"
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import '../assets/styles/react_dates_overrides.css';
 import { url } from '../config';
-import {CampyContext} from '../CampyContext';
+// import { CampyContext } from '../CampyContext';
+
+const classes = () => ({
+  stem: {
+    display: "flex",
+    direction: "column",
+    "justify-content": "center",
+    "align-items": "center",
+    width: "100%",
+  },
+  leaf: {
+    width: "250px",
+  }
+});
 
 class NewCalendar extends Component {
-  static context = CampyContext
   constructor(props) {
     super(props);
 
     this.state = {
       id: null,
-      authToken: null,
+      authToken: props.authToken ? props.authToken : null,
       startDate: null,
       endDate: null,
       focusedInput: null,
       message: undefined,
     };
 
-    this.onDatesChange = this.onDatesChange.bind(this);
-    this.onFocusChange = this.onFocusChange.bind(this);
     this.postCalendar = this.postCalendar.bind(this);
     this.formatDate = this.formatDate.bind(this);
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    const {authToken} = this.context;
-
     this.state.id = id;
-    this.state.authToken = authToken;
   }
+  componentDidUpdate() { /* Intentionally empty */ }
 
   formatDate = function (date) {
     let fdate = date.toLocaleDateString("en-US", { // you can skip the first argument
@@ -42,83 +50,79 @@ class NewCalendar extends Component {
       month: "2-digit",
       day: "2-digit",
     }).split("/")
-    const s = [fdate[2], fdate[0], fdate[1]].join("-")
+    const s = [fdate[2], fdate[0], fdate[1]].join("-");
+    console.log(s);
     return s;
   }
 
   postCalendar = async function () {
-    console.log("startDate",this.startDate);
-    console.log("endDate",this.endDate)
-    await fetch(`${url}/locations/${this.state.id}/calendar/`, {
-      method: "POST",
-      body: JSON.stringify({
-        start_date: this.formatDate(this.startDate),
-        end_date: this.formatDate(this.endDate),
-      }),
-      headers:
-      {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.state.authToken}`
-      },
-    })
-      .then(async (result) => {
-        result = await result.json()
-        if (result.status === 200) {
-          this.message = result["message"];
-        } else if (result.status === 202) {
-          this.message = result["message"]
-        }
-        else {
-          this.message = result["message"]
-        }
-      })
-      .catch(err => {
+    if (!this.state.authToken) this.state.message.setState("Please Sign Up or Login to schedule your stay!")
+    else if (!this.state.startDate || !this.state.endDate) this.message = "Oops, you entered an invalid date!"
+    else {
+      try {
+        await fetch(`${url}/locations/${this.state.id}/calendar/`, {
+          method: "POST",
+          body: JSON.stringify({
+            start_date: this.formatDate(this.state.startDate._d),
+            end_date: this.formatDate(this.state.endDate._d),
+          }),
+          headers:
+          {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.state.authToken}`
+          },
+        })
+          .then(async (result) => {
+            result = await result.json()
+            console.log(result["message"]);
+            if (result.status === 200) {
+              this.setState({ message: result["message"] });
+            } else if (result.status === 202) {
+              this.setState({ message: result["message"] })
+            }
+            else {
+              this.setState({ message: result["message"] })
+            }
+            this.componentDidUpdate()
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } catch (err) {
         console.error(err);
-      });
-  }
-
-
-  onDatesChange({ startDate, endDate }) {
-    const { daysViolatingMinNightsCanBeClicked, minimumNights } = this.props;
-    let doesNotMeetMinNights = false;
-    if (daysViolatingMinNightsCanBeClicked && startDate && endDate) {
-      const dayDiff = endDate.diff(startDate.clone().startOf('day').hour(12), 'days');
-      doesNotMeetMinNights = dayDiff < minimumNights && dayDiff >= 0;
+      }
     }
-    this.setState({
-      startDate,
-      endDate: doesNotMeetMinNights ? null : endDate,
-      errorMessage: doesNotMeetMinNights
-        ? 'That day does not meet the minimum nights requirement'
-        : null,
-    });
-  }
-
-  onFocusChange(focusedInput) {
-    this.setState({
-      // Force the focusedInput to always be truthy so that dates are always selectable
-      focusedInput: !focusedInput ? START_DATE : focusedInput,
-    });
   }
 
   render() {
     return (
-      <>
-        <DateRangePicker
-          minimumNights={1}
-          onDatesChange={this.onDatesChange}
-          onFocusChange={this.onFocusChange}
-          focusedInput={this.focusedInput}
-          startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-          startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-          endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-          endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-          onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-          focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-          onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-        />
-        <Button onClick={this.postCalendar}>Schedule</Button>
-      </>
+      <Grid container spacing={1} alignItems="center" justify="center">
+          <Grid item xs={7}>
+            <h1>Calendar</h1>
+          </Grid>
+        <Grid item xs={8} className={classes.stem}>
+          <DateRangePicker
+            minimumNights={1}
+            numberOfMonths={1}
+            onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
+            onFocusChange={this.onFocusChange}
+            onFocusChange={focusedInput => this.setState({ focusedInput })}
+            startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+            startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+            endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+            endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+            onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+          />
+        </Grid>
+        <Grid item xs={2} className={classes.stem}>
+          <Button variant="contained" color="primary" onClick={this.postCalendar}>Submit</Button>
+        </Grid>
+        <Grid item xs={12} id="message" className={classes.stem}>
+          {this.state.message}
+        </Grid>
+      </Grid>
     )
   }
 }
