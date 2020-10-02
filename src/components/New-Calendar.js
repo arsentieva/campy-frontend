@@ -32,16 +32,41 @@ class NewCalendar extends Component {
       endDate: null,
       focusedInput: null,
       message: undefined,
+      reservations: [],
     };
 
     this.postCalendar = this.postCalendar.bind(this);
     this.formatDate = this.formatDate.bind(this);
   }
 
+  getCalendarDates = async function () {
+    try {
+      await fetch(`${url}/locations/${this.state.id}/calendar/`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(async result => {
+          result = await result.json();
+          let dates = result.dates;
+          console.log(dates);
+          let relevant = dates.filter(element => {
+            let n = element.end_date.split("\"").join('')   // there's an extra set of quotes for some reason
+            if (new Date(n) > new Date()) return element;
+          });
+          console.log(relevant)
+          this.setState({reservations: relevant});
+        })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   componentDidMount() {
     const id = this.props.match.params.id;
     this.state.id = id;
+    this.getCalendarDates();
   }
+
   componentDidUpdate() { /* Intentionally empty */ }
 
   formatDate = function (date) {
@@ -56,8 +81,8 @@ class NewCalendar extends Component {
   }
 
   postCalendar = async function () {
-    if (!this.state.authToken) this.state.message.setState("Please Sign Up or Login to schedule your stay!")
-    else if (!this.state.startDate || !this.state.endDate) this.message = "Oops, you entered an invalid date!"
+    if (!this.state.authToken) this.setState({ message: "Please Sign Up or Login to schedule your stay!" })
+    else if (!this.state.startDate || !this.state.endDate) this.setState({ message: "Oops, you entered an invalid date!" })
     else {
       try {
         await fetch(`${url}/locations/${this.state.id}/calendar/`, {
@@ -97,13 +122,13 @@ class NewCalendar extends Component {
   render() {
     return (
       <Grid container spacing={1} alignItems="center" justify="center">
-          <Grid item xs={7}>
-            <h1>Calendar</h1>
-          </Grid>
+        <Grid item xs={7}>
+          <h1>Calendar</h1>
+        </Grid>
         <Grid item xs={8} className={classes.stem}>
           <DateRangePicker
-            minimumNights={1}
-            numberOfMonths={1}
+            minimumNights={0} // allow Single Day entries
+            numberOfMonths={1} // show only one calendar
             onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
             onFocusChange={this.onFocusChange}
             onFocusChange={focusedInput => this.setState({ focusedInput })}
