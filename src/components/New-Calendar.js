@@ -33,10 +33,35 @@ class NewCalendar extends Component {
       focusedInput: null,
       message: undefined,
       reservations: [],
+      unavailable: [],
     };
 
     this.postCalendar = this.postCalendar.bind(this);
     this.formatDate = this.formatDate.bind(this);
+  }
+
+  getUnavailableDates = function () {
+    console.log("getUnavailabilities");
+    let reservations = this.state.reservations;
+    let unavailability = []
+    reservations.forEach(booking => {
+      let start = new Date(booking.start_date.split('\"').join(''));
+      let end = new Date(booking.end_date.split('\"').join(''));
+      if(start === end) unavailability.push(start);
+      else {
+        let item = start;
+        while (item <= end) {
+          if(item === end) {
+            unavailability.push(item);
+            break;
+          }
+          item.setDate(item.getDate() + 1);
+          unavailability.push(item);
+        }
+      }
+    })
+    console.log(unavailability);
+    this.setState({ unavailabile: unavailability })
   }
 
   getCalendarDates = async function () {
@@ -54,7 +79,7 @@ class NewCalendar extends Component {
             if (new Date(n) > new Date()) return element;
           });
           console.log(relevant)
-          this.setState({reservations: relevant});
+          this.setState({ reservations: relevant });
         })
     } catch (err) {
       console.error(err);
@@ -64,7 +89,9 @@ class NewCalendar extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
     this.state.id = id;
-    this.getCalendarDates();
+    this.getCalendarDates().then(() => {
+      this.getUnavailableDates();
+    })
   }
 
   componentDidUpdate() { /* Intentionally empty */ }
