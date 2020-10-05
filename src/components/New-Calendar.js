@@ -46,8 +46,6 @@ class NewCalendar extends Component {
     reservations.forEach(booking => {
       let start = new Date(booking.start_date.split('\"').join(''));
       let end = new Date(booking.end_date.split('\"').join(''));
-      // console.log("start: ", start)
-      // console.log("end: ", end)
       if(start === end) {
         unavailability.push(new Date(this.formatDate(start)));
       }
@@ -59,7 +57,6 @@ class NewCalendar extends Component {
         }
       }
     })
-    console.log("Unavailability", unavailability);
     this.setState({ unavailable: unavailability })
   }
 
@@ -181,6 +178,8 @@ class NewCalendar extends Component {
             onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
             showClearDates={true}
             isDayBlocked={this.isDayBlocked}
+            startDatePlaceholderText={"First Night"}
+            endDatePlaceholderText={"Last Night"}
           />
         </Grid>
         <Grid item xs={2} className={classes.stem}>
