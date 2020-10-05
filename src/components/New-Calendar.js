@@ -1,12 +1,11 @@
 import 'react-dates/initialize';
-import React, { Component, useContext } from 'react'
+import React, { Component } from 'react'
 import { withRouter } from "react-router"
 import { Button, Grid } from '@material-ui/core'
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import '../assets/styles/react_dates_overrides.css';
 import { url } from '../config';
-// import { CampyContext } from '../CampyContext';
 
 const classes = () => ({
   stem: {
@@ -38,30 +37,30 @@ class NewCalendar extends Component {
 
     this.postCalendar = this.postCalendar.bind(this);
     this.formatDate = this.formatDate.bind(this);
+    this.isDayBlocked = this.isDayBlocked.bind(this);
   }
 
   getUnavailableDates = function () {
-    console.log("getUnavailabilities");
     let reservations = this.state.reservations;
     let unavailability = []
     reservations.forEach(booking => {
       let start = new Date(booking.start_date.split('\"').join(''));
       let end = new Date(booking.end_date.split('\"').join(''));
-      if(start === end) unavailability.push(start);
+      // console.log("start: ", start)
+      // console.log("end: ", end)
+      if(start === end) {
+        unavailability.push(new Date(this.formatDate(start)));
+      }
       else {
         let item = start;
         while (item <= end) {
-          if(item === end) {
-            unavailability.push(item);
-            break;
-          }
+          unavailability.push(new Date(item));
           item.setDate(item.getDate() + 1);
-          unavailability.push(item);
         }
       }
     })
-    console.log(unavailability);
-    this.setState({ unavailabile: unavailability })
+    console.log("Unavailability", unavailability);
+    this.setState({ unavailable: unavailability })
   }
 
   getCalendarDates = async function () {
@@ -73,17 +72,32 @@ class NewCalendar extends Component {
         .then(async result => {
           result = await result.json();
           let dates = result.dates;
-          console.log(dates);
           let relevant = dates.filter(element => {
-            let n = element.end_date.split("\"").join('')   // there's an extra set of quotes for some reason
-            if (new Date(n) > new Date()) return element;
+            let n = element.end_date.split("\"").join('')   // there's an extra set of quotes for some reason, I'm removing them
+            let now = new Date(); // used to get today's date, in the database, it will be floored to the day's beginning
+            now.setHours(0);
+            now.setMinutes(0);
+            now.setSeconds(0);
+            now.setMilliseconds(0);
+            if (new Date(n) >= now) return element;
           });
-          console.log(relevant)
           this.setState({ reservations: relevant });
         })
     } catch (err) {
       console.error(err);
     }
+  }
+
+  isDayBlocked(day){
+    // date to date comparison was not working for some reason, so I am converting these days to strings
+    day._d.setHours(0)
+    day = day._d
+    let badDates = this.state.unavailable;
+    badDates = badDates.map(date => String(date)) // convert the badDate array into Strings
+    if(badDates.includes(String(day))) {
+      return true;
+    }
+    return false;
   }
 
   componentDidMount() {
@@ -103,7 +117,6 @@ class NewCalendar extends Component {
       day: "2-digit",
     }).split("/")
     const s = [fdate[2], fdate[0], fdate[1]].join("-");
-    console.log(s);
     return s;
   }
 
@@ -167,6 +180,7 @@ class NewCalendar extends Component {
             focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
             onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
             showClearDates={true}
+            isDayBlocked={this.isDayBlocked}
           />
         </Grid>
         <Grid item xs={2} className={classes.stem}>
