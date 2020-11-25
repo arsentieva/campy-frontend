@@ -17,7 +17,10 @@ const classes = () => ({
   },
   leaf: {
     width: "250px",
-  }
+  },
+  button: {
+    marginTop: "18.76px",
+  },
 });
 
 class NewCalendar extends Component {
@@ -46,7 +49,7 @@ class NewCalendar extends Component {
     reservations.forEach(booking => {
       let start = new Date(booking.start_date.split('\"').join(''));
       let end = new Date(booking.end_date.split('\"').join(''));
-      if(start === end) {
+      if (start === end) {
         unavailability.push(new Date(this.formatDate(start)));
       }
       else {
@@ -85,13 +88,13 @@ class NewCalendar extends Component {
     }
   }
 
-  isDayBlocked(day){
+  isDayBlocked(day) {
     // date to date comparison was not working for some reason, so I am converting these days to strings
     day._d.setHours(0)
     day = day._d
     let badDates = this.state.unavailable;
     badDates = badDates.map(date => String(date)) // convert the badDate array into Strings
-    if(badDates.includes(String(day))) {
+    if (badDates.includes(String(day))) {
       return true;
     }
     return false;
@@ -105,7 +108,7 @@ class NewCalendar extends Component {
     })
   }
 
-  componentDidUpdate() { /* Intentionally empty */ }
+  componentDidUpdate() { /* Intentionally Empty */ }
 
   formatDate = function (date) {
     let fdate = date.toLocaleDateString("en-US", { // you can skip the first argument
@@ -145,7 +148,8 @@ class NewCalendar extends Component {
             else {
               this.setState({ message: result["message"] })
             }
-            this.componentDidUpdate()
+            this.componentDidMount();
+            this.componentDidUpdate();
           })
           .catch(err => {
             console.error(err);
@@ -159,7 +163,7 @@ class NewCalendar extends Component {
   render() {
     return (
       <Grid container spacing={1} alignItems="center" justify="center">
-        <Grid item xs={7}>
+        <Grid container justify="center">
           <h1>Calendar</h1>
         </Grid>
         <Grid item xs={8} className={classes.stem}>
@@ -182,8 +186,10 @@ class NewCalendar extends Component {
             endDatePlaceholderText={"Last Night"}
           />
         </Grid>
-        <Grid item xs={2} className={classes.stem}>
-          <Button variant="contained" color="primary" onClick={this.postCalendar}>Submit</Button>
+        <Grid container justify="center">
+          <Grid item xs={2} className={classes.stem, classes.button}>
+            <Button variant="contained" color="primary" onClick={this.postCalendar}>Submit</Button>
+          </Grid>
         </Grid>
         <Grid item xs={12} id="message" className={classes.stem}>
           {this.state.message}
