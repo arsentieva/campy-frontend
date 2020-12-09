@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     media: {
       width: 250,
       height: 145,
-      
+
     },
   }));
 
@@ -50,7 +50,7 @@ export const LocationItems = () => {
         refs && refs[location.id].current && refs[location.id].current.scrollIntoView({behavior: "smooth"});
        }
      }, [location, refs]);
-    
+
      const handleRedirect = (id) => {
       loadLocation(id);
       history.push(`/location-detail/${id}`);
@@ -65,11 +65,11 @@ export const LocationItems = () => {
     };
 
 
-    return (  
+    return (
         <Box className={classes.root}>
          {   locations &&
-             locations.map((location) => (
-                <Box className={classes.card} onClick={()=>handleClick(location.id)}>
+             locations.map((location, i) => (
+                <Box key={i} className={classes.card} onClick={()=>handleClick(location.id)}>
                    <Paper key={location.id} ref={refs[location.id]} className={classes.paper} elevation={3}>
                     <Grid container spacing={2}>
                       <Grid item>
@@ -87,7 +87,7 @@ export const LocationItems = () => {
                           </Grid>
                         </Grid>
                         <Grid item>
-                         <Button color="primary" variant="outlined" size="small" onClick={()=>handleRedirect(location.id)}> Learn More </Button> 
+                         <Button color="primary" variant="outlined" size="small" onClick={()=>handleRedirect(location.id)}> Learn More </Button>
                       </Grid>
                       </Grid>
                     </Grid>
